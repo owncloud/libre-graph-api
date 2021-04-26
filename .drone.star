@@ -32,7 +32,7 @@ def stagePipelines(ctx):
 					'image': 'openapitools/openapi-generator-cli',
 					'pull': 'always',
 					'commands': [
-						'validate -i api/openapi-spec/v0.0.yml',
+						'/usr/local/bin/docker-entrypoint.sh validate -i api/openapi-spec/v0.0.yml',
 					],
 				}
 			],
