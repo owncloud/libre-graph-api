@@ -20,7 +20,7 @@ repository:
   allow_rebase_merge: true
 
 labels:
-  - name: API:Proposal
+  - name: Interaction:API-Proposal
     color: "#D4C5F9"
     description: Proposal to add something to the spec
   
