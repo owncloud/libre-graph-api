@@ -2,7 +2,7 @@
 _extends: gh-labels
 
 repository:
-  name: ocis
+  name: open-graph-api
   description: ':cloud: open Graph Cloud Collaboration API'
   homepage: https://owncloud.dev/open-graph-api/
   topics: api, graph, ocis
@@ -37,13 +37,13 @@ branches:
         required_approving_review_count: 1
         dismiss_stale_reviews: false
         require_code_owner_reviews: true
-        dismissal_restrictions: {}
       required_status_checks:
         strict: false
         contexts:
           - continuous-integration/drone/pr
       enforce_admins: false
       restrictions:
+        apps: []
         users: []
         teams:
           - ci
