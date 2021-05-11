@@ -727,7 +727,7 @@ components:
           type: string
           description: Represents the state of the deleted item.
           nullable: false
-    file:
+    openGraphFile:
       type: object
       properties:
         hashes:
