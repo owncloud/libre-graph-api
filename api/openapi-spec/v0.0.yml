@@ -77,7 +77,7 @@ paths:
                   value:
                     type: array
                     items:
-                      $ref: '#/components/schemas/open.graph.drive'
+                      $ref: '#/components/schemas/drive'
                     maxItems: 100
                   '@odata.nextLink':
                     type: string
@@ -102,7 +102,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/open.graph.drive'
+              $ref: '#/components/schemas/drive'
         required: true
       responses:
         '201':
@@ -110,7 +110,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/open.graph.drive'
+                $ref: '#/components/schemas/drive'
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
@@ -178,7 +178,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/open.graph.drive'
+                $ref: '#/components/schemas/drive'
           links:
             root:
               operationId: me.drive.root.GetRoot
@@ -205,7 +205,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/open.graph.drive'
+              $ref: '#/components/schemas/drive'
         required: true
       responses:
         '204':
@@ -303,7 +303,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/open.graph.driveItem'
+                $ref: '#/components/schemas/driveItem'
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
@@ -317,7 +317,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/open.graph.driveItem'
+              $ref: '#/components/schemas/driveItem'
         required: true
       responses:
         '204':
@@ -344,9 +344,9 @@ paths:
       x-ms-docs-operation-type: operation
 components:
   schemas:
-    open.graph.drive:
+    drive:
       allOf:
-        - $ref: '#/components/schemas/open.graph.baseItem'
+        - $ref: '#/components/schemas/baseItem'
         - type: object
           properties:
             driveType:
@@ -359,41 +359,41 @@ components:
               description: Describes the status of the drive.
             owner:
               allOf:
-                - $ref: '#/components/schemas/open.graph.identitySet'
+                - $ref: '#/components/schemas/identitySet'
               description: Optional. The user account that owns the drive. Read-only.
               nullable: false
               readOnly: true
             oCCoOwner:
               allOf:
-                - $ref: '#/components/schemas/open.graph.identitySet'
+                - $ref: '#/components/schemas/identitySet'
               description: Optional. The user account that owns the drive.
               nullable: false
             quota:
               allOf:
-                - $ref: '#/components/schemas/open.graph.quota'
+                - $ref: '#/components/schemas/quota'
               description: Optional. Information about the drive's storage space quota. Read-only.
               nullable: false
               readOnly: true
             items:
               type: array
               items:
-                $ref: '#/components/schemas/open.graph.driveItem'
+                $ref: '#/components/schemas/driveItem'
               description: All items contained in the drive. Read-only. Nullable.
               readOnly: true
             root:
               allOf:
-                - $ref: '#/components/schemas/open.graph.driveItem'
+                - $ref: '#/components/schemas/driveItem'
               description: The root folder of the drive. Read-only.
               nullable: false
               readOnly: true
-    open.graph.baseItem:
+    baseItem:
       allOf:
-        - $ref: '#/components/schemas/open.graph.entity'
+        - $ref: '#/components/schemas/entity'
         - type: object
           properties:
             createdBy:
               allOf:
-                - $ref: '#/components/schemas/open.graph.identitySet'
+                - $ref: '#/components/schemas/identitySet'
               description: 'Identity of the user, device, or application which created the item. Read-only.'
               nullable: false
               readOnly: true
@@ -414,7 +414,7 @@ components:
               readOnly: true
             lastModifiedBy:
               allOf:
-                - $ref: '#/components/schemas/open.graph.identitySet'
+                - $ref: '#/components/schemas/identitySet'
               description: 'Identity of the user, device, and application which last modified the item. Read-only.'
               nullable: false
               readOnly: true
@@ -430,7 +430,7 @@ components:
               nullable: false
             parentReference:
               allOf:
-                - $ref: '#/components/schemas/open.graph.itemReference'
+                - $ref: '#/components/schemas/itemReference'
               description: 'Parent information, if the item has a parent. Read-write.'
               nullable: false
             webUrl:
@@ -440,17 +440,17 @@ components:
               readOnly: true
             createdByUser:
               allOf:
-                - $ref: '#/components/schemas/open.graph.user'
+                - $ref: '#/components/schemas/user'
               description: Identity of the user who created the item. Read-only.
               nullable: false
               readOnly: true
             lastModifiedByUser:
               allOf:
-                - $ref: '#/components/schemas/open.graph.user'
+                - $ref: '#/components/schemas/user'
               description: Identity of the user who last modified the item. Read-only.
               nullable: false
               readOnly: true
-    open.graph.entity:
+    entity:
       type: object
       properties:
         id:
@@ -459,25 +459,25 @@ components:
           readOnly: true
       discriminator:
         propertyName: id
-    open.graph.identitySet:
+    identitySet:
       type: object
       properties:
         application:
           allOf:
-            - $ref: '#/components/schemas/open.graph.identity'
+            - $ref: '#/components/schemas/identity'
           description: Optional. The application associated with this action.
           nullable: false
         device:
           allOf:
-            - $ref: '#/components/schemas/open.graph.identity'
+            - $ref: '#/components/schemas/identity'
           description: Optional. The device associated with this action.
           nullable: false
         user:
           allOf:
-            - $ref: '#/components/schemas/open.graph.identity'
+            - $ref: '#/components/schemas/identity'
           description: Optional. The user associated with this action.
           nullable: false
-    open.graph.identity:
+    identity:
       type: object
       properties:
         displayName:
@@ -487,9 +487,9 @@ components:
         id:
           type: string
           description: Unique identifier for the identity.
-    open.graph.user:
+    user:
       allOf:
-        - $ref: '#/components/schemas/open.graph.directoryObject'
+        - $ref: '#/components/schemas/directoryObject'
         - type: object
           properties:
             accountEnabled:
@@ -610,19 +610,19 @@ components:
               format: date-time
             drive:
               allOf:
-                - $ref: '#/components/schemas/open.graph.drive'
+                - $ref: '#/components/schemas/drive'
               description: The user's HomeDrive. Read-only.
               nullable: false
               readOnly: true
             drives:
               type: array
               items:
-                $ref: '#/components/schemas/open.graph.drive'
+                $ref: '#/components/schemas/drive'
               description: A collection of drives available for this user. Read-only.
               maxItems: 100
               readOnly: true
           description: Represents an Active Directory user object.
-    open.graph.itemReference:
+    itemReference:
       type: object
       properties:
         driveId:
@@ -654,9 +654,9 @@ components:
           type: string
           description: 'A unique identifier for a shared resource that can be accessed via the [Shares][] API.'
           nullable: false
-    open.graph.driveItem:
+    driveItem:
       allOf:
-        - $ref: '#/components/schemas/open.graph.baseItem'
+        - $ref: '#/components/schemas/baseItem'
         - type: object
           properties:
             content:
@@ -671,36 +671,36 @@ components:
               readOnly: true
             deleted:
               allOf:
-                - $ref: '#/components/schemas/open.graph.deleted'
+                - $ref: '#/components/schemas/deleted'
               description: Information about the deleted state of the item. Read-only.
               nullable: false
               readOnly: true
             file:
               allOf:
-                - $ref: '#/components/schemas/open.graph.file'
+                - $ref: '#/components/schemas/file'
               description: 'File metadata, if the item is a file. Read-only.'
               nullable: false
               readOnly: true
             fileSystemInfo:
               allOf:
-                - $ref: '#/components/schemas/open.graph.fileSystemInfo'
+                - $ref: '#/components/schemas/fileSystemInfo'
               description: File system information on client. Read-write.
               nullable: false
             folder:
               allOf:
-                - $ref: '#/components/schemas/open.graph.folder'
+                - $ref: '#/components/schemas/folder'
               description: 'Folder metadata, if the item is a folder. Read-only.'
               nullable: false
               readOnly: true
             image:
               allOf:
-                - $ref: '#/components/schemas/open.graph.image'
+                - $ref: '#/components/schemas/image'
               description: 'Image metadata, if the item is an image. Read-only.'
               nullable: false
               readOnly: true
             root:
               allOf:
-                - $ref: '#/components/schemas/open.graph.root'
+                - $ref: '#/components/schemas/root'
               description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
               nullable: false
             size:
@@ -717,22 +717,22 @@ components:
             children:
               type: array
               items:
-                $ref: '#/components/schemas/open.graph.driveItem'
+                $ref: '#/components/schemas/driveItem'
               description: Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable.
               readOnly: true
-    open.graph.deleted:
+    deleted:
       type: object
       properties:
         state:
           type: string
           description: Represents the state of the deleted item.
           nullable: false
-    open.graph.file:
+    file:
       type: object
       properties:
         hashes:
           allOf:
-            - $ref: '#/components/schemas/open.graph.hashes'
+            - $ref: '#/components/schemas/hashes'
           description: 'Hashes of the file''s binary content, if available. Read-only.'
           nullable: false
           readOnly: true
@@ -744,7 +744,7 @@ components:
         processingMetadata:
           type: boolean
           nullable: false
-    open.graph.fileSystemInfo:
+    fileSystemInfo:
       type: object
       properties:
         createdDateTime:
@@ -765,7 +765,7 @@ components:
           description: The UTC date and time the file was last modified on a client.
           format: date-time
           nullable: false
-    open.graph.folder:
+    folder:
       type: object
       properties:
         childCount:
@@ -776,10 +776,10 @@ components:
           nullable: false
         view:
           allOf:
-            - $ref: '#/components/schemas/open.graph.folderView'
+            - $ref: '#/components/schemas/folderView'
           description: A collection of properties defining the recommended view for the folder.
           nullable: false
-    open.graph.image:
+    image:
       type: object
       properties:
         height:
@@ -796,11 +796,11 @@ components:
           format: int32
           nullable: false
           readOnly: true
-    open.graph.root:
+    root:
       type: object
-    open.graph.directoryObject:
+    directoryObject:
       allOf:
-        - $ref: '#/components/schemas/open.graph.entity'
+        - $ref: '#/components/schemas/entity'
         - type: object
           properties:
             deletedDateTime:
@@ -809,7 +809,7 @@ components:
               format: date-time
               nullable: false
           description: Represents an Active Directory object. The directoryObject type is the base type for many other directory entity types.
-    open.graph.quota:
+    quota:
       type: object
       properties:
         deleted:
@@ -831,7 +831,7 @@ components:
           readOnly: true
         storagePlanInformation:
           allOf:
-            - $ref: '#/components/schemas/open.graph.storagePlanInformation'
+            - $ref: '#/components/schemas/storagePlanInformation'
           description: Information about the drive's storage quota plans.
           nullable: false
         total:
@@ -846,14 +846,14 @@ components:
           format: int64
           nullable: false
           readOnly: true
-    open.graph.storagePlanInformation:
+    storagePlanInformation:
       type: object
       properties:
         upgradeAvailable:
           type: boolean
           description: Indicates if there are higher storage quota plans available. Read-only.
           nullable: false
-    open.graph.hashes:
+    hashes:
       type: object
       properties:
         crc32Hash:
@@ -875,7 +875,7 @@ components:
           description: SHA256 hash for the contents of the file (if available). Read-only.
           nullable: false
           maxLength: 160
-    open.graph.folderView:
+    folderView:
       type: object
       properties:
         sortBy:
