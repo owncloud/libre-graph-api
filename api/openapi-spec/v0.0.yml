@@ -677,7 +677,7 @@ components:
               readOnly: true
             file:
               allOf:
-                - $ref: '#/components/schemas/file'
+                - $ref: '#/components/schemas/openGraphFile'
               description: 'File metadata, if the item is a file. Read-only.'
               nullable: false
               readOnly: true
