@@ -358,19 +358,16 @@ components:
               type: string
               description: Describes the status of the drive.
             owner:
-              allOf:
-                - $ref: '#/components/schemas/identitySet'
+              $ref: '#/components/schemas/identitySet'
               description: Optional. The user account that owns the drive. Read-only.
               nullable: false
               readOnly: true
             oCCoOwner:
-              allOf:
-                - $ref: '#/components/schemas/identitySet'
+              $ref: '#/components/schemas/identitySet'
               description: Optional. The user account that owns the drive.
               nullable: false
             quota:
-              allOf:
-                - $ref: '#/components/schemas/quota'
+              $ref: '#/components/schemas/quota'
               description: Optional. Information about the drive's storage space quota. Read-only.
               nullable: false
               readOnly: true
@@ -381,8 +378,7 @@ components:
               description: All items contained in the drive. Read-only. Nullable.
               readOnly: true
             root:
-              allOf:
-                - $ref: '#/components/schemas/driveItem'
+              $ref: '#/components/schemas/driveItem'
               description: The root folder of the drive. Read-only.
               nullable: false
               readOnly: true
@@ -392,8 +388,7 @@ components:
         - type: object
           properties:
             createdBy:
-              allOf:
-                - $ref: '#/components/schemas/identitySet'
+              $ref: '#/components/schemas/identitySet'
               description: 'Identity of the user, device, or application which created the item. Read-only.'
               nullable: false
               readOnly: true
@@ -413,8 +408,7 @@ components:
               nullable: false
               readOnly: true
             lastModifiedBy:
-              allOf:
-                - $ref: '#/components/schemas/identitySet'
+              $ref: '#/components/schemas/identitySet'
               description: 'Identity of the user, device, and application which last modified the item. Read-only.'
               nullable: false
               readOnly: true
@@ -429,8 +423,7 @@ components:
               description: The name of the item. Read-write.
               nullable: false
             parentReference:
-              allOf:
-                - $ref: '#/components/schemas/itemReference'
+              $ref: '#/components/schemas/itemReference'
               description: 'Parent information, if the item has a parent. Read-write.'
               nullable: false
             webUrl:
@@ -439,14 +432,12 @@ components:
               nullable: false
               readOnly: true
             createdByUser:
-              allOf:
-                - $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/user'
               description: Identity of the user who created the item. Read-only.
               nullable: false
               readOnly: true
             lastModifiedByUser:
-              allOf:
-                - $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/user'
               description: Identity of the user who last modified the item. Read-only.
               nullable: false
               readOnly: true
@@ -463,18 +454,15 @@ components:
       type: object
       properties:
         application:
-          allOf:
-            - $ref: '#/components/schemas/identity'
+          $ref: '#/components/schemas/identity'
           description: Optional. The application associated with this action.
           nullable: false
         device:
-          allOf:
-            - $ref: '#/components/schemas/identity'
+          $ref: '#/components/schemas/identity'
           description: Optional. The device associated with this action.
           nullable: false
         user:
-          allOf:
-            - $ref: '#/components/schemas/identity'
+          $ref: '#/components/schemas/identity'
           description: Optional. The user associated with this action.
           nullable: false
     identity:
@@ -609,8 +597,7 @@ components:
               description: 'The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z Returned only on $select.'
               format: date-time
             drive:
-              allOf:
-                - $ref: '#/components/schemas/drive'
+              $ref: '#/components/schemas/drive'
               description: The user's HomeDrive. Read-only.
               nullable: false
               readOnly: true
@@ -670,37 +657,31 @@ components:
               nullable: false
               readOnly: true
             deleted:
-              allOf:
-                - $ref: '#/components/schemas/deleted'
+              $ref: '#/components/schemas/deleted'
               description: Information about the deleted state of the item. Read-only.
               nullable: false
               readOnly: true
             file:
-              allOf:
-                - $ref: '#/components/schemas/openGraphFile'
+              $ref: '#/components/schemas/file'
               description: 'File metadata, if the item is a file. Read-only.'
               nullable: false
               readOnly: true
             fileSystemInfo:
-              allOf:
-                - $ref: '#/components/schemas/fileSystemInfo'
+              $ref: '#/components/schemas/fileSystemInfo'
               description: File system information on client. Read-write.
               nullable: false
             folder:
-              allOf:
-                - $ref: '#/components/schemas/folder'
+              $ref: '#/components/schemas/folder'
               description: 'Folder metadata, if the item is a folder. Read-only.'
               nullable: false
               readOnly: true
             image:
-              allOf:
-                - $ref: '#/components/schemas/image'
+              $ref: '#/components/schemas/image'
               description: 'Image metadata, if the item is an image. Read-only.'
               nullable: false
               readOnly: true
             root:
-              allOf:
-                - $ref: '#/components/schemas/root'
+              $ref: '#/components/schemas/root'
               description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
               nullable: false
             size:
@@ -727,12 +708,11 @@ components:
           type: string
           description: Represents the state of the deleted item.
           nullable: false
-    openGraphFile:
+    file:
       type: object
       properties:
         hashes:
-          allOf:
-            - $ref: '#/components/schemas/hashes'
+          $ref: '#/components/schemas/hashes'
           description: 'Hashes of the file''s binary content, if available. Read-only.'
           nullable: false
           readOnly: true
@@ -775,8 +755,7 @@ components:
           format: int32
           nullable: false
         view:
-          allOf:
-            - $ref: '#/components/schemas/folderView'
+          $ref: '#/components/schemas/folderView'
           description: A collection of properties defining the recommended view for the folder.
           nullable: false
     image:
@@ -830,8 +809,7 @@ components:
           nullable: false
           readOnly: true
         storagePlanInformation:
-          allOf:
-            - $ref: '#/components/schemas/storagePlanInformation'
+          $ref: '#/components/schemas/storagePlanInformation'
           description: Information about the drive's storage quota plans.
           nullable: false
         total:
