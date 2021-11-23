@@ -6,8 +6,8 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: https://owncloud.dev/open-graph-api/
-    description: open Graph API
+  - url: https://ocis.ocis-traefik.latest.owncloud.works/
+    description: ownCloud Infinite Scale Latest
 paths:
   /me/drives:
     get:
