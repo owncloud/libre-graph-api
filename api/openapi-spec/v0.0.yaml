@@ -949,7 +949,7 @@ components:
         type: boolean 
   securitySchemes:
       openId:
-      type: openIdConnect
-      openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
+        type: openIdConnect
+        openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
 security:
   - openId: [ ]
