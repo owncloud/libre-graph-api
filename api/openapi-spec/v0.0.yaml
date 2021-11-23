@@ -948,8 +948,8 @@ components:
       schema:
         type: boolean 
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
+      openId:
+      type: openIdConnect
+      openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
 security:
-  - bearerAuth: [ ]
+  - openId: [ ]
