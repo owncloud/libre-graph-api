@@ -47,8 +47,9 @@ paths:
                 - createdByUser
                 - lastModifiedByUser
                 - root
+                - spaceImage
               type: string
-            maxItems: 18
+            maxItems: 19
         - name: $expand
           in: query
           description: Expand related entities
@@ -61,6 +62,7 @@ paths:
               enum:
                 - '*'
                 - root
+                - spaceImage
               type: string
             maxItems: 2
       responses:
@@ -151,8 +153,9 @@ paths:
                 - createdByUser
                 - lastModifiedByUser
                 - root
+                - spaceImage
               type: string
-            maxItems: 18
+            maxItems: 19
         - name: $expand
           in: query
           description: Expand related entities
@@ -165,6 +168,7 @@ paths:
               enum:
                 - '*'
                 - root
+                - spaceImage
               type: string
             maxItems: 2
       responses:
@@ -970,6 +974,8 @@ components:
           description: All items contained in the drive. Read-only. Nullable.
           readOnly: true
         root:
+          $ref: '#/components/schemas/driveItem'
+        spaceImage:
           $ref: '#/components/schemas/driveItem'
     identitySet:
       type: object
