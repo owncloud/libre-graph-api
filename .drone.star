@@ -123,7 +123,7 @@ def generate(ctx, lang):
 	result = {
 		'kind': 'pipeline',
 		'type': 'docker',
-		'name': 'generate-%s' lang,
+		'name': 'generate-%s' % lang,
 		'steps': [
 			{
 				"name": "clone-remote-%s" % lang,
