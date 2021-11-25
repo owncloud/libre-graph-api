@@ -13,9 +13,9 @@ config = {
 			'repo-slug': "open-graph-api-go",
 			'branch': 'main',
 		},
-		'qt5': {
-			'src': "out-qt5",
-			'repo-slug': "libre-graph-api-qt5",
+		'cpp-qt-client': {
+			'src': "out-cpp-qt-client",
+			'repo-slug': "libre-graph-api-cpp-qt-client",
 			'branch': 'main',
 		},
 	},
