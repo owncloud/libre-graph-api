@@ -90,6 +90,25 @@ paths:
         nextLinkName: '@odata.nextLink'
         operationName: listMore
       x-ms-docs-operation-type: operation
+  '/drives':
+    post:
+      tags:
+        - drives
+      summary: Create a new navigation property of a specific drive
+      operationId: drives.CreateDrive
+      requestBody:
+        description: New navigation property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/drive'
+        required: true
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   '/drives/{drive-id}':
     get:
       tags:
@@ -184,24 +203,6 @@ paths:
       responses:
         '204':
           description: Success
-        default:
-          $ref: '#/components/responses/error'
-      x-ms-docs-operation-type: operation
-    post:
-      tags:
-        - drives
-      summary: Create a new navigation property of a specific drive
-      operationId: drives.CreateDrive
-      requestBody:
-        description: New navigation property values
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/drive'
-        required: true
-      responses:
-        '201':
-          description: Created
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
