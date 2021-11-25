@@ -10,7 +10,12 @@ config = {
 	'languages': {
 		'go': {
 			'src': "out-go",
-			'repo-slug': "open-graph-api-go",
+			'repo-slug': "libre-graph-api-go",
+			'branch': 'main',
+		},
+		'typescript-axios': {
+			'src': "out-typescript-axios",
+			'repo-slug': "libre-graph-api-typescript-axios",
 			'branch': 'main',
 		},
 		'cpp-qt-client': {
@@ -33,7 +38,7 @@ def main(ctx):
 
 def stagePipelines(ctx):
 	linters = linting(ctx)
-	generators = generate(ctx, "go") + generate(ctx, "cpp-qt-client")
+	generators = generate(ctx, "go") + generate(ctx, "typescript-axios") + generate(ctx, "cpp-qt-client")
 	dependsOn(linters, generators)
 	return linters + generators
 
