@@ -15,7 +15,7 @@ config = {
 		},
 		'qt5': {
 			'src': "out-qt5",
-			'repo-slug': "open-graph-api-qt5",
+			'repo-slug': "libre-graph-api-qt5",
 			'branch': 'main',
 		},
 	},
