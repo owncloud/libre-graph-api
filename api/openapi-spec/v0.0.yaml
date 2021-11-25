@@ -291,8 +291,8 @@ components:
   schemas:
     drive:
       description: The user's HomeDrive. Read-only.
-      nullable: false
       readOnly: true
+      type: object
       allOf:
         - $ref: '#/components/schemas/baseItem'
         - type: object
@@ -314,8 +314,8 @@ components:
               readOnly: true
             root:
               $ref: '#/components/schemas/driveItem'
-
     baseItem:
+      type: object
       allOf:
         - $ref: '#/components/schemas/entity'
         - type: object
@@ -323,7 +323,6 @@ components:
             createdBy:
               $ref: '#/components/schemas/identitySet'
               description: 'Identity of the user, device, or application which created the item. Read-only.'
-              nullable: false
               readOnly: true
             createdDateTime:
               pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
@@ -386,7 +385,6 @@ components:
     identitySet:
       type: object
       description: Optional. User account.
-      nullable: false
       properties:
         application:
           $ref: '#/components/schemas/identity'
@@ -411,6 +409,7 @@ components:
           type: string
           description: Unique identifier for the identity.
     user:
+      type: object
       allOf:
         - $ref: '#/components/schemas/directoryObject'
         - type: object
@@ -575,8 +574,8 @@ components:
           nullable: false
     driveItem:
       description: Reprensents a resource inside a drive. Read-only.
-      nullable: false
       readOnly: true
+      type: object
       allOf:
         - $ref: '#/components/schemas/baseItem'
         - type: object
@@ -623,7 +622,6 @@ components:
     deleted:
       type: object
       description: Information about the deleted state of the item. Read-only.
-      nullable: false
       readOnly: true
       properties:
         state:
@@ -633,7 +631,6 @@ components:
     openGraphFile:
       type: object
       description: 'File metadata, if the item is a file. Read-only.'
-      nullable: false
       readOnly: true
       properties:
         hashes:
@@ -649,7 +646,6 @@ components:
     fileSystemInfo:
       type: object
       description: File system information on client. Read-write.
-      nullable: false
       properties:
         createdDateTime:
           pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
@@ -672,7 +668,6 @@ components:
     folder:
       type: object
       description: 'Folder metadata, if the item is a folder. Read-only.'
-      nullable: false
       readOnly: true
       properties:
         childCount:
@@ -686,7 +681,6 @@ components:
     image:
       type: object
       description: 'Image metadata, if the item is an image. Read-only.'
-      nullable: false
       readOnly: true
       properties:
         height:
@@ -706,8 +700,8 @@ components:
     root:
       type: object
       description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
-      nullable: false
     directoryObject:
+      type: object
       allOf:
         - $ref: '#/components/schemas/entity'
         - type: object
@@ -721,7 +715,6 @@ components:
     quota:
       type: object
       description: Optional. Information about the drive's storage space quota. Read-only.
-      nullable: false
       readOnly: true
       properties:
         deleted:
@@ -756,7 +749,6 @@ components:
     hashes:
       type: object
       description: 'Hashes of the file''s binary content, if available. Read-only.'
-      nullable: false
       readOnly: true
       properties:
         crc32Hash:
@@ -781,7 +773,6 @@ components:
     folderView:
       type: object
       description: A collection of properties defining the recommended view for the folder.
-      nullable: false
       properties:
         sortBy:
           type: string
