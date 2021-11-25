@@ -32,7 +32,10 @@ def main(ctx):
 	return stages + after
 
 def stagePipelines(ctx):
-	return linting(ctx) + generate(ctx, "go")
+	linters = linting(ctx)
+	generators = generate(ctx, "go") + generate(ctx, "qt5")
+	depends_on(linters, generators)
+	return linters + generators
 
 def afterPipelines(ctx):
 	return [
