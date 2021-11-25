@@ -13,6 +13,11 @@ config = {
 			'repo-slug': "open-graph-api-go",
 			'branch': 'main',
 		},
+		'qt5': {
+			'src': "out-qt5",
+			'repo-slug': "open-graph-api-qt5",
+			'branch': 'main',
+		},
 	},
 }
 
