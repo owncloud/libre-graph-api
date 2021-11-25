@@ -149,12 +149,8 @@ def generate(ctx, lang):
 				'image': 'openapitools/openapi-generator-cli',
 				'pull': 'always',
 				'commands': [
-					'/usr/local/bin/docker-entrypoint.sh generate -i api/openapi-spec/v0.0.yaml --additional-properties=packageName=opengraph -g %s -o %s' % (lang, config["languages"][lang]["src"]),
+					'/usr/local/bin/docker-entrypoint.sh generate -i api/openapi-spec/v0.0.yaml --additional-properties=packageName=opengraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"]),
 				],
-				"environment": {
-					"GIT_USER_ID": "owncloud",
-					"GIT_REPO_ID": "%s" % config["languages"][lang]["repo-slug"],
-				}
 			},
 			{
 				"name": "diff",
