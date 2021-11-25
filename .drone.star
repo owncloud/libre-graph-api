@@ -10,7 +10,7 @@ config = {
 	'languages': {
 		'go': {
 			'src': "out-go",
-			'repo': "https://github.com/owncloud/open-graph-api-go",
+			'repo-slug': "open-graph-api-go",
 			'branch': 'main',
 		},
 	},
@@ -125,7 +125,7 @@ def generate(ctx, lang):
 					"actions": [
 						"clone",
 					],
-					"remote": "%s" % config["languages"][lang]["repo"],
+					"remote": "https://github.com/owncloud/%s" % config["languages"][lang]["repo-slug"],
 					"branch": "%s" % config["languages"][lang]["branch"],
 					"path": "%s" % config["languages"][lang]["src"],
 					"netrc_machine": "github.com",
@@ -145,12 +145,16 @@ def generate(ctx, lang):
 				],
 			},
 			{
-				'name': 'generate',
+				'name': 'generate-%s' % lang,
 				'image': 'openapitools/openapi-generator-cli',
 				'pull': 'always',
 				'commands': [
 					'/usr/local/bin/docker-entrypoint.sh generate -i api/openapi-spec/v0.0.yaml --additional-properties=packageName=opengraph -g %s -o %s' % (lang, config["languages"][lang]["src"]),
 				],
+				"environment": {
+					"GIT_USER_ID": "owncloud",
+					"GIT_REPO_ID": "%s" % config["languages"][lang]["repo-slug"],
+				}
 			},
 			{
 				"name": "diff",
@@ -174,7 +178,7 @@ def generate(ctx, lang):
 					"author_email": "michael.barz@zeitgestalten.eu", 
 					"author_name": "micbar",
 					"followtags": True,
-					"remote" : "%s" % config["languages"][lang]["repo"],
+					"remote" : "https://github.com/owncloud/%s" % config["languages"][lang]["repo-slug"],
 					"netrc_machine": "github.com",
 					"netrc_username": {
 						"from_secret": "github_username",
