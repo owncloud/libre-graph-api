@@ -33,7 +33,7 @@ def main(ctx):
 
 def stagePipelines(ctx):
 	linters = linting(ctx)
-	generators = generate(ctx, "go") + generate(ctx, "qt5")
+	generators = generate(ctx, "go") + generate(ctx, "cpp-qt-client")
 	dependsOn(linters, generators)
 	return linters + generators
 
