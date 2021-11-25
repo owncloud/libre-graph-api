@@ -34,7 +34,7 @@ def main(ctx):
 def stagePipelines(ctx):
 	linters = linting(ctx)
 	generators = generate(ctx, "go") + generate(ctx, "qt5")
-	depends_on(linters, generators)
+	dependsOn(linters, generators)
 	return linters + generators
 
 def afterPipelines(ctx):
