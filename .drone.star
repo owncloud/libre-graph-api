@@ -1,5 +1,5 @@
 config = {
-	'name': 'open-graph-api',
+	'name': 'libre-graph-api',
 	'rocketchat': {
 		'channel': 'builds',
 		'from_secret': 'private_rocketchat'
