@@ -10,16 +10,19 @@ config = {
 	'languages': {
 		'go': {
 			'src': "out-go",
+			'clean-src': "out-go/*",
 			'repo-slug': "libre-graph-api-go",
 			'branch': 'main',
 		},
 		'typescript-axios': {
 			'src': "out-typescript-axios",
+			'clean-src': "out-typescript-axios/*",
 			'repo-slug': "libre-graph-api-typescript-axios",
 			'branch': 'main',
 		},
 		'cpp-qt-client': {
 			'src': "out-cpp-qt-client",
+			'clean-src': "out-cpp-qt-client/client/*",
 			'repo-slug': "libre-graph-api-cpp-qt-client",
 			'branch': 'main',
 		},
@@ -154,7 +157,7 @@ def generate(ctx, lang):
 				"name": "clean-%s" % lang,
 				"image": "owncloudci/alpine:latest",
 				"commands": [
-					"rm -rf %s/*" % config["languages"][lang]["src"],
+					"rm -rf %s" % config["languages"][lang]["clean-src"],
 				],
 			},
 			{
@@ -208,7 +211,8 @@ def generate(ctx, lang):
 		'depends_on': [],
 		'trigger': {
 			'ref': [
-				'refs/tags/**'
+				'refs/tags/**',
+				'refs/pull/**',
 			]
 		}
 	}
