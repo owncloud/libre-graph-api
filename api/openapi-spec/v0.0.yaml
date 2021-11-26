@@ -65,11 +65,11 @@ paths:
             maxItems: 2
       responses:
         '200':
-          description: Retrieved navigation property
+          description: Retrieved spaces
           content:
             application/json:
               schema:
-                title: Collection of drive
+                title: Collection of drives
                 type: object
                 properties:
                   value:
@@ -94,10 +94,10 @@ paths:
     post:
       tags:
         - drives
-      summary: Create a new navigation property of a specific drive
+      summary: Create a new space of a specific type
       operationId: drives.CreateDrive
       requestBody:
-        description: New navigation property values
+        description: New space property values
         content:
           application/json:
             schema:
@@ -167,7 +167,7 @@ paths:
             maxItems: 2
       responses:
         '200':
-          description: Retrieved navigation property
+          description: Retrieved space
           content:
             application/json:
               schema:
@@ -183,7 +183,7 @@ paths:
     patch:
       tags:
         - drives
-      summary: Update the navigation property of a specific drive
+      summary: Update the space
       operationId: drives.UpdateDrive
       parameters:
         - name: drive-id
@@ -194,7 +194,7 @@ paths:
             type: string
           x-ms-docs-key-type: drive
       requestBody:
-        description: New navigation property values
+        description: New space values
         content:
           application/json:
             schema:
@@ -209,7 +209,7 @@ paths:
     delete:
       tags:
         - drives
-      summary: Delete a specific navigation property drive
+      summary: Delete a specific space
       operationId: drives.DeleteDrive
       parameters:
         - name: drive-id
@@ -234,11 +234,11 @@ paths:
     get:
       tags:
         - me.drive
-      summary: Get home drive for user
+      summary: Get personal space for user
       operationId: me.drive.GetHome
       responses:
         '200':
-          description: Retrieved navigation property
+          description: Retrieved personal space
           content:
             application/json:
               schema:
@@ -250,7 +250,7 @@ paths:
     get:
       tags:
         - me.drive.root
-      summary: Get root from home drive
+      summary: Get root from personal space
       operationId: me.drive.GetRoot
       responses:
         '200':
@@ -290,89 +290,92 @@ paths:
 components:
   schemas:
     drive:
-      description: The user's HomeDrive. Read-only.
+      description: Storage Space. Read-only.
       readOnly: true
       type: object
       allOf:
         - $ref: '#/components/schemas/baseItem'
-        - type: object
-          properties:
-            driveType:
-              type: string
-              description: Describes the type of drive represented by this resource. Values are "personal" for users home spaces, "project" or "share". Read-only.
-              nullable: false
-              readOnly: true
-            owner:
-              $ref: '#/components/schemas/identitySet'
-            quota:
-              $ref: '#/components/schemas/quota'
+        - $ref: '#/components/schemas/driveInline'
+    driveInline:
+        type: object
+        properties:
+          driveType:
+            type: string
+            description: Describes the type of drive represented by this resource. Values are "personal" for users home spaces, "project" or "share". Read-only.
+            nullable: false
+            readOnly: true
+          owner:
+            $ref: '#/components/schemas/identitySet'
+          quota:
+            $ref: '#/components/schemas/quota'
+          items:
+            type: array
             items:
-              type: array
-              items:
-                $ref: '#/components/schemas/driveItem'
-              description: All items contained in the drive. Read-only. Nullable.
-              readOnly: true
-            root:
               $ref: '#/components/schemas/driveItem'
+            description: All items contained in the drive. Read-only. Nullable.
+            readOnly: true
+          root:
+            $ref: '#/components/schemas/driveItem'
     baseItem:
-      type: object
       allOf:
         - $ref: '#/components/schemas/entity'
-        - type: object
-          properties:
-            createdBy:
-              $ref: '#/components/schemas/identitySet'
-              description: 'Identity of the user, device, or application which created the item. Read-only.'
-              readOnly: true
-            createdDateTime:
-              pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-              type: string
-              description: Date and time of item creation. Read-only.
-              format: date-time
-              readOnly: true
-            description:
-              type: string
-              description: Provides a user-visible description of the item. Optional.
-              nullable: false
-            eTag:
-              type: string
-              description: ETag for the item. Read-only.
-              nullable: false
-              readOnly: true
-            lastModifiedBy:
-              $ref: '#/components/schemas/identitySet'
-              description: 'Identity of the user, device, and application which last modified the item. Read-only.'
-              nullable: false
-              readOnly: true
-            lastModifiedDateTime:
-              pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-              type: string
-              description: Date and time the item was last modified. Read-only.
-              format: date-time
-              readOnly: true
-            name:
-              type: string
-              description: The name of the item. Read-write.
-              nullable: false
-            parentReference:
-              $ref: '#/components/schemas/itemReference'
-              description: 'Parent information, if the item has a parent. Read-write.'
-              nullable: false
-            webUrl:
-              type: string
-              description: URL that displays the resource in the browser. Read-only.
-              nullable: false
-              readOnly: true
-            createdByUser:
-              $ref: '#/components/schemas/user'
-              description: Identity of the user who created the item. Read-only.
-              nullable: false
-              readOnly: true
-            lastModifiedByUser:
-              $ref: '#/components/schemas/user'
-              description: Identity of the user who last modified the item. Read-only.
-              nullable: false
-              readOnly: true
+        - $ref: '#/components/schemas/baseItemInline'
+    baseItemInline:
+        type: object
+        properties:
+          createdBy:
+            $ref: '#/components/schemas/identitySet'
+            description: 'Identity of the user, device, or application which created the item. Read-only.'
+            readOnly: true
+          createdDateTime:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            description: Date and time of item creation. Read-only.
+            format: date-time
+            readOnly: true
+          description:
+            type: string
+            description: Provides a user-visible description of the item. Optional.
+            nullable: false
+          eTag:
+            type: string
+            description: ETag for the item. Read-only.
+            nullable: false
+            readOnly: true
+          lastModifiedBy:
+            $ref: '#/components/schemas/identitySet'
+            description: 'Identity of the user, device, and application which last modified the item. Read-only.'
+            nullable: false
+            readOnly: true
+          lastModifiedDateTime:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            description: Date and time the item was last modified. Read-only.
+            format: date-time
+            readOnly: true
+          name:
+            type: string
+            description: The name of the item. Read-write.
+            nullable: false
+          parentReference:
+            $ref: '#/components/schemas/itemReference'
+            description: 'Parent information, if the item has a parent. Read-write.'
+            nullable: false
+          webUrl:
+            type: string
+            description: URL that displays the resource in the browser. Read-only.
+            nullable: false
+            readOnly: true
+          createdByUser:
+            $ref: '#/components/schemas/user'
+            description: Identity of the user who created the item. Read-only.
+            nullable: false
+            readOnly: true
+          lastModifiedByUser:
+            $ref: '#/components/schemas/user'
+            description: Identity of the user who last modified the item. Read-only.
+            nullable: false
+            readOnly: true
     entity:
       type: object
       properties:
@@ -380,8 +383,6 @@ components:
           type: string
           description: Read-only.
           readOnly: true
-      discriminator:
-        propertyName: id
     identitySet:
       type: object
       description: Optional. User account.
@@ -412,134 +413,136 @@ components:
       type: object
       allOf:
         - $ref: '#/components/schemas/directoryObject'
-        - type: object
-          properties:
-            accountEnabled:
-              type: boolean
-              description: 'true if the account is enabled; otherwise, false. This property is required when a user is created. Returned only on $select. Supports $filter.'
-              nullable: false
-            businessPhones:
-              type: array
-              items:
-                type: string
-              description: The telephone numbers for the user. Only one number can be set for this property. Returned by default. Read-only for users synced from on-premises directory.
-            city:
+        - $ref: '#/components/schemas/userInline'
+    userInline:
+        type: object
+        properties:
+          accountEnabled:
+            type: boolean
+            description: 'true if the account is enabled; otherwise, false. This property is required when a user is created. Returned only on $select. Supports $filter.'
+            nullable: false
+          businessPhones:
+            type: array
+            items:
               type: string
-              description: The city in which the user is located. Returned only on $select. Supports $filter.
-              nullable: false
-            companyName:
-              type: string
-              description: The company name which the user is associated. This property can be useful for describing the company that an external user comes from. The maximum length of the company name is 64 characters.Returned only on $select.
-              nullable: false
-            country:
-              type: string
-              description: 'The country/region in which the user is located; for example, ''US'' or ''UK''. Returned only on $select. Supports $filter.'
-              nullable: false
-              maxLength: 3
-            createdDateTime:
-              pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-              type: string
-              description: The date and time the user was created. The value cannot be modified and is automatically populated when the entity is created. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. Property is nullable. A null value indicates that an accurate creation time couldn't be determined for the user. Returned only on $select. Read-only. Supports $filter.
-              format: date-time
-              nullable: false
-              readOnly: true
-            department:
-              type: string
-              description: The name for the department in which the user works. Returned only on $select. Supports $filter.
-              nullable: false
-            displayName:
-              type: string
-              description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $filter and $orderby.'
-              nullable: false
-            faxNumber:
-              type: string
-              description: The fax number of the user. Returned only on $select.
-              nullable: false
-            givenName:
-              type: string
-              description: The given name (first name) of the user. Returned by default. Supports $filter.
-              nullable: false
-            lastPasswordChangeDateTime:
-              pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-              type: string
-              description: 'The time when this user last changed their password. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z Returned only on $select. Read-only.'
-              format: date-time
-              nullable: false
-              readOnly: true
-            legalAgeGroupClassification:
-              type: string
-              description: 'Used by enterprise applications to determine the legal age group of the user. This property is read-only and calculated based on ageGroup and consentProvidedForMinor properties. Allowed values: null, minorWithOutParentalConsent, minorWithParentalConsent, minorNoParentalConsentRequired, notAdult and adult. Refer to the legal age group property definitions for further information. Returned only on $select.'
-              nullable: false
-            mail:
-              type: string
-              description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
-              nullable: false
-            mailNickname:
-              type: string
-              description: The mail alias for the user. This property must be specified when a user is created. Returned only on $select. Supports $filter.
-              nullable: false
-            mobilePhone:
-              type: string
-              description: The primary cellular telephone number for the user. Returned by default. Read-only for users synced from on-premises directory.
-              nullable: false
-            officeLocation:
-              type: string
-              description: The office location in the user's place of business. Returned by default.
-              nullable: false
-            postalCode:
-              type: string
-              description: 'The postal code for the user''s postal address. The postal code is specific to the user''s country/region. In the United States of America, this attribute contains the ZIP code. Returned only on $select.'
-              nullable: false
-            preferredLanguage:
-              type: string
-              description: The preferred language for the user. Should follow ISO 639-1 Code; for example 'en-US'. Returned by default.
-              nullable: false
-              pattern: '^[a-z]{2}(-[A-Z]{2})?$'
-              maxLength: 7
-            state:
-              type: string
-              description: The state or province in the user's address. Returned only on $select. Supports $filter.
-              nullable: false
-            streetAddress:
-              type: string
-              description: The street address of the user's place of business. Returned only on $select.
-              nullable: false
-            surname:
-              type: string
-              description: The user's surname (family name or last name). Returned by default. Supports $filter.
-              nullable: false
-            usageLocation:
-              type: string
-              description: 'A two letter country code (ISO standard 3166). Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries.  Examples include: ''US'', ''JP'', and ''GB''. Not nullable. Returned only on $select. Supports $filter.'
-              nullable: false
-              maxLength: 3
-            userPrincipalName:
-              type: string
-              description: 'The user principal name (UPN) of the user. The UPN is an Internet-style login name for the user based on the Internet standard RFC 822. By convention, this should map to the user''s email name. The general format is alias@domain, where domain must be present in the tenant''s collection of verified domains. This property is required when a user is created. The verified domains for the tenant can be accessed from the verifiedDomains property of organization. Returned by default. Supports $filter, $orderby, and endsWith.'
-              nullable: false
-            userType:
-              type: string
-              description: 'A string value that can be used to classify user types in your directory, such as ''Member'' and ''Guest''. Returned only on $select. Supports $filter.'
-              nullable: false
-            aboutMe:
-              type: string
-              description: A freeform text entry field for the user to describe themselves. Returned only on $select.
-              nullable: false
-            birthday:
-              pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-              type: string
-              description: 'The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z Returned only on $select.'
-              format: date-time
-            drive:
+            description: The telephone numbers for the user. Only one number can be set for this property. Returned by default. Read-only for users synced from on-premises directory.
+          city:
+            type: string
+            description: The city in which the user is located. Returned only on $select. Supports $filter.
+            nullable: false
+          companyName:
+            type: string
+            description: The company name which the user is associated. This property can be useful for describing the company that an external user comes from. The maximum length of the company name is 64 characters.Returned only on $select.
+            nullable: false
+          country:
+            type: string
+            description: 'The country/region in which the user is located; for example, ''US'' or ''UK''. Returned only on $select. Supports $filter.'
+            nullable: false
+            maxLength: 3
+          createdDateTime:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            description: The date and time the user was created. The value cannot be modified and is automatically populated when the entity is created. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. Property is nullable. A null value indicates that an accurate creation time couldn't be determined for the user. Returned only on $select. Read-only. Supports $filter.
+            format: date-time
+            nullable: false
+            readOnly: true
+          department:
+            type: string
+            description: The name for the department in which the user works. Returned only on $select. Supports $filter.
+            nullable: false
+          displayName:
+            type: string
+            description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $filter and $orderby.'
+            nullable: false
+          faxNumber:
+            type: string
+            description: The fax number of the user. Returned only on $select.
+            nullable: false
+          givenName:
+            type: string
+            description: The given name (first name) of the user. Returned by default. Supports $filter.
+            nullable: false
+          lastPasswordChangeDateTime:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            description: 'The time when this user last changed their password. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z Returned only on $select. Read-only.'
+            format: date-time
+            nullable: false
+            readOnly: true
+          legalAgeGroupClassification:
+            type: string
+            description: 'Used by enterprise applications to determine the legal age group of the user. This property is read-only and calculated based on ageGroup and consentProvidedForMinor properties. Allowed values: null, minorWithOutParentalConsent, minorWithParentalConsent, minorNoParentalConsentRequired, notAdult and adult. Refer to the legal age group property definitions for further information. Returned only on $select.'
+            nullable: false
+          mail:
+            type: string
+            description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
+            nullable: false
+          mailNickname:
+            type: string
+            description: The mail alias for the user. This property must be specified when a user is created. Returned only on $select. Supports $filter.
+            nullable: false
+          mobilePhone:
+            type: string
+            description: The primary cellular telephone number for the user. Returned by default. Read-only for users synced from on-premises directory.
+            nullable: false
+          officeLocation:
+            type: string
+            description: The office location in the user's place of business. Returned by default.
+            nullable: false
+          postalCode:
+            type: string
+            description: 'The postal code for the user''s postal address. The postal code is specific to the user''s country/region. In the United States of America, this attribute contains the ZIP code. Returned only on $select.'
+            nullable: false
+          preferredLanguage:
+            type: string
+            description: The preferred language for the user. Should follow ISO 639-1 Code; for example 'en-US'. Returned by default.
+            nullable: false
+            pattern: '^[a-z]{2}(-[A-Z]{2})?$'
+            maxLength: 7
+          state:
+            type: string
+            description: The state or province in the user's address. Returned only on $select. Supports $filter.
+            nullable: false
+          streetAddress:
+            type: string
+            description: The street address of the user's place of business. Returned only on $select.
+            nullable: false
+          surname:
+            type: string
+            description: The user's surname (family name or last name). Returned by default. Supports $filter.
+            nullable: false
+          usageLocation:
+            type: string
+            description: 'A two letter country code (ISO standard 3166). Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries.  Examples include: ''US'', ''JP'', and ''GB''. Not nullable. Returned only on $select. Supports $filter.'
+            nullable: false
+            maxLength: 3
+          userPrincipalName:
+            type: string
+            description: 'The user principal name (UPN) of the user. The UPN is an Internet-style login name for the user based on the Internet standard RFC 822. By convention, this should map to the user''s email name. The general format is alias@domain, where domain must be present in the tenant''s collection of verified domains. This property is required when a user is created. The verified domains for the tenant can be accessed from the verifiedDomains property of organization. Returned by default. Supports $filter, $orderby, and endsWith.'
+            nullable: false
+          userType:
+            type: string
+            description: 'A string value that can be used to classify user types in your directory, such as ''Member'' and ''Guest''. Returned only on $select. Supports $filter.'
+            nullable: false
+          aboutMe:
+            type: string
+            description: A freeform text entry field for the user to describe themselves. Returned only on $select.
+            nullable: false
+          birthday:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            description: 'The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z Returned only on $select.'
+            format: date-time
+          drive:
+            $ref: '#/components/schemas/drive'
+          drives:
+            type: array
+            items:
               $ref: '#/components/schemas/drive'
-            drives:
-              type: array
-              items:
-                $ref: '#/components/schemas/drive'
-              description: A collection of drives available for this user. Read-only.
-              maxItems: 100
-              readOnly: true
-          description: Represents an Active Directory user object.
+            description: A collection of drives available for this user. Read-only.
+            maxItems: 100
+            readOnly: true
+        description: Represents an Active Directory user object.
     itemReference:
       type: object
       properties:
@@ -578,47 +581,49 @@ components:
       type: object
       allOf:
         - $ref: '#/components/schemas/baseItem'
-        - type: object
-          properties:
-            content:
-              type: string
-              description: 'The content stream, if the item represents a file.'
-              format: base64url
-              nullable: false
-            cTag:
-              type: string
-              description: An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the item is a folder. Read-only.
-              nullable: false
-              readOnly: true
-            deleted:
-              $ref: '#/components/schemas/deleted'
-            file:
-              $ref: '#/components/schemas/openGraphFile'
-            fileSystemInfo:
-              $ref: '#/components/schemas/fileSystemInfo'
-            folder:
-              $ref: '#/components/schemas/folder'
-            image:
-              $ref: '#/components/schemas/image'
-            root:
-              $ref: '#/components/schemas/root'
-            size:
-              type: integer
-              description: Size of the item in bytes. Read-only.
-              format: int64
-              nullable: false
-              readOnly: true
-            webDavUrl:
-              type: string
-              description: WebDAV compatible URL for the item. Read-only.
-              nullable: false
-              readOnly: true
-            children:
-              type: array
-              items:
-                $ref: '#/components/schemas/driveItem'
-              description: Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable.
-              readOnly: true
+        - $ref: '#/components/schemas/driveItemInline'
+    driveItemInline:
+        type: object
+        properties:
+          content:
+            type: string
+            description: 'The content stream, if the item represents a file.'
+            format: base64url
+            nullable: false
+          cTag:
+            type: string
+            description: An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the item is a folder. Read-only.
+            nullable: false
+            readOnly: true
+          deleted:
+            $ref: '#/components/schemas/deleted'
+          file:
+            $ref: '#/components/schemas/openGraphFile'
+          fileSystemInfo:
+            $ref: '#/components/schemas/fileSystemInfo'
+          folder:
+            $ref: '#/components/schemas/folder'
+          image:
+            $ref: '#/components/schemas/image'
+          root:
+            $ref: '#/components/schemas/root'
+          size:
+            type: integer
+            description: Size of the item in bytes. Read-only.
+            format: int64
+            nullable: false
+            readOnly: true
+          webDavUrl:
+            type: string
+            description: WebDAV compatible URL for the item. Read-only.
+            nullable: false
+            readOnly: true
+          children:
+            type: array
+            items:
+              $ref: '#/components/schemas/driveItem'
+            description: Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable.
+            readOnly: true
     deleted:
       type: object
       description: Information about the deleted state of the item. Read-only.
@@ -702,16 +707,18 @@ components:
       description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
     directoryObject:
       type: object
+      description: Represents an Active Directory object. The directoryObject type is the base type for many other directory entity types.
       allOf:
         - $ref: '#/components/schemas/entity'
-        - type: object
-          properties:
-            deletedDateTime:
-              pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-              type: string
-              format: date-time
-              nullable: false
-          description: Represents an Active Directory object. The directoryObject type is the base type for many other directory entity types.
+        - $ref: '#/components/schemas/directoryObjectInline'
+    directoryObjectInline:
+        type: object
+        properties:
+          deletedDateTime:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            format: date-time
+            nullable: false
     quota:
       type: object
       description: Optional. Information about the drive's storage space quota. Read-only.
