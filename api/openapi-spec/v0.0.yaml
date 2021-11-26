@@ -292,7 +292,6 @@ components:
     drive:
       description: Storage Space. Read-only.
       readOnly: true
-      type: object
       allOf:
         - $ref: '#/components/schemas/baseItem'
         - $ref: '#/components/schemas/driveInline'
@@ -410,7 +409,7 @@ components:
           type: string
           description: Unique identifier for the identity.
     user:
-      type: object
+      description: Represents an Active Directory user object.
       allOf:
         - $ref: '#/components/schemas/directoryObject'
         - $ref: '#/components/schemas/userInline'
@@ -542,7 +541,6 @@ components:
             description: A collection of drives available for this user. Read-only.
             maxItems: 100
             readOnly: true
-        description: Represents an Active Directory user object.
     itemReference:
       type: object
       properties:
@@ -578,7 +576,6 @@ components:
     driveItem:
       description: Reprensents a resource inside a drive. Read-only.
       readOnly: true
-      type: object
       allOf:
         - $ref: '#/components/schemas/baseItem'
         - $ref: '#/components/schemas/driveItemInline'
@@ -706,7 +703,6 @@ components:
       type: object
       description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
     directoryObject:
-      type: object
       description: Represents an Active Directory object. The directoryObject type is the base type for many other directory entity types.
       allOf:
         - $ref: '#/components/schemas/entity'
