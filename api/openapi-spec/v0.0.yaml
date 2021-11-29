@@ -14,7 +14,7 @@ paths:
       tags:
         - me.drives
       summary: Get drives from me
-      operationId: me.ListDrives
+      operationId: ListMyDrives
       parameters:
         - $ref: '#/components/parameters/top'
         - $ref: '#/components/parameters/skip'
@@ -81,9 +81,7 @@ paths:
                     type: string
           links:
             root:
-              operationId: me.drive.GetRoot
-              parameters:
-                drive-id: $request.path.drive-id
+              operationId: HomeGetRoot
         default:
           $ref: '#/components/responses/error'
       x-ms-pageable:
@@ -95,7 +93,7 @@ paths:
       tags:
         - drives
       summary: Create a new space of a specific type
-      operationId: drives.CreateDrive
+      operationId: CreateDrive
       requestBody:
         description: New space property values
         content:
@@ -114,7 +112,7 @@ paths:
       tags:
         - drives
       summary: Get drive by id
-      operationId: drives.GetDrive
+      operationId: GetDrive
       parameters:
         - name: drive-id
           in: path
@@ -174,7 +172,7 @@ paths:
                 $ref: '#/components/schemas/drive'
           links:
             root:
-              operationId: drive.root.GetRoot
+              operationId: GetRoot
               parameters:
                 drive-id: $request.path.drive-id
         default:
@@ -184,7 +182,7 @@ paths:
       tags:
         - drives
       summary: Update the space
-      operationId: drives.UpdateDrive
+      operationId: UpdateDrive
       parameters:
         - name: drive-id
           in: path
@@ -210,7 +208,7 @@ paths:
       tags:
         - drives
       summary: Delete a specific space
-      operationId: drives.DeleteDrive
+      operationId: DeleteDrive
       parameters:
         - name: drive-id
           in: path
@@ -230,12 +228,28 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/drives/{drive-id}/root':
+    get:
+      tags:
+        - drives.root
+      summary: Get root from arbitrary space
+      operationId: GetRoot
+      responses:
+        '200':
+          description: Retrieved resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/driveItem'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   /me/drive:
     get:
       tags:
         - me.drive
       summary: Get personal space for user
-      operationId: me.drive.GetHome
+      operationId: GetHome
       responses:
         '200':
           description: Retrieved personal space
@@ -251,7 +265,7 @@ paths:
       tags:
         - me.drive.root
       summary: Get root from personal space
-      operationId: me.drive.GetRoot
+      operationId: HomeGetRoot
       responses:
         '200':
           description: Retrieved resource
@@ -267,7 +281,7 @@ paths:
       tags:
         - me.drive.root.children
       summary: Get children from drive
-      operationId: me.drive.root.GetChildren
+      operationId: HomeGetChildren
       responses:
         '200':
           description: Retrieved resource list
