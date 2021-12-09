@@ -187,8 +187,8 @@ def generate(ctx, lang):
 					"message": "%s" % ctx.build.message,
 					"branch": "%s" % config["languages"][lang]["branch"],
 					"path": "%s" % config["languages"][lang]["src"],
-					"author_email": "michael.barz@zeitgestalten.eu", 
-					"author_name": "micbar",
+					"author_email": "%s" % ctx.build.author_email, 
+					"author_name": "%s" % ctx.build.author_name,
 					"followtags": True,
 					"remote" : "https://github.com/owncloud/%s" % config["languages"][lang]["repo-slug"],
 					"netrc_machine": "github.com",
@@ -207,7 +207,7 @@ def generate(ctx, lang):
 					},
 				},
 			},
-		],
+			] + validate(lang),
 		'depends_on': [],
 		'trigger': {
 			'ref': [
@@ -223,3 +223,40 @@ def generate(ctx, lang):
 	pipelines.append(result)
 
 	return pipelines
+
+def validate(lang):
+	steps = {
+		"cpp-qt-client": [
+			{
+				"name": "validate-cpp",
+				"image": "owncloudci/client",
+				"commands": [
+					"cd %s" % config["languages"][lang]["src"],
+					"cmake -GNinja .",
+					"ninja -j1",
+				],
+				"failure": "ignore", # we need to fix the code generator
+			}
+		],
+		"go": [
+			{
+				"name": "go-mod",
+				"image": "owncloudci/golang:1.17",
+				"commands": [
+					"cd %s" % config["languages"][lang]["src"],
+					"go mod tidy",
+				]
+			},
+			{
+				"name": "validate-go",
+				"image": "golangci/golangci-lint:latest",
+				"commands": [
+					"cd %s" % config["languages"][lang]["src"],
+					"golangci-lint run -v",
+				]
+			},
+		],
+		"typescript-axios": []
+	}
+
+	return steps[lang]
