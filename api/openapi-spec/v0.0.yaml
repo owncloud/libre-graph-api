@@ -104,6 +104,10 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/drive'
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
@@ -199,8 +203,12 @@ paths:
               $ref: '#/components/schemas/drive'
         required: true
       responses:
-        '204':
+        '200':
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/drive'
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
