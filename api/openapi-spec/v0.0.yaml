@@ -543,6 +543,400 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get entities from users
+      operationId: ListUsers
+      parameters:
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - id desc
+                - deletedDateTime
+                - deletedDateTime desc
+                - accountEnabled
+                - accountEnabled desc
+                - businessPhones
+                - businessPhones desc
+                - city
+                - city desc
+                - companyName
+                - companyName desc
+                - country
+                - country desc
+                - createdDateTime
+                - createdDateTime desc
+                - department
+                - department desc
+                - displayName
+                - displayName desc
+                - faxNumber
+                - faxNumber desc
+                - givenName
+                - givenName desc
+                - lastPasswordChangeDateTime
+                - lastPasswordChangeDateTime desc
+                - legalAgeGroupClassification
+                - legalAgeGroupClassification desc
+                - mail
+                - mail desc
+                - mailNickname
+                - mailNickname desc
+                - mobilePhone
+                - mobilePhone desc
+                - officeLocation
+                - officeLocation desc
+                - onPremisesDistinguishedName
+                - onPremisesDistinguishedName desc
+                - onPremisesDomainName
+                - onPremisesDomainName desc
+                - onPremisesImmutableId
+                - onPremisesImmutableId desc
+                - onPremisesLastSyncDateTime
+                - onPremisesLastSyncDateTime desc
+                - onPremisesSamAccountName
+                - onPremisesSamAccountName desc
+                - onPremisesSyncEnabled
+                - onPremisesSyncEnabled desc
+                - onPremisesUserPrincipalName
+                - onPremisesUserPrincipalName desc
+                - passwordPolicies
+                - passwordPolicies desc
+                - passwordProfile
+                - passwordProfile desc
+                - postalCode
+                - postalCode desc
+                - preferredLanguage
+                - preferredLanguage desc
+                - state
+                - state desc
+                - streetAddress
+                - streetAddress desc
+                - surname
+                - surname desc
+                - usageLocation
+                - usageLocation desc
+                - userPrincipalName
+                - userPrincipalName desc
+                - userType
+                - userType desc
+                - aboutMe
+                - aboutMe desc
+                - birthday
+                - birthday desc
+                - preferredName
+                - preferredName desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - deletedDateTime
+                - accountEnabled
+                - businessPhones
+                - city
+                - companyName
+                - country
+                - createdDateTime
+                - creationType
+                - department
+                - displayName
+                - faxNumber
+                - givenName
+                - lastPasswordChangeDateTime
+                - legalAgeGroupClassification
+                - licenseAssignmentStates
+                - mail
+                - mailNickname
+                - mobilePhone
+                - officeLocation
+                - onPremisesDistinguishedName
+                - onPremisesDomainName
+                - onPremisesImmutableId
+                - onPremisesLastSyncDateTime
+                - onPremisesSamAccountName
+                - onPremisesSyncEnabled
+                - onPremisesUserPrincipalName
+                - postalCode
+                - preferredLanguage
+                - state
+                - streetAddress
+                - surname
+                - usageLocation
+                - userPrincipalName
+                - userType
+                - aboutMe
+                - birthday
+                - preferredName
+                - drive
+                - drives
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+                - drive
+                - drives
+              type: string
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of user
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/user'
+                  '@odata.nextLink':
+                    type: string
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-pageable:
+        nextLinkName: '@odata.nextLink'
+        operationName: listMore
+      x-ms-docs-operation-type: operation
+    post:
+      tags:
+        - users
+      summary: Add new entity to users
+      operationId: CreateUser
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/users/{user-id}':
+    get:
+      tags:
+        - user
+      summary: Get entity from users by key
+      operationId: GetUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: user
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - deletedDateTime
+                - accountEnabled
+                - businessPhones
+                - city
+                - companyName
+                - country
+                - createdDateTime
+                - creationType
+                - department
+                - displayName
+                - faxNumber
+                - givenName
+                - lastPasswordChangeDateTime
+                - legalAgeGroupClassification
+                - licenseAssignmentStates
+                - mail
+                - mailNickname
+                - mobilePhone
+                - officeLocation
+                - onPremisesDistinguishedName
+                - onPremisesDomainName
+                - onPremisesImmutableId
+                - onPremisesLastSyncDateTime
+                - onPremisesSamAccountName
+                - onPremisesSyncEnabled
+                - onPremisesUserPrincipalName
+                - postalCode
+                - preferredLanguage
+                - state
+                - streetAddress
+                - surname
+                - usageLocation
+                - userPrincipalName
+                - userType
+                - aboutMe
+                - birthday
+                - preferredName
+                - drive
+                - drives
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+                - appRoleAssignments
+                - createdObjects
+                - directReports
+                - licenseDetails
+                - manager
+                - memberOf
+                - oauth2PermissionGrants
+                - ownedDevices
+                - ownedObjects
+                - registeredDevices
+                - scopedRoleMemberOf
+                - transitiveMemberOf
+                - calendar
+                - calendarGroups
+                - calendars
+                - calendarView
+                - contactFolders
+                - contacts
+                - events
+                - inferenceClassification
+                - mailFolders
+                - messages
+                - outlook
+                - people
+                - drive
+                - drives
+                - followedSites
+                - extensions
+                - agreementAcceptances
+                - managedDevices
+                - managedAppRegistrations
+                - deviceManagementTroubleshootingEvents
+                - planner
+                - insights
+                - settings
+                - onenote
+                - photo
+                - photos
+                - activities
+                - onlineMeetings
+                - presence
+                - authentication
+                - chats
+                - joinedTeams
+                - teamwork
+                - todo
+              type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - user
+      summary: Update entity in users
+      operationId: UpdateUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: user
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - user
+      summary: Delete entity from users
+      operationId: DeleteUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: user
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
 components:
   schemas:
     drive:
@@ -664,10 +1058,10 @@ components:
           readOnly: true
         # directory object
         deletedDateTime:
-            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-            type: string
-            format: date-time
-            nullable: false
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          format: date-time
+          nullable: false
         # user
         accountEnabled:
           type: boolean
@@ -737,9 +1131,35 @@ components:
           type: string
           description: The primary cellular telephone number for the user. Returned by default. Read-only for users synced from on-premises directory.
           nullable: false
+        onPremisesDistinguishedName:
+          type: string
+          description: Contains the on-premises Active Directory distinguished name or DN. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.
+          nullable: true
+        onPremisesDomainName:
+          type: string
+          description: 'Contains the on-premises domainFQDN, also called dnsDomainName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.'
+          nullable: true
+        onPremisesImmutableId:
+          type: string
+          description: 'This property is used to associate an on-premises Active Directory user account to their Azure AD user object. This property must be specified when creating a new user account in the Graph if you are using a federated domain for the user''s userPrincipalName (UPN) property. NOTE: The $ and _ characters cannot be used when specifying this property. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in)..'
+          nullable: true
+        onPremisesSyncEnabled:
+          type: boolean
+          description: 'true if this object is synced from an on-premises directory; false if this object was originally synced from an on-premises directory but is no longer synced; null if this object has never been synced from an on-premises directory (default). Read-only. Returned only on $select. Supports $filter (eq, ne, not, in, and eq on null values).'
+          nullable: true
+        onPremisesLastSyncDateTime:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          description: 'Indicates the last time at which the object was synced with the on-premises directory; for example: 2013-02-16T03:04:54Z. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in).'
+          format: date-time
+          nullable: true
         onPremisesSamAccountName:
           type: string
           description: 'Contains the on-premises SAM account name synchronized from the on-premises directory. Read-only.'
+          nullable: true
+        onPremisesUserPrincipalName:
+          type: string
+          description: 'Contains the on-premises userPrincipalName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select. Supports $filter (eq, ne, not, ge, le, in, startsWith).'
           nullable: true
         officeLocation:
           type: string
@@ -789,6 +1209,10 @@ components:
           type: string
           description: 'The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z Returned only on $select.'
           format: date-time
+        preferredName:
+          type: string
+          description: The preferred name for the user. Returned only on $select.
+          nullable: true
         drive:
           $ref: '#/components/schemas/drive'
         drives:
