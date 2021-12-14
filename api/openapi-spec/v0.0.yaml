@@ -379,7 +379,7 @@ paths:
   '/groups/{group-id}':
     get:
       tags:
-        - groups
+        - group
       summary: Get entity from groups by key
       operationId: GetGroup
       parameters:
@@ -438,9 +438,9 @@ paths:
       x-ms-docs-operation-type: operation
     patch:
       tags:
-        - groups.group
+        - group
       summary: Update entity in groups
-      operationId: groups.group.UpdateGroup
+      operationId: UpdateGroup
       parameters:
         - name: group-id
           in: path
@@ -464,9 +464,9 @@ paths:
       x-ms-docs-operation-type: operation
     delete:
       tags:
-        - groups.group
+        - group
       summary: Delete entity from groups
-      operationId: groups.group.DeleteGroup
+      operationId: DeleteGroup
       parameters:
         - name: group-id
           in: path
@@ -615,10 +615,6 @@ paths:
                 - onPremisesSyncEnabled desc
                 - onPremisesUserPrincipalName
                 - onPremisesUserPrincipalName desc
-                - passwordPolicies
-                - passwordPolicies desc
-                - passwordProfile
-                - passwordProfile desc
                 - postalCode
                 - postalCode desc
                 - preferredLanguage
@@ -789,7 +785,6 @@ paths:
                 - givenName
                 - lastPasswordChangeDateTime
                 - legalAgeGroupClassification
-                - licenseAssignmentStates
                 - mail
                 - mailNickname
                 - mobilePhone
@@ -826,52 +821,8 @@ paths:
             items:
               enum:
                 - '*'
-                - appRoleAssignments
-                - createdObjects
-                - directReports
-                - licenseDetails
-                - manager
-                - memberOf
-                - oauth2PermissionGrants
-                - ownedDevices
-                - ownedObjects
-                - registeredDevices
-                - scopedRoleMemberOf
-                - transitiveMemberOf
-                - calendar
-                - calendarGroups
-                - calendars
-                - calendarView
-                - contactFolders
-                - contacts
-                - events
-                - inferenceClassification
-                - mailFolders
-                - messages
-                - outlook
-                - people
                 - drive
                 - drives
-                - followedSites
-                - extensions
-                - agreementAcceptances
-                - managedDevices
-                - managedAppRegistrations
-                - deviceManagementTroubleshootingEvents
-                - planner
-                - insights
-                - settings
-                - onenote
-                - photo
-                - photos
-                - activities
-                - onlineMeetings
-                - presence
-                - authentication
-                - chats
-                - joinedTeams
-                - teamwork
-                - todo
               type: string
       responses:
         '200':
@@ -1517,17 +1468,17 @@ components:
       type: object
       title: group
       properties:
-          # entity
+        # entity
         id:
           type: string
           description: Read-only.
           readOnly: true
         # directory object
         deletedDateTime:
-            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-            type: string
-            format: date-time
-            nullable: false
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          format: date-time
+          nullable: false
         createdDateTime:
           pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$'
           type: string
@@ -1625,10 +1576,10 @@ components:
           readOnly: true
         # directory object
         deletedDateTime:
-            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-            type: string
-            format: date-time
-            nullable: false
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          format: date-time
+          nullable: false
       description: 'The user (or application) that created the group. NOTE: This is not set if the user is an administrator. Read-only.'
       nullable: true
     odata.error:
