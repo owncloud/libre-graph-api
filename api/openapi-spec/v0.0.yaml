@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Libre Graph API
-  version: v0.5.0
+  version: v0.6.0
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
