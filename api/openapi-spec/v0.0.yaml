@@ -993,6 +993,18 @@ components:
         id:
           type: string
           description: Unique identifier for the identity.
+    passwordProfile:
+      description: Password Profile associated with a user
+      type: object
+      properties:
+        forceChangePasswordNextSignIn:
+          type: boolean
+          description: If true the user is required to change their password upon the next login
+          default: false
+        password:
+          type: string
+          writeOnly: true
+          description: The user's password
     user:
       description: Represents an Active Directory user object.
       type: object
@@ -1088,6 +1100,8 @@ components:
         officeLocation:
           type: string
           description: The office location in the user's place of business. Returned by default.
+        passwordProfile:
+          $ref: '#/components/schemas/passwordProfile'
         postalCode:
           type: string
           description: 'The postal code for the user''s postal address. The postal code is specific to the user''s country/region. In the United States of America, this attribute contains the ZIP code. Returned only on $select.'
