@@ -47,7 +47,7 @@ paths:
                 - createdByUser
                 - lastModifiedByUser
                 - root
-                - spaceImage
+                - special
               type: string
             maxItems: 19
         - name: $expand
@@ -62,7 +62,7 @@ paths:
               enum:
                 - '*'
                 - root
-                - spaceImage
+                - special
               type: string
             maxItems: 2
       responses:
@@ -153,7 +153,7 @@ paths:
                 - createdByUser
                 - lastModifiedByUser
                 - root
-                - spaceImage
+                - special
               type: string
             maxItems: 19
         - name: $expand
@@ -168,7 +168,7 @@ paths:
               enum:
                 - '*'
                 - root
-                - spaceImage
+                - special
               type: string
             maxItems: 2
       responses:
@@ -975,8 +975,11 @@ components:
           readOnly: true
         root:
           $ref: '#/components/schemas/driveItem'
-        spaceImage:
-          $ref: '#/components/schemas/driveItem'
+        special:
+          type: array
+          items:
+              $ref: '#/components/schemas/driveItem'
+          description: A collection of special drive resources.
     identitySet:
       type: object
       description: Optional. User account.
