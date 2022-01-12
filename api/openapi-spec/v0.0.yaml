@@ -1258,6 +1258,8 @@ components:
           $ref: '#/components/schemas/image'
         root:
           $ref: '#/components/schemas/root'
+        trash:
+          $ref: '#/components/schemas/trash'
         size:
           type: integer
           description: Size of the item in bytes. Read-only.
@@ -1345,6 +1347,20 @@ components:
     root:
       type: object
       description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
+    trash:
+      type: object
+      description: 'Metadata for trashed drive Items'
+      readOnly: true
+      properties:
+        trashedBy:
+          $ref: '#/components/schemas/identitySet'
+          description: 'Identity of the user, device, or application which trashed the item. Read-only.'
+          readOnly: true
+        trashedDateTime:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          description: The UTC date and time the folder was marked as trashed.
+          format: date-time
     quota:
       type: object
       description: Optional. Information about the drive's storage space quota. Read-only.
