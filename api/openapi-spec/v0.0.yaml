@@ -1263,6 +1263,8 @@ components:
           $ref: '#/components/schemas/root'
         trash:
           $ref: '#/components/schemas/trash'
+        specialFolder:
+          $ref: '#/components/schemas/specialFolder'
         size:
           type: integer
           description: Size of the item in bytes. Read-only.
@@ -1364,6 +1366,14 @@ components:
           type: string
           description: The UTC date and time the folder was marked as trashed.
           format: date-time
+    specialFolder:
+      type: object
+      description: 'If the current item is also available as a special folder, this facet is returned. Read-only'
+      readOnly: true
+      properties:
+        name:
+          type: string
+          description: The unique identifier for this item in the /drive/special collection
     quota:
       type: object
       description: Optional. Information about the drive's storage space quota. Read-only.
