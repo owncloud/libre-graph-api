@@ -1,4 +1,4 @@
-# open Graph Api
+# Libre Graph Api
 
 An API for open Cloud Collaboration.
 
