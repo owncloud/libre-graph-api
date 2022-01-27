@@ -498,6 +498,68 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/groups/{group-id}/members/$ref':
+    post:
+      tags:
+        - group
+      summary: Add a member to a group
+      operationId: AddMember
+      parameters:
+        - name: group-id
+          in: path
+          description: 'key: id of group'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: group
+      requestBody:
+        description: Object to be added as member
+        content:
+          application/json:
+            schema:
+              title: Member Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/groups/{group-id}/members/{directory-object-id}/$ref':
+    delete:
+      tags:
+        - group
+      summary: Delete member from a group
+      operationId: DeleteMember
+      parameters:
+        - name: group-id
+          in: path
+          description: 'key: id of group'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: group
+        - name: directory-object-id
+          in: path
+          description: 'key: id of group member to remove'
+          required: true
+          schema:
+            type: string
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   /me/drive:
     get:
       tags:
@@ -1522,6 +1584,14 @@ components:
           description: The group's drives. Read-only.
         isArchived:
               type: boolean
+        'members@odata.bind':
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          minItems: 1
+          maxItems: 20
+          description: A list of member references to the members to be added. Up to 20 members can be added with a single request
     directoryObject:
       type: object
       properties:
