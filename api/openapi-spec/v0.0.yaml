@@ -1037,6 +1037,7 @@ components:
           readOnly: true
         root:
           $ref: '#/components/schemas/driveItem'
+          description: Drive item of the drive's root. Read-only.
         special:
           type: array
           items:
