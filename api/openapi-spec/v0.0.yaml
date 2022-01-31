@@ -1454,7 +1454,7 @@ components:
           readOnly: true
         state:
           type: string
-          description: Enumeration value that indicates the state of the storage space. Read-only.
+          description: Enumeration value that indicates the state of the storage space. Either "normal" or "exceeded". Read-only.
           readOnly: true
         total:
           type: integer
