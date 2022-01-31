@@ -1023,7 +1023,7 @@ components:
         # drive
         driveType:
           type: string
-          description: Describes the type of drive represented by this resource. Values are "personal" for users home spaces, "project" or "share". Read-only.
+          description: Describes the type of drive represented by this resource. Values are "personal" for users home spaces, "project", "virtual" or "share". Read-only.
           readOnly: true
         owner:
           $ref: '#/components/schemas/identitySet'
