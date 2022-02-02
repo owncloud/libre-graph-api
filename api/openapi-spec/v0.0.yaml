@@ -1342,6 +1342,12 @@ components:
             $ref: '#/components/schemas/driveItem'
           description: Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable.
           readOnly: true
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permission'
+          description: The set of permissions for the item. Read-only. Nullable.
+          readOnly: true
     deleted:
       type: object
       description: Information about the deleted state of the item. Read-only.
@@ -1606,6 +1612,19 @@ components:
           type: string
           format: date-time
       description: 'Represents a Directory object. Read-only.'
+    permission:
+      type: object
+      description: 'The Permission resource provides information about a sharing permission granted for a DriveItem resource.'
+      readOnly: true
+      properties:
+        grantedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/identitySet'
+        roles:
+          type: array
+          items:
+            type: string
     odata.error:
       required:
         - error
