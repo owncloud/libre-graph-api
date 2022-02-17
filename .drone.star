@@ -238,8 +238,7 @@ def validate(lang):
 					"cd %s" % config["languages"][lang]["src"],
 					"cmake -GNinja .",
 					"ninja -j1",
-				],
-				"failure": "ignore", # we need to fix the code generator
+				]
 			}
 		],
 		"go": [
