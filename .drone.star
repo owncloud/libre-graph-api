@@ -27,6 +27,9 @@ config = {
 			'branch': 'main',
 		},
 	},
+	# FIXME: switch back to openapitools/openapi-generator-cli
+	# when https://github.com/OpenAPITools/openapi-generator/pull/11490 is merged
+	'openapi-generator-image': 'owncloudci/openapi-generator'
 }
 
 def main(ctx):
@@ -103,7 +106,7 @@ def linting(ctx):
 			'steps': [
 				{
 					'name': 'validate',
-					'image': 'openapitools/openapi-generator-cli',
+					'image': config['openapi-generator-image'],
 					'pull': 'always',
 					'commands': [
 						'/usr/local/bin/docker-entrypoint.sh validate -i api/openapi-spec/v0.0.yaml',
@@ -162,7 +165,7 @@ def generate(ctx, lang):
 			},
 			{
 				'name': 'generate-%s' % lang,
-				'image': 'openapitools/openapi-generator-cli',
+				'image': config['openapi-generator-image'],
 				'pull': 'always',
 				'commands': [
 					'/usr/local/bin/docker-entrypoint.sh generate -i api/openapi-spec/v0.0.yaml --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"]),
