@@ -168,7 +168,8 @@ def generate(ctx, lang):
 				'image': config['openapi-generator-image'],
 				'pull': 'always',
 				'commands': [
-					'/usr/local/bin/docker-entrypoint.sh generate -i api/openapi-spec/v0.0.yaml --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"]),
+					'test -d "templates/{0}" && TEMPLATE_ARG="-t templates/{0}" || TEMPLATE_ARG=""'.format(lang),
+					'/usr/local/bin/docker-entrypoint.sh generate --enable-post-process-file -i api/openapi-spec/v0.0.yaml $${TEMPLATE_ARG} --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"]),
 				],
 			},
 			{
@@ -190,7 +191,7 @@ def generate(ctx, lang):
 					"message": "%s" % ctx.build.message,
 					"branch": "%s" % config["languages"][lang]["branch"],
 					"path": "%s" % config["languages"][lang]["src"],
-					"author_email": "%s" % ctx.build.author_email, 
+					"author_email": "%s" % ctx.build.author_email,
 					"author_name": "%s" % ctx.build.author_name,
 					"followtags": True,
 					"remote" : "https://github.com/owncloud/%s" % config["languages"][lang]["repo-slug"],
