@@ -18,7 +18,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/top'
         - $ref: '#/components/parameters/skip'
-        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/orderby'
         - $ref: '#/components/parameters/filter'
         - $ref: '#/components/parameters/count'
         - name: $select
@@ -62,6 +62,7 @@ paths:
               enum:
                 - '*'
                 - root
+                - root/permissions/grantedTo/user
                 - special
               type: string
             maxItems: 2
@@ -91,6 +92,87 @@ paths:
         operationName: listMore
       x-ms-docs-operation-type: operation
   '/drives':
+    get:
+      tags:
+        - drives.GetDrives
+      summary: Get All drives
+      operationId: ListAllDrives
+      parameters:
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/orderby'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - createdBy
+                - createdDateTime
+                - description
+                - eTag
+                - lastModifiedBy
+                - lastModifiedDateTime
+                - name
+                - parentReference
+                - webUrl
+                - driveType
+                - owner
+                - quota
+                - createdByUser
+                - lastModifiedByUser
+                - root
+                - special
+              type: string
+            maxItems: 19
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+                - root
+                - root/permissions/grantedTo/user
+                - special
+              type: string
+            maxItems: 2
+      responses:
+        '200':
+          description: Retrieved spaces
+          content:
+            application/json:
+              schema:
+                title: Collection of drives
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/drive'
+                    maxItems: 100
+                  '@odata.nextLink':
+                    type: string
+          links:
+            root:
+              operationId: GetRoot
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-pageable:
+        nextLinkName: '@odata.nextLink'
+        operationName: listMore
+      x-ms-docs-operation-type: operation
     post:
       tags:
         - drives
@@ -1703,7 +1785,13 @@ components:
       in: query
       description: Include count of items
       schema:
-        type: boolean 
+        type: boolean
+    orderby:
+      name: $orderby
+      in: query
+      description: The $orderby system query option allows clients to request resources in either ascending order using asc or descending order using desc.
+      schema:
+        type: string
   securitySchemes:
       openId:
         type: openIdConnect
