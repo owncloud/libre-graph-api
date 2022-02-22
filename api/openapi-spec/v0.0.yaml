@@ -1105,7 +1105,7 @@ components:
         # drive
         driveType:
           type: string
-          description: Describes the type of drive represented by this resource. Values are "personal" for users home spaces, "project" or "share". Read-only.
+          description: Describes the type of drive represented by this resource. Values are "personal" for users home spaces, "project", "virtual" or "share". Read-only.
           readOnly: true
         owner:
           $ref: '#/components/schemas/identitySet'
@@ -1119,6 +1119,7 @@ components:
           readOnly: true
         root:
           $ref: '#/components/schemas/driveItem'
+          description: Drive item describing the drive's root. Read-only.
         special:
           type: array
           items:
@@ -1541,7 +1542,7 @@ components:
           readOnly: true
         state:
           type: string
-          description: Enumeration value that indicates the state of the storage space. Read-only.
+          description: Enumeration value that indicates the state of the storage space. Either "normal", "nearing", "critical" or "exceeded". Read-only.
           readOnly: true
         total:
           type: integer
