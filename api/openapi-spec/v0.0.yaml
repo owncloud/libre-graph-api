@@ -1444,8 +1444,7 @@ components:
           description: The unique identifier for this item in the /drive/special collection
     quota:
       type: object
-      description: Optional. Information about the drive's storage space quota. Read-only.
-      readOnly: true
+      description: Optional. Information about the drive's storage space quota.
       properties:
         deleted:
           type: integer
@@ -1461,9 +1460,16 @@ components:
           type: string
           description: Enumeration value that indicates the state of the storage space. Read-only.
           readOnly: true
+        isRestricted:
+          type: boolean
+          description: Indicates if the maximum avatilable quota has been set.
+        restricted:
+          type: integer
+          description: Total allowed storage space, in bytes.
+          format: int64
         total:
           type: integer
-          description: 'Total allowed storage space, in bytes. Read-only.'
+          description: 'Dynamic value. Shows either the total possible available storage space or quota limit in bytes. Read-only.'
           format: int64
           readOnly: true
         used:
