@@ -27,9 +27,7 @@ config = {
 			'branch': 'main',
 		},
 	},
-	# FIXME: switch back to openapitools/openapi-generator-cli
-	# when https://github.com/OpenAPITools/openapi-generator/pull/11490 is merged
-	'openapi-generator-image': 'owncloudci/openapi-generator'
+	'openapi-generator-image': 'openapitools/openapi-generator-cli:latest'
 }
 
 def main(ctx):
