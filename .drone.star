@@ -22,7 +22,7 @@ config = {
 		},
 		'cpp-qt-client': {
 			'src': "out-cpp-qt-client",
-			'clean-src': "out-cpp-qt-client/client/*",
+			'clean-src': "out-cpp-qt-client/*",
 			'repo-slug': "libre-graph-api-cpp-qt-client",
 			'branch': 'main',
 		},
@@ -233,7 +233,7 @@ def validate(lang):
 				"name": "validate-cpp",
 				"image": "owncloudci/client",
 				"commands": [
-					"cd %s" % config["languages"][lang]["src"],
+					"cd %s/client" % config["languages"][lang]["src"],
 					"cmake -GNinja .",
 					"ninja -j1",
 				]
