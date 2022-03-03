@@ -9,6 +9,20 @@ servers:
   - url: https://ocis.ocis-traefik.latest.owncloud.works/
     description: ownCloud Infinite Scale Latest
 paths:
+  '/me':
+    get:
+      tags:
+        - me.user
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   /me/drives:
     get:
       tags:
