@@ -22,14 +22,12 @@ config = {
 		},
 		'cpp-qt-client': {
 			'src': "out-cpp-qt-client",
-			'clean-src': "out-cpp-qt-client/client/*",
+			'clean-src': "out-cpp-qt-client/*",
 			'repo-slug': "libre-graph-api-cpp-qt-client",
 			'branch': 'main',
 		},
 	},
-	# FIXME: switch back to openapitools/openapi-generator-cli
-	# when https://github.com/OpenAPITools/openapi-generator/pull/11490 is merged
-	'openapi-generator-image': 'owncloudci/openapi-generator'
+	'openapi-generator-image': 'openapitools/openapi-generator-cli:latest@sha256:2957b6c14449411b92512602ad0ecff75dc5f164abc1cbc80769de4e7b711d4c'
 }
 
 def main(ctx):
@@ -235,7 +233,7 @@ def validate(lang):
 				"name": "validate-cpp",
 				"image": "owncloudci/client",
 				"commands": [
-					"cd %s" % config["languages"][lang]["src"],
+					"cd %s/client" % config["languages"][lang]["src"],
 					"cmake -GNinja .",
 					"ninja -j1",
 				]
