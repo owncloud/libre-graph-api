@@ -1547,7 +1547,6 @@ components:
     remoteItem:
       title: remoteItem
       description: 'Remote item data, if the item is shared from a drive other than the one being accessed. Read-only.'
-      nullable: true
       type: object
       properties:
         createdBy:
@@ -1557,7 +1556,6 @@ components:
           type: string
           description: Date and time of item creation. Read-only.
           format: date-time
-          nullable: true
         file:
           $ref: '#/components/schemas/openGraphFile'
         fileSystemInfo:
@@ -1567,7 +1565,6 @@ components:
         id:
           type: string
           description: Unique identifier for the remote item in its drive. Read-only.
-          nullable: true
         image:
           $ref: '#/components/schemas/image'
         lastModifiedBy:
@@ -1577,11 +1574,9 @@ components:
           type: string
           description: Date and time the item was last modified. Read-only.
           format: date-time
-          nullable: true
         name:
           type: string
           description: Optional. Filename of the remote item. Read-only.
-          nullable: true
         parentReference:
           $ref: '#/components/schemas/itemReference'
         shared:
@@ -1590,17 +1585,14 @@ components:
           type: integer
           description: Size of the remote item. Read-only.
           format: int64
-          nullable: true
         specialFolder:
           $ref: '#/components/schemas/specialFolder'
         webDavUrl:
           type: string
           description: DAV compatible URL for the item.
-          nullable: true
         webUrl:
           type: string
           description: URL that displays the resource in the browser. Read-only.
-          nullable: true
           title: shared
     shared:
       type: object
@@ -1610,7 +1602,6 @@ components:
         scope:
           type: string
           description: 'Indicates the scope of how the item is shared: anonymous, organization, or users. Read-only.'
-          nullable: true
         sharedBy:
           $ref: '#/components/schemas/identitySet'
         sharedDateTime:
@@ -1618,7 +1609,6 @@ components:
           type: string
           description: The UTC date and time when the item was shared. Read-only.
           format: date-time
-          nullable: true
     quota:
       type: object
       description: Optional. Information about the drive's storage space quota. Read-only.
