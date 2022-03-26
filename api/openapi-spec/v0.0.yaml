@@ -1577,6 +1577,14 @@ components:
         name:
           type: string
           description: Optional. Filename of the remote item. Read-only.
+        eTag:
+          type: string
+          description: ETag for the item. Read-only.
+          readOnly: true
+        cTag:
+          type: string
+          description: An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the item is a folder. Read-only.
+          readOnly: true
         parentReference:
           $ref: '#/components/schemas/itemReference'
         shared:
