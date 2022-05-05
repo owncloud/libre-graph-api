@@ -23,6 +23,31 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  /me/changePassword:
+    post:
+      tags:
+        - me.changepassword
+      summary: Chanage your own password
+      operationId: ChangeOwnPassword
+      requestBody:
+        description: Password change request
+        content:
+          application/json:
+            schema:
+              title: Password change
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   /me/drives:
     get:
       tags:
