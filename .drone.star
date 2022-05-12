@@ -10,19 +10,16 @@ config = {
 	'languages': {
 		'go': {
 			'src': "out-go",
-			'clean-src': "out-go/*",
 			'repo-slug': "libre-graph-api-go",
 			'branch': 'main',
 		},
 		'typescript-axios': {
 			'src': "out-typescript-axios",
-			'clean-src': "out-typescript-axios/*",
 			'repo-slug': "libre-graph-api-typescript-axios",
 			'branch': 'main',
 		},
 		'cpp-qt-client': {
 			'src': "out-cpp-qt-client",
-			'clean-src': "out-cpp-qt-client/*",
 			'repo-slug': "libre-graph-api-cpp-qt-client",
 			'branch': 'main',
 		},
@@ -153,13 +150,6 @@ def generate(ctx, lang):
 						"from_secret": "github_token",
 					},
 				},
-			},
-			{
-				"name": "clean-%s" % lang,
-				"image": "owncloudci/alpine:latest",
-				"commands": [
-					"rm -rf %s" % config["languages"][lang]["clean-src"],
-				],
 			},
 			{
 				'name': 'generate-%s' % lang,
