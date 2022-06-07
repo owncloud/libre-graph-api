@@ -792,6 +792,7 @@ paths:
                 - mail desc
                 - mailNickname
                 - mailNickname desc
+                - memberOf
                 - mobilePhone
                 - mobilePhone desc
                 - officeLocation
@@ -862,6 +863,7 @@ paths:
                 - mail
                 - mailNickname
                 - mobilePhone
+                - memberOf
                 - officeLocation
                 - onPremisesDistinguishedName
                 - onPremisesDomainName
@@ -897,6 +899,7 @@ paths:
                 - '*'
                 - drive
                 - drives
+                - memberOf
               type: string
       responses:
         '200':
@@ -982,6 +985,7 @@ paths:
                 - legalAgeGroupClassification
                 - mail
                 - mailNickname
+                - memberOf
                 - mobilePhone
                 - officeLocation
                 - onPremisesDistinguishedName
@@ -1018,6 +1022,7 @@ paths:
                 - '*'
                 - drive
                 - drives
+                - memberOf
               type: string
       responses:
         '200':
@@ -1270,6 +1275,11 @@ components:
         mobilePhone:
           type: string
           description: The primary cellular telephone number for the user. Returned by default. Read-only for users synced from on-premises directory.
+        memberOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/group'
+          description: 'Groups that this group is a member of. HTTP Methods: GET (supported for all groups). Read-only. Nullable. Supports $expand.'
         onPremisesDistinguishedName:
           type: string
           description: Contains the on-premises Active Directory distinguished name or DN. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.
@@ -1769,12 +1779,12 @@ components:
         memberOf:
           type: array
           items:
-            $ref: '#/components/schemas/directoryObject'
+            $ref: '#/components/schemas/group'
           description: 'Groups that this group is a member of. HTTP Methods: GET (supported for all groups). Read-only. Nullable. Supports $expand.'
         members:
           type: array
           items:
-            $ref: '#/components/schemas/directoryObject'
+            $ref: '#/components/schemas/user'
           description: 'Users and groups that are members of this group. HTTP Methods: GET (supported for all groups), Nullable. Supports $expand.'
         owners:
           type: array
