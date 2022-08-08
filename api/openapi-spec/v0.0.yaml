@@ -1048,6 +1048,10 @@ components:
           description: A collection of drives available for this user. Read-only.
           maxItems: 100
           readOnly: true
+        drive:
+          $ref: '#/components/schemas/drive'
+          description: The personal drive of this user. Read-only.
+          readOnly: true
         mail:
           type: string
           description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
