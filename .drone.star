@@ -104,7 +104,7 @@ def linting(ctx):
 					'image': config['openapi-generator-image'],
 					'pull': 'always',
 					'commands': [
-						'/usr/local/bin/docker-entrypoint.sh validate -i api/openapi-spec/v0.0.yaml',
+						'/usr/local/bin/docker-entrypoint.sh validate -i api/openapi-spec/v1.0.yaml',
 					],
 				}
 			],
@@ -157,7 +157,7 @@ def generate(ctx, lang):
 				'pull': 'always',
 				'commands': [
 					'test -d "templates/{0}" && TEMPLATE_ARG="-t templates/{0}" || TEMPLATE_ARG=""'.format(lang),
-					'/usr/local/bin/docker-entrypoint.sh generate --enable-post-process-file -i api/openapi-spec/v0.0.yaml $${TEMPLATE_ARG} --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"]),
+					'/usr/local/bin/docker-entrypoint.sh generate --enable-post-process-file -i api/openapi-spec/v1.0.yaml $${TEMPLATE_ARG} --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"]),
 				],
 			},
 			{
