@@ -20,5 +20,9 @@ An OpenAPI definition can then be used by documentation generation tools to disp
 
 Client code can be generated from the API spec. 
 
-A [C++/Qt client library](https://github.com/owncloud/libre-graph-api-cpp-qt-client) is available.
+
+### Available client libraries
+- [C++/Qt](https://github.com/owncloud/libre-graph-api-cpp-qt-client)
+- [go](https://github.com/owncloud/libre-graph-api-go)
+- [typescript-axios](https://github.com/owncloud/libre-graph-api-typescript-axios)
 
