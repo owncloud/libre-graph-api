@@ -926,6 +926,115 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  /education/schools:
+    get:
+      tags:
+        - educationSchool
+      summary: Get a list of schools and their properties
+      operationId: ListSchools
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of schools
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationSchool'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - educationSchool
+      summary: Add new school
+      operationId: CreateSchool
+      requestBody:
+        description: New school
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationSchool'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationSchool'
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}':
+    get:
+      tags:
+        - educationSchool
+      summary: Get the properties of a specific school
+      operationId: GetSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationSchool'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      tags:
+        - educationSchool
+      summary: Update properties of a school
+      operationId: UpdateSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationSchool'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationSchool'
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      tags:
+        - educationSchool
+      summary: Delete school
+      operationId: DeleteSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
 components:
   schemas:
     entity:
