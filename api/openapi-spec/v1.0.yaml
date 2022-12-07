@@ -1032,6 +1032,16 @@ components:
         id:
           type: string
           description: Unique identifier for the identity.
+    objectIdentity:
+      description: Represents an identity used to sign in to a user account
+      type: object
+      properties:
+        issuer:
+          description: domain of the Provider issuing the identity
+          type: string
+        issuerAssignedId:
+          description: The unique id assigned by the issuer to the account
+          type: string
     passwordProfile:
       description: Password Profile associated with a user
       type: object
@@ -1070,6 +1080,11 @@ components:
           $ref: '#/components/schemas/drive'
           description: The personal drive of this user. Read-only.
           readOnly: true
+        identities:
+          description: Identities associated with this account.
+          type: array
+          items:
+            $ref: '#/components/schemas/objectIdentity'
         mail:
           type: string
           description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
