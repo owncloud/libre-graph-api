@@ -1186,6 +1186,112 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/users/$ref':
+    post:
+      tags:
+        - educationSchool
+      summary: Assign a user to a school
+      operationId: AddUserToSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: educationUser to be added as member
+        content:
+          application/json:
+            schema:
+              title: EducationUser Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/users/{user-id}/$ref':
+    delete:
+      tags:
+        - educationSchool
+      summary: Unassign user from a school
+      operationId: DeleteUserFromSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+        - name: user-id
+          in: path
+          description: 'key: id of the user to unassign from school'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/classes/$ref':
+    post:
+      tags:
+        - educationSchool
+      summary: Assign a class to a school
+      operationId: AddClassToSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: educationClass to be added as member
+        content:
+          application/json:
+            schema:
+              title: Class Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/classes/{class-id}/$ref':
+    delete:
+      tags:
+        - educationSchool
+      summary: Unassign class from a school
+      operationId: DeleteClassFromSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+        - name: user-id
+          in: path
+          description: 'key: id of the class to unassign from school'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
   /education/classes:
     get:
       tags:
