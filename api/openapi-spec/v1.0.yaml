@@ -1186,6 +1186,111 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
+  /education/classes:
+    get:
+      tags:
+        - educationClass
+      summary: Get education class
+      operationId: ListClasses
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of class
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationClass'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - educationClass
+      summary: Add new education class
+      operationId: CreateClass
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationClass'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationClass'
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}':
+    get:
+      tags:
+        - educationClass
+      summary: Get class by key
+      operationId: GetClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationClass'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      tags:
+        - educationClass
+      summary: Update properties of a education class
+      operationId: UpdateClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationClass'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      tags:
+        - educationClass
+      summary: Delete education class
+      operationId: DeleteClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
 components:
   schemas:
     entity:
