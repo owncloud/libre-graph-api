@@ -1397,6 +1397,59 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/members/$ref':
+    post:
+      tags:
+        - educationClass
+      summary: Assign a user to a class
+      operationId: AddUserToClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: educationUser to be added as member
+        content:
+          application/json:
+            schema:
+              title: Class Member Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/members/{user-id}/$ref':
+    delete:
+      tags:
+        - educationClass
+      summary: Unassign user from a class
+      operationId: DeleteUserFromClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+        - name: user-id
+          in: path
+          description: 'key: id of the user to unassign from class'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
 components:
   schemas:
     entity:
