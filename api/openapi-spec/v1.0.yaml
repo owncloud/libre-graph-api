@@ -926,6 +926,157 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  /education/users:
+    get:
+      tags:
+        - educationUser
+      summary: Get entities from education users
+      operationId: ListEducationUsers
+      parameters:
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - displayName
+                - displayName desc
+                - mail
+                - mail desc
+                - onPremisesSamAccountName
+                - onPremisesSamAccountName desc
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - memberOf
+              type: string
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of educationUser
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationUser'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - educationUser
+      summary: Add new education user
+      operationId: CreateEducationUser
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationUser'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationUser'
+        default:
+          $ref: '#/components/responses/error'
+  '/education/users/{user-id}':
+    get:
+      tags:
+        - educationUser
+      summary: Get properties of educationUser
+      operationId: GetEducationUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - memberOf
+              type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationUser'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      tags:
+        - educationUser
+      summary: Update properties of educationUser
+      operationId: UpdateEducationUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationUser'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationUser'
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      tags:
+        - educationUser
+      summary: Delete educationUser
+      operationId: DeleteEducationUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
   /education/schools:
     get:
       tags:
