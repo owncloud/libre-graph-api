@@ -928,6 +928,54 @@ paths:
       x-ms-docs-operation-type: operation
 components:
   schemas:
+    entity:
+      description: Represents an entity.
+      readOnly: true
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique idenfier for an entity. Read-only.
+          readOnly: true
+    educationOrganization:
+      description: Abstract. Represents an organization in educational context
+      allOf:
+        - $ref: '#/components/schemas/entity'
+        - type: object
+          properties:
+            displayName:
+              type: string
+              description: The organization name
+    educationSchool:
+      description: Represents a school
+      allOf:
+        - $ref: '#/components/schemas/educationOrganization'
+        - type: object
+          properties:
+            schoolNumber:
+              type: string
+              description: School number
+    educationClass:
+      description: And extension of group representing a class or course
+      allOf:
+        - $ref: '#/components/schemas/group'
+        - type: object
+          properties:
+            classification:
+              type: string
+              description: 'Classification of the group, i.e. "class" or "course"'
+            externalId:
+              type: string
+              description: An external unique ID for the class
+    educationUser:
+      description: And extension of user with education specific attributes
+      allOf:
+        - $ref: '#/components/schemas/user'
+        - type: object
+          properties:
+            primaryRole:
+              type: string
+              description: 'The user`s default role. Such as "student" or "teacher"'
     drive:
       description: Storage Space. Read-only.
       readOnly: true
