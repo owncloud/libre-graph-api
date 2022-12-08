@@ -926,8 +926,773 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  /education/users:
+    get:
+      tags:
+        - educationUser
+      summary: Get entities from education users
+      operationId: ListEducationUsers
+      parameters:
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - displayName
+                - displayName desc
+                - mail
+                - mail desc
+                - onPremisesSamAccountName
+                - onPremisesSamAccountName desc
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - memberOf
+              type: string
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of educationUser
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationUser'
+              example:
+                - id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+                  onPremisesSAMAccountName: max.mustermann
+                  displayName: Max Mustermann
+                  mail: max.musterman@example.org
+                  primariyRole: student
+                  identities:
+                    - issuer: idp.school.com
+                      issuerAssignedId: max.mustermann
+                    - issuer: newidp.school.com
+                      issuerAssignedId: ieZ2AeV5
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - educationUser
+      summary: Add new education user
+      operationId: CreateEducationUser
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationUser'
+            examples:
+              student:
+                $ref: '#/components/examples/educationUser_post'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationUser'
+              examples:
+                student:
+                  $ref: '#/components/examples/educationUser'
+        default:
+          $ref: '#/components/responses/error'
+  '/education/users/{user-id}':
+    get:
+      tags:
+        - educationUser
+      summary: Get properties of educationUser
+      operationId: GetEducationUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id or username of user'
+          required: true
+          schema:
+            type: string
+          examples:
+            id:
+              value: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+            name:
+              value: max.mustermann
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - memberOf
+              type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationUser'
+              examples:
+                student:
+                  $ref: '#/components/examples/educationUser'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      tags:
+        - educationUser
+      summary: Update properties of educationUser
+      operationId: UpdateEducationUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+            example: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationUser'
+            example:
+              mail: max.mustermann@new.domain
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationUser'
+              example:
+                id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+                onPremisesSAMAccountName: max.mustermann
+                displayName: Max Mustermann
+                surname: Mustermann
+                givenName: Max
+                mail: max.musterman@new.domain
+                primariyRole: student
+                identities:
+                  - issuer: idp.school.com
+                    issuerAssignedId: max.mustermann
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      tags:
+        - educationUser
+      summary: Delete educationUser
+      operationId: DeleteEducationUser
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id of user'
+          required: true
+          schema:
+            type: string
+            example: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  /education/schools:
+    get:
+      tags:
+        - educationSchool
+      summary: Get a list of schools and their properties
+      operationId: ListSchools
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of schools
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationSchool'
+              example:
+                - id: 0e19303e-8144-44bd-86d8-35cc8ac9c255
+                  displayName: Gymnasium Musterstadt
+                  schoolNumber: '0123'
+                - id: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+                  displayName: Realschule Musterstadt
+                  schoolNumber: '1234'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - educationSchool
+      summary: Add new school
+      operationId: CreateSchool
+      requestBody:
+        description: New school
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationSchool'
+            examples:
+              school:
+                $ref: '#/components/examples/educationSchool_post'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationSchool'
+              examples:
+                school:
+                  $ref: '#/components/examples/educationSchool'
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}':
+    get:
+      tags:
+        - educationSchool
+      summary: Get the properties of a specific school
+      operationId: GetSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationSchool'
+              examples:
+                school:
+                  $ref: '#/components/examples/educationSchool'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      tags:
+        - educationSchool
+      summary: Update properties of a school
+      operationId: UpdateSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationSchool'
+            example:
+              schoolNumber: '1234'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationSchool'
+              examples:
+                school:
+                  $ref: '#/components/examples/educationSchool'
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      tags:
+        - educationSchool
+      summary: Delete school
+      operationId: DeleteSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/users/$ref':
+    post:
+      tags:
+        - educationSchool
+      summary: Assign a user to a school
+      operationId: AddUserToSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+      requestBody:
+        description: educationUser to be added as member
+        content:
+          application/json:
+            schema:
+              title: EducationUser Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+                  example: "https://<hostname>/graph/v1.0/education/users/90eedea1-dea1-90ee-a1de-ee90a1deee90"
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/users/{user-id}/$ref':
+    delete:
+      tags:
+        - educationSchool
+      summary: Unassign user from a school
+      operationId: DeleteUserFromSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+        - name: user-id
+          in: path
+          description: 'key: id of the user to unassign from school'
+          required: true
+          schema:
+            type: string
+            example: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/classes/$ref':
+    post:
+      tags:
+        - educationSchool
+      summary: Assign a class to a school
+      operationId: AddClassToSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+      requestBody:
+        description: educationClass to be added as member
+        content:
+          application/json:
+            schema:
+              title: Class Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+                  example: "https://<hostname>/graph/v1.0/education/classes/7e84a069-f374-479b-817d-71590117d443"
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/classes/{class-id}/$ref':
+    delete:
+      tags:
+        - educationSchool
+      summary: Unassign class from a school
+      operationId: DeleteClassFromSchool
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+        - name: user-id
+          in: path
+          description: 'key: id of the class to unassign from school'
+          required: true
+          schema:
+            type: string
+            example: 7e84a069-f374-479b-817d-71590117d443
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  /education/classes:
+    get:
+      tags:
+        - educationClass
+      summary: list education classes
+      operationId: ListClasses
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of class
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationClass'
+              example:
+                - id: 86948e45-96a6-43df-b83d-46e92afd30de
+                  displayName: Mathematik
+                  classification: course
+                  externalId: 1234Mathematik
+                - id: 9097631c-24b6-4621-9635-36195a9c8d79
+                  displayName: 10b
+                  classification: class
+                  externalId: 0123_10b
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - educationClass
+      summary: Add new education class
+      operationId: CreateClass
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationClass'
+            examples:
+              class:
+                $ref: '#/components/examples/educationClass_post'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationClass'
+              examples:
+                class:
+                  $ref: '#/components/examples/educationClass'
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}':
+    get:
+      tags:
+        - educationClass
+      summary: Get class by key
+      operationId: GetClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationClass'
+              examples:
+                class:
+                  $ref: '#/components/examples/educationClass'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      tags:
+        - educationClass
+      summary: Update properties of a education class
+      operationId: UpdateClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/educationClass'
+            example:
+              displayName: Musik
+              externalId: 1234Musik
+        required: true
+      responses:
+        '200':
+          description: New property values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/educationClass'
+              example:
+                id: 86948e45-96a6-43df-b83d-46e92afd30de
+                displayName: Musik
+                classification: course
+                externalId: 1234Musik
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      tags:
+        - educationClass
+      summary: Delete education class
+      operationId: DeleteClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/members/$ref':
+    post:
+      tags:
+        - educationClass
+      summary: Assign a user to a class
+      operationId: AddUserToClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      requestBody:
+        description: educationUser to be added as member
+        content:
+          application/json:
+            schema:
+              title: Class Member Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+                  example: "https://<hostname>/graph/v1.0/education/users/90eedea1-dea1-90ee-a1de-ee90a1deee90"
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/members/{user-id}/$ref':
+    delete:
+      tags:
+        - educationClass
+      summary: Unassign user from a class
+      operationId: DeleteUserFromClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+        - name: user-id
+          in: path
+          description: 'key: id of the user to unassign from class'
+          required: true
+          schema:
+            type: string
+            example: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
 components:
   schemas:
+    entity:
+      description: Represents an entity.
+      readOnly: true
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique idenfier for an entity. Read-only.
+          readOnly: true
+    educationOrganization:
+      description: Abstract. Represents an organization in educational context
+      properties:
+        id:
+          type: string
+          description: The unique idenfier for an entity. Read-only.
+          readOnly: true
+        displayName:
+          type: string
+          description: The organization name
+    educationSchool:
+      description: Represents a school
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique idenfier for an entity. Read-only.
+          readOnly: true
+        displayName:
+          type: string
+          description: The organization name
+        schoolNumber:
+          type: string
+          description: School number
+    educationClass:
+      description: And extension of group representing a class or course
+      type: object
+      properties:
+        # entity
+        id:
+          type: string
+          description: Read-only.
+          readOnly: true
+        # group
+        description:
+          type: string
+          description: 'An optional description for the group. Returned by default. Supports $filter (eq, ne, not, ge, le, startsWith) and $search.'
+        displayName:
+          type: string
+          description: 'The display name for the group. This property is required when a group is created and cannot be cleared during updates. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values), $search, and $orderBy.'
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/user'
+          description: 'Users and groups that are members of this group. HTTP Methods: GET (supported for all groups), Nullable. Supports $expand.'
+        onPremisesDomainName:
+          type: string
+          description: 'Contains the on-premises domainFQDN, also called dnsDomainName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.'
+        onPremisesSamAccountName:
+          type: string
+          description: 'Contains the on-premises SAM account name synchronized from the on-premises directory. Read-only.'
+        'members@odata.bind':
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          minItems: 1
+          maxItems: 20
+          description: A list of member references to the members to be added. Up to 20 members can be added with a single request
+        classification:
+          type: string
+          enum: [class, course]
+          description: 'Classification of the group, i.e. "class" or "course"'
+        externalId:
+          type: string
+          description: An external unique ID for the class
+    educationUser:
+      description: And extension of user with education specific attributes
+      type: object
+      properties:
+        # entity
+        id:
+          type: string
+          description: Read-only.
+          readOnly: true
+        # user
+        accountEnabled:
+          type: boolean
+          description: 'Set to "true" when the account is enabled.'
+        displayName:
+          type: string
+          description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $filter and $orderby.'
+        drives:
+          type: array
+          items:
+            $ref: '#/components/schemas/drive'
+          description: A collection of drives available for this user. Read-only.
+          maxItems: 100
+          readOnly: true
+        drive:
+          $ref: '#/components/schemas/drive'
+          description: The personal drive of this user. Read-only.
+          readOnly: true
+        identities:
+          description: Identities associated with this account.
+          type: array
+          items:
+            $ref: '#/components/schemas/objectIdentity'
+        mail:
+          type: string
+          description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
+        memberOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/group'
+          description: 'Groups that this user is a member of. HTTP Methods: GET (supported for all groups). Read-only. Nullable. Supports $expand.'
+        onPremisesSamAccountName:
+          type: string
+          description: 'Contains the on-premises SAM account name synchronized from the on-premises directory. Read-only.'
+        passwordProfile:
+          $ref: '#/components/schemas/passwordProfile'
+        surname:
+          type: string
+          description: The user's surname (family name or last name). Returned by default. Supports $filter.
+        givenName:
+          type: string
+          description: The user's givenName. Returned by default. Supports $filter.
+        primaryRole:
+          type: string
+          description: 'The user`s default role. Such as "student" or "teacher"'
     drive:
       description: Storage Space. Read-only.
       readOnly: true
@@ -1032,6 +1797,16 @@ components:
         id:
           type: string
           description: Unique identifier for the identity.
+    objectIdentity:
+      description: Represents an identity used to sign in to a user account
+      type: object
+      properties:
+        issuer:
+          description: domain of the Provider issuing the identity
+          type: string
+        issuerAssignedId:
+          description: The unique id assigned by the issuer to the account
+          type: string
     passwordProfile:
       description: Password Profile associated with a user
       type: object
@@ -1053,6 +1828,9 @@ components:
           type: string
           description: Read-only.
           readOnly: true
+        accountEnabled:
+          type: boolean
+          description: 'Set to "true" when the account is enabled.'
         displayName:
           type: string
           description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $filter and $orderby.'
@@ -1067,6 +1845,11 @@ components:
           $ref: '#/components/schemas/drive'
           description: The personal drive of this user. Read-only.
           readOnly: true
+        identities:
+          description: Identities associated with this account.
+          type: array
+          items:
+            $ref: '#/components/schemas/objectIdentity'
         mail:
           type: string
           description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
@@ -1083,6 +1866,9 @@ components:
         surname:
           type: string
           description: The user's surname (family name or last name). Returned by default. Supports $filter.
+        givenName:
+          type: string
+          description: The user's givenName. Returned by default. Supports $filter.
     itemReference:
       type: object
       properties:
@@ -1592,5 +2378,49 @@ components:
       openId:
         type: openIdConnect
         openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
+  examples:
+    educationUser:
+      value:
+        id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+        onPremisesSAMAccountName: max.mustermann
+        displayName: Max Mustermann
+        surname: Mustermann
+        givenName: Max
+        mail: max.musterman@example.org
+        primariyRole: student
+        identities:
+          - issuer: idp.school.com
+            issuerAssignedId: max.mustermann
+    educationUser_post:
+      value:
+        onPremisesSAMAccountName: max.mustermann
+        displayName: Max Mustermann
+        surname: Mustermann
+        givenName: Max
+        mail: max.musterman@example.org
+        primariyRole: student
+        identities:
+          - issuer: idp.school.com
+            issuerAssignedId: max.mustermann
+    educationSchool:
+      value:
+        id: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+        displayName: Realschule Musterstadt
+        schoolNumber: '1234'
+    educationSchool_post:
+      value:
+        displayName: Realschule Musterstadt
+        schoolNumber: '1234'
+    educationClass:
+      value:
+        id: 86948e45-96a6-43df-b83d-46e92afd30de
+        displayName: Mathematik
+        classification: course
+        externalId: 1234Mathematik
+    educationClass_post:
+      value:
+        displayName: Mathematik
+        classification: course
+        externalId: 1234Mathematik
 security:
   - openId: [ ]
