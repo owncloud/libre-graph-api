@@ -1090,6 +1090,8 @@ paths:
                 id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
                 onPremisesSAMAccountName: max.mustermann
                 displayName: Max Mustermann
+                surname: Mustermann
+                givenName: Max
                 mail: max.musterman@new.domain
                 primariyRole: student
                 identities:
@@ -1685,6 +1687,9 @@ components:
         surname:
           type: string
           description: The user's surname (family name or last name). Returned by default. Supports $filter.
+        givenName:
+          type: string
+          description: The user's givenName. Returned by default. Supports $filter.
         primaryRole:
           type: string
           description: 'The user`s default role. Such as "student" or "teacher"'
@@ -1861,6 +1866,9 @@ components:
         surname:
           type: string
           description: The user's surname (family name or last name). Returned by default. Supports $filter.
+        givenName:
+          type: string
+          description: The user's givenName. Returned by default. Supports $filter.
     itemReference:
       type: object
       properties:
@@ -2376,6 +2384,8 @@ components:
         id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
         onPremisesSAMAccountName: max.mustermann
         displayName: Max Mustermann
+        surname: Mustermann
+        givenName: Max
         mail: max.musterman@example.org
         primariyRole: student
         identities:
@@ -2385,6 +2395,8 @@ components:
       value:
         onPremisesSAMAccountName: max.mustermann
         displayName: Max Mustermann
+        surname: Mustermann
+        givenName: Max
         mail: max.musterman@example.org
         primariyRole: student
         identities:
