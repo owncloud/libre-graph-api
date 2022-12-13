@@ -6,8 +6,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: https://ocis.ocis-traefik.latest.owncloud.works/
+  - url: https://ocis.ocis-traefik.latest.owncloud.works/graph/v1.0
     description: ownCloud Infinite Scale Latest
+  - url: https://localhost:9200/graph/v1.0
+    description: ownCloud Infinite Scale Development Setup
 paths:
   '/me':
     get:
@@ -1411,6 +1413,7 @@ paths:
               class:
                 $ref: '#/components/examples/educationClass_post'
         required: true
+
       responses:
         '201':
           description: Created entity
@@ -1600,6 +1603,9 @@ components:
     educationClass:
       description: And extension of group representing a class or course
       type: object
+      required:
+        - displayName
+        - classification
       properties:
         # entity
         id:
