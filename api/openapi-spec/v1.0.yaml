@@ -1595,14 +1595,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                resourceId:
-                  type: string
-                tags:
-                  type: array
-                  items:
-                    type: string
+              $ref: '#/components/schemas/tagAssignment' 
     delete:
       tags:
         - tags
@@ -1614,14 +1607,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                resourceId:
-                  type: string
-                tags:
-                  type: array
-                  items:
-                    type: string
+              $ref: '#/components/schemas/tagUnassignment' 
 
 components:
   schemas:
@@ -1634,12 +1620,24 @@ components:
           type: string
           description: The unique idenfier for an entity. Read-only.
           readOnly: true
-    tag:
-      description: Represents a tag.
+    tagAssignment:
+      type: object
       properties:
-        name:
+        resourceId:
           type: string
-          description: The tag name
+        tags:
+          type: array
+          items:
+            type: string
+    tagUnassignment:
+      type: object
+      properties:
+        resourceId:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
     educationOrganization:
       description: Abstract. Represents an organization in educational context
       properties:
