@@ -1565,6 +1565,57 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
+  '/extensions/org.libregraph/tags':
+    get:
+      tags:
+        - tags
+      summary: Get all known tags
+      operationId: GetTags
+      responses:
+        '200':
+          description: Retrieved tags
+          content:
+            application/json:
+              schema:
+                title: Collection of tags
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: string
+        default:
+          $ref: '#/components/responses/error'
+    put:
+      tags:
+        - tags
+      summary: Assign tags to a resource
+      operationId: AssignTags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagAssignment'
+      responses:
+        '200':
+          description: No content
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      tags:
+        - tags
+      summary: Unassign tags from a resource
+      operationId: UnassignTags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagUnassignment'
+      responses:
+        '200':
+          description: No content
+        default:
+          $ref: '#/components/responses/error'
 components:
   schemas:
     entity:
@@ -1576,6 +1627,30 @@ components:
           type: string
           description: The unique idenfier for an entity. Read-only.
           readOnly: true
+    tagAssignment:
+      type: object
+      required:
+        - resourceId
+        - tags
+      properties:
+        resourceId:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    tagUnassignment:
+      type: object
+      required:
+        - resourceId
+        - tags
+      properties:
+        resourceId:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
     educationOrganization:
       description: Abstract. Represents an organization in educational context
       properties:
@@ -2385,6 +2460,18 @@ components:
         type: openIdConnect
         openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
   examples:
+    tags_put:
+      value:
+        resourceId: 7f92b0a9-06ad-49dc-890f-0e0a6eb4dea6$e9f01ca3-577f-4d1d-acd4-1cc44149ac25!5fb9f87c-a317-467b-9882-eb9f171564ac
+        tags:
+          - tag_to_assign_1
+          - tag_to_assign_2
+    tags_delete:
+      value:
+        resourceId: 7f92b0a9-06ad-49dc-890f-0e0a6eb4dea6$e9f01ca3-577f-4d1d-acd4-1cc44149ac25!5fb9f87c-a317-467b-9882-eb9f171564ac
+        tags:
+          - tag_to_unassign_1
+          - tag_to_unassign_2
     educationUser:
       value:
         id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
