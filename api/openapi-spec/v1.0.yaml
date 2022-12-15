@@ -1584,31 +1584,38 @@ paths:
                     type: array
                     items:
                       type: string
+        default:
+          $ref: '#/components/responses/error'
     put:
       tags:
         - tags
+      summary: Assign tags to a resource
       operationId: AssignTags
-      responses:
-        default:
-          $ref: '#/components/responses/error'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/tagAssignment' 
+      responses:
+        '200':
+          description: No content
+        default:
+          $ref: '#/components/responses/error'
     delete:
       tags:
         - tags
+      summary: Unassign tags from a resource
       operationId: UnassignTags
-      responses:
-        default:
-          $ref: '#/components/responses/error'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/tagUnassignment' 
-
+      responses:
+        '200':
+          description: No content
+        default:
+          $ref: '#/components/responses/error'
 components:
   schemas:
     entity:
