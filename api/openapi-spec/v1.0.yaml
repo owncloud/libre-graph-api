@@ -1629,6 +1629,9 @@ components:
           readOnly: true
     tagAssignment:
       type: object
+      required:
+        - resourceId
+        - tags
       properties:
         resourceId:
           type: string
@@ -1638,6 +1641,9 @@ components:
             type: string
     tagUnassignment:
       type: object
+      required:
+        - resourceId
+        - tags
       properties:
         resourceId:
           type: string
