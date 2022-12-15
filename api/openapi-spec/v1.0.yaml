@@ -1595,7 +1595,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/tagAssignment' 
+              $ref: '#/components/schemas/tagAssignment'
       responses:
         '200':
           description: No content
@@ -1610,7 +1610,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/tagUnassignment' 
+              $ref: '#/components/schemas/tagUnassignment'
       responses:
         '200':
           description: No content
@@ -2454,6 +2454,18 @@ components:
         type: openIdConnect
         openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
   examples:
+    tags_put:
+      value:
+        resourceId: 7f92b0a9-06ad-49dc-890f-0e0a6eb4dea6$e9f01ca3-577f-4d1d-acd4-1cc44149ac25!5fb9f87c-a317-467b-9882-eb9f171564ac
+        tags:
+          - tag_to_assign_1
+          - tag_to_assign_2
+    tags_delete:
+      value:
+        resourceId: 7f92b0a9-06ad-49dc-890f-0e0a6eb4dea6$e9f01ca3-577f-4d1d-acd4-1cc44149ac25!5fb9f87c-a317-467b-9882-eb9f171564ac
+        tags:
+          - tag_to_unassign_1
+          - tag_to_unassign_2
     educationUser:
       value:
         id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
