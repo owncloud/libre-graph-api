@@ -16,6 +16,10 @@ The [OpenAPI Specification (OAS)](https://swagger.io/specification/) defines a s
 
 An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.
 
+## Documentation
+
+You can find a rendered version of the [API documentation](https://owncloud.dev/libre-graph-api/) in our dev docs.
+
 ## Clients
 
 Client code can be generated from the API spec. 
