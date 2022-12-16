@@ -1596,6 +1596,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/tagAssignment'
+            examples:
+              assign:
+                $ref: '#/components/examples/tags_put'
       responses:
         '200':
           description: No content
@@ -1611,6 +1614,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/tagUnassignment'
+            examples:
+              unassign:
+                $ref: '#/components/examples/tags_delete'
       responses:
         '200':
           description: No content
