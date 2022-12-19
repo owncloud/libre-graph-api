@@ -2530,4 +2530,4 @@ components:
         classification: course
         externalId: 1234Mathematik
 security:
-  - openId: [ ]
+  - openId: []
