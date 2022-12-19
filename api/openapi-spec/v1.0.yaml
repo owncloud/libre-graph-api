@@ -384,6 +384,14 @@ paths:
         - drives.root
       summary: Get root from arbitrary space
       operationId: GetRoot
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
       responses:
         '200':
           description: Retrieved resource
@@ -1356,7 +1364,7 @@ paths:
           schema:
             type: string
             example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
-        - name: user-id
+        - name: class-id
           in: path
           description: 'key: id of the class to unassign from school'
           required: true
