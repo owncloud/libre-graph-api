@@ -1774,6 +1774,9 @@ components:
         user:
           $ref: '#/components/schemas/identity'
           description: Optional. The user associated with this action.
+        group:
+          $ref: '#/components/schemas/identity'
+          description: Optional. The group associated with this action.
     identity:
       type: object
       required:
