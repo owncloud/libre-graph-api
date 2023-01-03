@@ -671,6 +671,7 @@ paths:
                 - drive
                 - drives
                 - memberOf
+                - appRoleAssignments
               type: string
       responses:
         '200':
@@ -761,6 +762,7 @@ paths:
                 - drive
                 - drives
                 - memberOf
+                - appRoleAssignments
               type: string
       responses:
         '200':
@@ -826,6 +828,100 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/users/{user-id}/appRoleAssignments':
+    description: Provides operations to manage assignments of roles to users.
+    get:
+      tags:
+        - user.appRoleAssignment
+      summary: Get appRoleAssignments from a user
+      description: Represents the global roles a user has been granted for an application.
+      operationId: user.ListAppRoleAssignments
+      responses:
+        200:
+          description: Retrieved appRoleAssignments
+          content:
+            application/json:
+              schema:
+                title: Collection of appRoleAssignments
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/appRoleAssignment'
+                    maxItems: 100
+                  '@odata.nextLink':
+                    type: string
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - user.appRoleAssignment
+      summary: Grant an appRoleAssignment to a user
+      description: |
+        Use this API to assign a global role to a user. To grant an app role assignment to a user, you need three identifiers:
+        * `principalId`: The `id` of the user to whom you are assigning the app role.
+        * `resourceId`: The `id` of the resource `servicePrincipal` or `application` that has defined the app role.
+        * `appRoleId`: The `id` of the `appRole` (defined on the resource service principal or application) to assign to the user.
+      operationId: user.CreateAppRoleAssignments
+      requestBody:
+        description: New app role assignment value
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/appRoleAssignment'
+        required: true
+      responses:
+        200:
+          description: Created new app role assignment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appRoleAssignment'
+        default:
+          $ref: '#/components/responses/error'
+    parameters:
+      - name: user-id
+        in: path
+        description: 'key: id of user'
+        required: true
+        style: simple
+        schema:
+          type: string
+  '/users/{user-id}/appRoleAssignments/{appRoleAssignment-id}':
+    description: Provides operations to manage a global role for an assigned user.
+    delete:
+      tags:
+        - user.appRoleAssignment
+      summary: Delete the appRoleAssignment from a user
+      operationId: user.DeleteAppRoleAssignments
+      parameters:
+        - name: If-Match
+          in: header
+          description: ETag
+          style: simple
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+    parameters:
+      - name: user-id
+        in: path
+        description: 'key: id of user'
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: appRoleAssignment-id
+        in: path
+        description: 'key: id of appRoleAssignment. This is the concatenated {user-id}:{appRole-id} separated by a colon.'
+        required: true
+        style: simple
+        schema:
+          type: string
   /education/users:
     get:
       tags:
@@ -1559,6 +1655,25 @@ paths:
       responses:
         '200':
           description: No content
+        default:
+          $ref: '#/components/responses/error'
+  /application/{application-id}:
+    get:
+      description: 'Get properties of an application by id'
+      parameters:
+        - name: application-id
+          in: path
+          description: 'key: id of application'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/application'
         default:
           $ref: '#/components/responses/error'
 components:
@@ -2359,6 +2474,103 @@ components:
           type: string
         target:
           type: string
+    appRole:
+      title: appRole
+      required:
+        - id
+      type: object
+      properties:
+        allowedMemberTypes:
+          type: array
+          items:
+            type: string
+          description: 'Specifies whether this app role can be assigned to users and groups (by setting to [''User'']), to other application''s (by setting to [''Application''], or both (by setting to [''User'', ''Application'']). App roles supporting assignment to other applications'' service principals are also known as application permissions. The ''Application'' value is only supported for app roles defined on application entities.'
+        description:
+          type: string
+          description: 'The description for the app role. This is displayed when the app role is being assigned and, if the app role functions as an application permission, during  consent experiences.'
+          nullable: true
+        displayName:
+          type: string
+          description: Display name for the permission that appears in the app role assignment and consent experiences.
+          nullable: true
+        id:
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          type: string
+          description: 'Unique role identifier inside the appRoles collection. When creating a new app role, a new GUID identifier must be provided.'
+          format: uuid
+    appRoleAssignment:
+        type: object
+        required:
+          - appRoleId
+          - principalId
+          - resourceId
+        properties:
+          # entity
+          id:
+            type: string
+            description: The unique identifier for the object. 12345678-9abc-def0-1234-56789abcde. The value of the ID property is often, but not exclusively, in the form of a GUID. The value should be treated as an opaque identifier and not based in being a GUID. Null values are not allowed. Read-only.
+            readOnly: true
+          # directory object
+          deletedDateTime:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            format: date-time
+          appRoleId:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            description: 'The identifier (id) for the app role which is assigned to the user. Required on create.'
+            format: uuid
+          createdDateTime:
+            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$'
+            type: string
+            description: 'The time when the app role assignment was created. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.'
+            format: date-time
+            nullable: true
+          principalDisplayName:
+            type: string
+            description: 'The display name of the user, group, or service principal that was granted the app role assignment. Read-only.'
+            nullable: true
+          principalId:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            description: 'The unique identifier (id) for the user, security group, or service principal being granted the app role. Security groups with dynamic memberships are supported. Required on create.'
+            format: uuid
+            nullable: true
+          principalType:
+            type: string
+            description: 'The type of the assigned principal. This can either be User, Group, or ServicePrincipal. Read-only.'
+            nullable: true
+          resourceDisplayName:
+            type: string
+            description: The display name of the resource app's service principal to which the assignment is made.
+            nullable: true
+          resourceId:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            description: The unique identifier (id) for the resource service principal for which the assignment is made. Required on create.
+            format: uuid
+            nullable: true
+    application:
+      type: object
+      required:
+        - id
+      properties:
+          # entity
+          id:
+            type: string
+            description: The unique identifier for the object. 12345678-9abc-def0-1234-56789abcde. The value of the ID property is often, but not exclusively, in the form of a GUID. The value should be treated as an opaque identifier and not based in being a GUID. Null values are not allowed. Read-only.
+            readOnly: true
+          # properties
+          appRoles:
+            type: array
+            description: 'The collection of roles defined for the application. With app role assignments, these roles can be assigned to users, groups, or service principals associated with other applications. Not nullable.'
+            items:
+              $ref: '#/components/schemas/appRole'
+            nullable: false
+          displayName:
+              type: string
+              description: 'The display name for the application.'
+              nullable: true
   responses:
       error:
         description: error
