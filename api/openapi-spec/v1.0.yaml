@@ -1657,7 +1657,7 @@ paths:
           description: No content
         default:
           $ref: '#/components/responses/error'
-  /application/{application-id}:
+  /applications/{application-id}:
     get:
       description: 'Get properties of an application by id'
       parameters:
