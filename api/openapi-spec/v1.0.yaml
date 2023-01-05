@@ -1970,6 +1970,12 @@ components:
         accountEnabled:
           type: boolean
           description: 'Set to "true" when the account is enabled.'
+        appRoleAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/appRoleAssignment'
+          description: The apps and app roles which this user has been assigned.
+          readOnly: true
         displayName:
           type: string
           description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $filter and $orderby.'
