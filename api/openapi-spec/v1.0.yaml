@@ -332,8 +332,6 @@ paths:
                 - displayName
                 - mail
                 - members
-                - onPremisesDomainName
-                - onPremisesSamAccountName
               type: string
         - name: $expand
           in: query
@@ -418,8 +416,6 @@ paths:
                 - description
                 - displayName
                 - members
-                - onPremisesDomainName
-                - onPremisesSamAccountName
               type: string
         - name: $expand
           in: query
@@ -1917,12 +1913,6 @@ components:
           items:
             $ref: '#/components/schemas/user'
           description: 'Users and groups that are members of this group. HTTP Methods: GET (supported for all groups), Nullable. Supports $expand.'
-        onPremisesDomainName:
-          type: string
-          description: 'Contains the on-premises domainFQDN, also called dnsDomainName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.'
-        onPremisesSamAccountName:
-          type: string
-          description: 'Contains the on-premises SAM account name synchronized from the on-premises directory. Read-only.'
         'members@odata.bind':
           type: array
           items:
@@ -2543,12 +2533,6 @@ components:
           items:
             $ref: '#/components/schemas/user'
           description: 'Users and groups that are members of this group. HTTP Methods: GET (supported for all groups), Nullable. Supports $expand.'
-        onPremisesDomainName:
-          type: string
-          description: 'Contains the on-premises domainFQDN, also called dnsDomainName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only. Returned only on $select.'
-        onPremisesSamAccountName:
-          type: string
-          description: 'Contains the on-premises SAM account name synchronized from the on-premises directory. Read-only.'
         'members@odata.bind':
           type: array
           items:
