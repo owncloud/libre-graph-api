@@ -1883,14 +1883,6 @@ components:
           type: string
           description: URL that displays the resource in the browser. Read-only.
           readOnly: true
-        createdByUser:
-          $ref: '#/components/schemas/user'
-          description: Identity of the user who created the item. Read-only.
-          readOnly: true
-        lastModifiedByUser:
-          $ref: '#/components/schemas/user'
-          description: Identity of the user who last modified the item. Read-only.
-          readOnly: true
         # drive
         driveType:
           type: string
@@ -2089,14 +2081,6 @@ components:
         webUrl:
           type: string
           description: URL that displays the resource in the browser. Read-only.
-          readOnly: true
-        createdByUser:
-          $ref: '#/components/schemas/user'
-          description: Identity of the user who created the item. Read-only.
-          readOnly: true
-        lastModifiedByUser:
-          $ref: '#/components/schemas/user'
-          description: Identity of the user who last modified the item. Read-only.
           readOnly: true
         # driveItem
         content:
