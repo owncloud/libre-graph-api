@@ -493,6 +493,40 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/groups/{group-id}/members':
+    get:
+      tags:
+        - group
+      summary: Get a list of the group's direct members
+      operationId: ListMembers
+      parameters:
+        - name: group-id
+          in: path
+          description: 'key: id of group'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      responses:
+        '200':
+          description: Retrieved group members
+          content:
+            application/json:
+              schema:
+                title: Collection of users
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/user'
+              example:
+                - id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+                  onPremisesSAMAccountName: max.mustermann
+                  displayName: Max Mustermann
+                  mail: max.musterman@example.org
+        default:
+          $ref: '#/components/responses/error'
   '/groups/{group-id}/members/$ref':
     post:
       tags:
@@ -1268,6 +1302,48 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/users':
+    get:
+      tags:
+        - educationSchool
+      summary: Get the educationUser resources associated with an educationSchool
+      security:
+        - bearerAuth: []
+      operationId: ListSchoolUsers
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+      responses:
+        '200':
+          description: Retrieved educationUser
+          content:
+            application/json:
+              schema:
+                title: Collection of educationUser
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationClass'
+              example:
+                - id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+                  onPremisesSAMAccountName: max.mustermann
+                  displayName: Max Mustermann
+                  surname: Mustermann
+                  givenName: Max
+                  mail: max.musterman@example.org
+                  primariyRole: student
+                  identities:
+                    - issuer: idp.school.com
+                      issuerAssignedId: max.mustermann
+        default:
+          $ref: '#/components/responses/error'
   '/education/schools/{school-id}/users/$ref':
     post:
       tags:
@@ -1327,6 +1403,46 @@ paths:
       responses:
         '204':
           description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/schools/{school-id}/classes':
+    get:
+      tags:
+        - educationSchool
+      summary: Get the educationClass resources owned by an educationSchool
+      security:
+        - bearerAuth: []
+      operationId: ListSchoolClasses
+      parameters:
+        - name: school-id
+          in: path
+          description: 'key: id of school'
+          required: true
+          schema:
+            type: string
+            example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
+      responses:
+        '200':
+          description: Retrieved classes
+          content:
+            application/json:
+              schema:
+                title: Collection of educationClass
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationClass'
+              example:
+                - id: 86948e45-96a6-43df-b83d-46e92afd30de
+                  displayName: Mathematik
+                  classification: course
+                  externalId: 1234Mathematik
+                - id: 9097631c-24b6-4621-9635-36195a9c8d79
+                  displayName: 10b
+                  classification: class
+                  externalId: 0123_10b
         default:
           $ref: '#/components/responses/error'
   '/education/schools/{school-id}/classes/$ref':
@@ -1538,6 +1654,48 @@ paths:
       responses:
         '204':
           description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/members':
+    get:
+      tags:
+        - educationClass
+      summary: Get the educationClass resources owned by an educationSchool
+      security:
+        - bearerAuth: []
+      operationId: ListClassMembers
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      responses:
+        '200':
+          description: Retrieved class members
+          content:
+            application/json:
+              schema:
+                title: Collection of educationUser
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationUser'
+              example:
+                - id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+                  onPremisesSAMAccountName: max.mustermann
+                  displayName: Max Mustermann
+                  surname: Mustermann
+                  givenName: Max
+                  mail: max.musterman@example.org
+                  primariyRole: student
+                  identities:
+                    - issuer: idp.school.com
+                      issuerAssignedId: max.mustermann
         default:
           $ref: '#/components/responses/error'
   '/education/classes/{class-id}/members/$ref':
