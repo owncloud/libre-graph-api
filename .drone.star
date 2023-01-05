@@ -159,7 +159,8 @@ def generate(ctx, lang):
 					'test -d "templates/{0}" && TEMPLATE_ARG="-t templates/{0}" || TEMPLATE_ARG=""'.format(lang),
 					'/usr/local/bin/docker-entrypoint.sh generate --enable-post-process-file -i api/openapi-spec/v1.0.yaml $${TEMPLATE_ARG} --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"]),
 				],
-			},
+			}
+			] + validate(lang) + [
 			{
 				"name": "diff",
 				"image": "owncloudci/alpine:latest",
@@ -198,8 +199,7 @@ def generate(ctx, lang):
 						],
 					},
 				},
-			},
-			] + validate(lang),
+			}],
 		'depends_on': [],
 		'trigger': {
 			'ref': [
