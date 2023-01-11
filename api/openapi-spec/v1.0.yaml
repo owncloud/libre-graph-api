@@ -1008,7 +1008,7 @@ paths:
                   onPremisesSAMAccountName: max.mustermann
                   displayName: Max Mustermann
                   mail: max.musterman@example.org
-                  primariyRole: student
+                  primaryRole: student
                   identities:
                     - issuer: idp.school.com
                       issuerAssignedId: max.mustermann
@@ -1127,7 +1127,7 @@ paths:
                 surname: Mustermann
                 givenName: Max
                 mail: max.musterman@new.domain
-                primariyRole: student
+                primaryRole: student
                 identities:
                   - issuer: idp.school.com
                     issuerAssignedId: max.mustermann
@@ -2793,7 +2793,7 @@ components:
         surname: Mustermann
         givenName: Max
         mail: max.musterman@example.org
-        primariyRole: student
+        primaryRole: student
         identities:
           - issuer: idp.school.com
             issuerAssignedId: max.mustermann
@@ -2804,7 +2804,7 @@ components:
         surname: Mustermann
         givenName: Max
         mail: max.musterman@example.org
-        primariyRole: student
+        primaryRole: student
         identities:
           - issuer: idp.school.com
             issuerAssignedId: max.mustermann
