@@ -1811,6 +1811,27 @@ paths:
           description: No content
         default:
           $ref: '#/components/responses/error'
+  /applications:
+    get:
+      tags:
+        - applications
+      summary: Get all applications
+      operationId: ListApplications
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of applications
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/application'
+        default:
+          $ref: '#/components/responses/error'
   /applications/{application-id}:
     get:
       description: 'Get properties of an application by id'
