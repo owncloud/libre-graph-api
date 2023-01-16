@@ -1834,6 +1834,10 @@ paths:
           $ref: '#/components/responses/error'
   /applications/{application-id}:
     get:
+      tags:
+        - applications
+      summary: Get application by id
+      operationId: GetApplication
       description: 'Get properties of an application by id'
       parameters:
         - name: application-id
