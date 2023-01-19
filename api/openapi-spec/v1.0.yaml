@@ -2584,6 +2584,10 @@ components:
       description: 'The Permission resource provides information about a sharing permission granted for a DriveItem resource.'
       readOnly: true
       properties:
+        expirationDateTime:
+          type: string
+          description: An optional expiration date which limits the permission in time.
+          format: date-time
         grantedToIdentities:
           type: array
           items:
