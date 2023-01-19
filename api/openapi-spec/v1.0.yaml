@@ -1754,6 +1754,108 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/teachers':
+    get:
+      tags:
+        - educationClass.teachers
+      summary: Get the teachers for a class
+      security:
+        - bearerAuth: []
+      operationId: GetTeachers
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      responses:
+        '200':
+          description: Retrieved class teachers
+          content:
+            application/json:
+              schema:
+                title: Collection of educationUser
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/educationUser'
+              example:
+                - id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+                  onPremisesSAMAccountName: max.mustermann
+                  displayName: Max Mustermann
+                  surname: Mustermann
+                  givenName: Max
+                  mail: max.musterman@example.org
+                  primariyRole: teacher
+                  identities:
+                    - issuer: idp.school.com
+                      issuerAssignedId: max.mustermann
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/teachers/$ref':
+    post:
+      tags:
+        - educationClass.teachers
+      summary: Assign a teacher to a class
+      security:
+        - bearerAuth: []
+      operationId: AddTeacherToClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+            example: 86948e45-96a6-43df-b83d-46e92afd30de
+      requestBody:
+        description: educationUser to be added as teacher
+        content:
+          application/json:
+            schema:
+              title: Class Teacher Reference
+              type: object
+              properties:
+                '@odata.id':
+                  type: string
+                  example: "https://<hostname>/graph/v1.0/education/users/90eedea1-dea1-90ee-a1de-ee90a1deee90"
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+  '/education/classes/{class-id}/teachers/{user-id}/$ref':
+    delete:
+      tags:
+        - educationClass.teachers
+      summary: Unassign user as teacher of a class
+      security:
+        - bearerAuth: []
+      operationId: DeleteTeacherFromClass
+      parameters:
+        - name: class-id
+          in: path
+          description: 'key: id of class'
+          required: true
+          schema:
+            type: string
+        - name: user-id
+          in: path
+          description: 'key: id of the user to unassign as teacher'
+          required: true
+          schema:
+            type: string
+            example: 90eedea1-dea1-90ee-a1de-ee90a1deee90
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
   '/extensions/org.libregraph/tags':
     get:
       tags:
