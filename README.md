@@ -1,12 +1,15 @@
 # Libre Graph Api
 
-An API for open Cloud Collaboration.
+An API for open Cloud Collaboration. See the [Libre Graph Home](https://libregraph.github.io/) for more details.
 
 This API is inspired by [Microsoft Graph API](https://developer.microsoft.com/en-us/graph).
 
+
 ## Goal
 
-This projects goal is to provide an open source standard for open Cloud Collaboration.
+The project goal is to provide an open source standard for open Cloud Collaboration.
+
+Libre Graph is open source and open to any open source project that implements endpoints of the API.
 
 ## Specification
 
@@ -22,7 +25,13 @@ You can find a rendered version of the [API documentation](https://owncloud.dev/
 
 ## Clients
 
-Client code can be generated from the API spec. 
+Client code can be generated from the API spec.
+
+For example, to run the generator for the C++ bindings locally, run the following docker based command:
+```bash
+docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate --enable-post-process-file  -t local/templates/cpp-qt-client  -i local/api/openapi-spec/v1.0.yaml -g cpp-qt-client -o /local/out/cpp
+```
+That generates the output in out/cpp.
 
 
 ### Available client libraries
