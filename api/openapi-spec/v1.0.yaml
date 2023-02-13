@@ -1225,7 +1225,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1252,7 +1252,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1288,7 +1288,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1309,7 +1309,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1351,7 +1351,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1384,7 +1384,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1412,7 +1412,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1452,7 +1452,7 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
@@ -1485,14 +1485,14 @@ paths:
       parameters:
         - name: school-id
           in: path
-          description: 'key: id of school'
+          description: 'key: id or schoolNumber of school'
           required: true
           schema:
             type: string
             example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
         - name: class-id
           in: path
-          description: 'key: id of the class to unassign from school'
+          description: 'key: id or externalId of the class to unassign from school'
           required: true
           schema:
             type: string
@@ -1574,7 +1574,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1601,7 +1601,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1642,7 +1642,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1663,7 +1663,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1705,7 +1705,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1738,7 +1738,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1765,7 +1765,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1807,7 +1807,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
@@ -1840,7 +1840,7 @@ paths:
       parameters:
         - name: class-id
           in: path
-          description: 'key: id of class'
+          description: 'key: id or externalId of class'
           required: true
           schema:
             type: string
