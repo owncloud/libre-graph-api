@@ -76,7 +76,7 @@ paths:
       operationId: ListMyDrives
       parameters:
         - $ref: '#/components/parameters/orderby'
-        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/drivesFilter'
       responses:
         '200':
           description: Retrieved spaces
@@ -110,7 +110,7 @@ paths:
       operationId: ListAllDrives
       parameters:
         - $ref: '#/components/parameters/orderby'
-        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/drivesFilter'
       responses:
         '200':
           description: Retrieved spaces
@@ -299,11 +299,7 @@ paths:
       summary: Get entities from groups
       operationId: ListGroups
       parameters:
-        - $ref: '#/components/parameters/top'
-        - $ref: '#/components/parameters/skip'
         - $ref: '#/components/parameters/search'
-        - $ref: '#/components/parameters/filter'
-        - $ref: '#/components/parameters/count'
         - name: $orderby
           in: query
           description: Order items by property values
@@ -397,7 +393,7 @@ paths:
       parameters:
         - name: group-id
           in: path
-          description: 'key: id of group'
+          description: 'key: id or name of group'
           required: true
           schema:
             type: string
@@ -498,7 +494,7 @@ paths:
       parameters:
         - name: group-id
           in: path
-          description: 'key: id of group'
+          description: 'key: id or name of group'
           required: true
           schema:
             type: string
@@ -649,11 +645,8 @@ paths:
       summary: Get entities from users
       operationId: ListUsers
       parameters:
-        - $ref: '#/components/parameters/top'
-        - $ref: '#/components/parameters/skip'
         - $ref: '#/components/parameters/search'
-        - $ref: '#/components/parameters/filter'
-        - $ref: '#/components/parameters/count'
+        - $ref: '#/components/parameters/usersFilter'
         - name: $orderby
           in: query
           description: Order items by property values
@@ -755,7 +748,7 @@ paths:
       parameters:
         - name: user-id
           in: path
-          description: 'key: id of user'
+          description: 'key: id or name of user'
           required: true
           schema:
             type: string
@@ -842,7 +835,7 @@ paths:
       parameters:
         - name: user-id
           in: path
-          description: 'key: id of user'
+          description: 'key: id or name of user'
           required: true
           schema:
             type: string
@@ -2030,10 +2023,10 @@ components:
         # group
         description:
           type: string
-          description: 'An optional description for the group. Returned by default. Supports $filter (eq, ne, not, ge, le, startsWith) and $search.'
+          description: 'An optional description for the group. Returned by default.'
         displayName:
           type: string
-          description: 'The display name for the group. This property is required when a group is created and cannot be cleared during updates. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values), $search, and $orderBy.'
+          description: 'The display name for the group. This property is required when a group is created and cannot be cleared during updates. Returned by default. Supports $search and $orderBy.'
         members:
           type: array
           items:
@@ -2069,7 +2062,7 @@ components:
           description: 'Set to "true" when the account is enabled.'
         displayName:
           type: string
-          description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $filter and $orderby.'
+          description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $orderby.'
         drives:
           type: array
           items:
@@ -2088,7 +2081,7 @@ components:
             $ref: '#/components/schemas/objectIdentity'
         mail:
           type: string
-          description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
+          description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default.'
         memberOf:
           type: array
           items:
@@ -2101,10 +2094,10 @@ components:
           $ref: '#/components/schemas/passwordProfile'
         surname:
           type: string
-          description: The user's surname (family name or last name). Returned by default. Supports $filter.
+          description: The user's surname (family name or last name). Returned by default.
         givenName:
           type: string
-          description: The user's givenName. Returned by default. Supports $filter.
+          description: The user's givenName. Returned by default.
         primaryRole:
           type: string
           description: 'The user`s default role. Such as "student" or "teacher"'
@@ -2252,7 +2245,7 @@ components:
           readOnly: true
         displayName:
           type: string
-          description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $filter and $orderby.'
+          description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $orderby.'
         drives:
           type: array
           items:
@@ -2271,7 +2264,7 @@ components:
             $ref: '#/components/schemas/objectIdentity'
         mail:
           type: string
-          description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default. Supports $filter and endsWith.'
+          description: 'The SMTP address for the user, for example, ''jeff@contoso.onowncloud.com''. Returned by default.'
         memberOf:
           type: array
           items:
@@ -2284,10 +2277,10 @@ components:
           $ref: '#/components/schemas/passwordProfile'
         surname:
           type: string
-          description: The user's surname (family name or last name). Returned by default. Supports $filter.
+          description: The user's surname (family name or last name). Returned by default.
         givenName:
           type: string
-          description: The user's givenName. Returned by default. Supports $filter.
+          description: The user's givenName. Returned by default.
     itemReference:
       type: object
       properties:
@@ -2650,10 +2643,10 @@ components:
           readOnly: true
         description:
           type: string
-          description: 'An optional description for the group. Returned by default. Supports $filter (eq, ne, not, ge, le, startsWith) and $search.'
+          description: 'An optional description for the group. Returned by default.'
         displayName:
           type: string
-          description: 'The display name for the group. This property is required when a group is created and cannot be cleared during updates. Returned by default. Supports $filter (eq, ne, not, ge, le, in, startsWith, and eq on null values), $search, and $orderBy.'
+          description: 'The display name for the group. This property is required when a group is created and cannot be cleared during updates. Returned by default. Supports $search and $orderBy.'
         members:
           type: array
           items:
@@ -2862,7 +2855,7 @@ components:
       description: Search items by search phrases
       schema:
         type: string
-    filter:
+    drivesFilter:
       name: $filter
       in: query
       description: Filter items by property values
@@ -2873,6 +2866,17 @@ components:
           value: driveType eq 'project'
         filter by id:
           value: id eq 'uuid'
+    usersFilter:
+      name: $filter
+      in: query
+      description: Filter users by property values and relationship attributes
+      schema:
+        type: string
+      examples:
+        filter by group membership:
+          value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf)
+        filter by membership in multiple groups:
+          value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
     count:
       name: $count
       in: query
