@@ -2878,6 +2878,10 @@ components:
           value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf)
         filter by membership in multiple groups:
           value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
+        filter by appRoleAssignments:
+          value: appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf)
+        filter by appRoleAssignments and group membership:
+          value: appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
     count:
       name: $count
       in: query
