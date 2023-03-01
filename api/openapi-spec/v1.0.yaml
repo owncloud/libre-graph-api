@@ -1099,7 +1099,7 @@ paths:
       parameters:
         - name: user-id
           in: path
-          description: 'key: id of user'
+          description: 'key: id or username of user'
           required: true
           schema:
             type: string
@@ -1145,7 +1145,7 @@ paths:
       parameters:
         - name: user-id
           in: path
-          description: 'key: id of user'
+          description: 'key: id or username of user'
           required: true
           schema:
             type: string
@@ -1391,7 +1391,7 @@ paths:
             example: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
         - name: user-id
           in: path
-          description: 'key: id of the user to unassign from school'
+          description: 'key: id or username of the user to unassign from school'
           required: true
           schema:
             type: string
@@ -1434,7 +1434,7 @@ paths:
                 - id: 86948e45-96a6-43df-b83d-46e92afd30de
                   displayName: Mathematik
                   classification: course
-                  externalId: 1234Mathematik
+                  externalId: ac528aea-978e-415c-a733-c4ba235d3388
                 - id: 9097631c-24b6-4621-9635-36195a9c8d79
                   displayName: 10b
                   classification: class
@@ -1527,7 +1527,7 @@ paths:
                 - id: 86948e45-96a6-43df-b83d-46e92afd30de
                   displayName: Mathematik
                   classification: course
-                  externalId: 1234Mathematik
+                  externalId: ac528aea-978e-415c-a733-c4ba235d3388
                 - id: 9097631c-24b6-4621-9635-36195a9c8d79
                   displayName: 10b
                   classification: class
@@ -1614,7 +1614,7 @@ paths:
               $ref: '#/components/schemas/educationClass'
             example:
               displayName: Musik
-              externalId: 1234Musik
+              externalId: cb766da3-bab1-478a-9615-f99d4c59c09a
         required: true
       responses:
         '200':
@@ -1627,7 +1627,7 @@ paths:
                 id: 86948e45-96a6-43df-b83d-46e92afd30de
                 displayName: Musik
                 classification: course
-                externalId: 1234Musik
+                externalId: cb766da3-bab1-478a-9615-f99d4c59c09a
         '204':
           description: Success
         default:
@@ -1744,7 +1744,7 @@ paths:
             type: string
         - name: user-id
           in: path
-          description: 'key: id of the user to unassign from class'
+          description: 'key: id or username of the user to unassign from class'
           required: true
           schema:
             type: string
@@ -1846,7 +1846,7 @@ paths:
             type: string
         - name: user-id
           in: path
-          description: 'key: id of the user to unassign as teacher'
+          description: 'key: id or username of the user to unassign as teacher'
           required: true
           schema:
             type: string
@@ -2952,11 +2952,11 @@ components:
         id: 86948e45-96a6-43df-b83d-46e92afd30de
         displayName: Mathematik
         classification: course
-        externalId: 1234Mathematik
+        externalId: ac528aea-978e-415c-a733-c4ba235d3388
     educationClass_post:
       value:
         displayName: Mathematik
         classification: course
-        externalId: 1234Mathematik
+        externalId: ac528aea-978e-415c-a733-c4ba235d3388
 security:
   - openId: []
