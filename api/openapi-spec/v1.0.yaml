@@ -1530,6 +1530,28 @@ paths:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
 
+  /v1beta1/invitations:
+    post:
+      tags:
+        - invitations
+      summary: Invite a user to the organization
+      operationId: CreateInvitation
+      requestBody:
+        description: New invitation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/invitation'
+        required: true
+      responses:
+        '201':
+          description: Created invitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invitation'
+        default:
+          $ref: '#/components/responses/error'
   /v1.0/users:
     get:
       tags:
@@ -3313,6 +3335,31 @@ components:
         id:
           type: string
           description: Unique identifier for the identity.
+    invitation:
+      type: object
+      required:
+        - invitedUserEmailAddress
+        - inviteRedirectUrl
+      properties:
+        invitedUserDisplayName:
+          type: string
+          description: The display name of the user being invited.
+        invitedUserEmailAddress:
+          type: string
+          description: The email address of the user being invited. Required.
+        inviteRedirectUrl:
+          type: string
+          description: The URL the user should be redirected to once the invitation is redeemed. Required.
+        sendInvitationMessage:
+          type: boolean
+          description: Indicates whether an email should be sent to the user being invited. The default is false.
+        status:
+          type: string
+          enum: [PendingAcceptance, Completed, InProgress, Error]
+          description: 'The status of the invitation. Possible values are: ''PendingAcceptance'', ''Completed'', ''InProgress'', and ''Error''.'
+        invitedUser:
+          $ref: '#/components/schemas/user'
+          description: The user created as part of the invitation creation. Read-Only
     objectIdentity:
       description: Represents an identity used to sign in to a user account
       type: object
