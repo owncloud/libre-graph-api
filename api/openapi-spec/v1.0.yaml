@@ -1657,12 +1657,14 @@ paths:
               enum:
                 - id
                 - displayName
+                - givenName
                 - drive
                 - drives
                 - mail
                 - memberOf
                 - onPremisesSamAccountName
                 - surname
+                - userType
               type: string
         - name: $expand
           in: query
@@ -3399,6 +3401,9 @@ components:
         displayName:
           type: string
           description: 'The name displayed in the address book for the user. This value is usually the combination of the user''s first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Returned by default. Supports $orderby.'
+        givenName:
+          type: string
+          description: The user's givenName. Returned by default.
         drives:
           type: array
           items:
@@ -3431,14 +3436,12 @@ components:
         surname:
           type: string
           description: The user's surname (family name or last name). Returned by default.
-        givenName:
-          type: string
-          description: The user's givenName. Returned by default.
-        userType:
-          type: string
-          description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
         preferredLanguage:
             $ref: '#/components/schemas/language'
+        userType:
+          type: string
+          enum: [Member, Guest]
+          description: 'A string value that can be used to classify user types in your directory, such as ''Member'' and ''Guest''. Returned only on $select. Supports $filter.'
     itemReference:
       type: object
       properties:
