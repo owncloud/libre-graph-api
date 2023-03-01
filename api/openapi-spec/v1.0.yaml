@@ -2874,14 +2874,18 @@ components:
       schema:
         type: string
       examples:
-        filter by group membership:
+        list all user of a group:
           value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf)
-        filter by membership in multiple groups:
+        list all users that are a member of both groups:
           value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
-        filter by appRoleAssignments:
+        list all users that are a member of either one or both groups:
+          value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) or memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
+        list all users with a specific role assignd:
           value: appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf)
-        filter by appRoleAssignments and group membership:
+        list all users that are a member of the group and have a specific role assigned:
           value: appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
+        list all users that are a member of any of groups and have a specific role assigned:
+          value: (memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) or memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)) and appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf)
     count:
       name: $count
       in: query
