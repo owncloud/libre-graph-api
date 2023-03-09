@@ -2102,6 +2102,9 @@ components:
         primaryRole:
           type: string
           description: 'The user`s default role. Such as "student" or "teacher"'
+        userType:
+          type: string
+          description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
     drive:
       description: The drive represents a space on the storage.
       type: object
@@ -2282,6 +2285,9 @@ components:
         givenName:
           type: string
           description: The user's givenName. Returned by default.
+        userType:
+          type: string
+          description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
     itemReference:
       type: object
       properties:
