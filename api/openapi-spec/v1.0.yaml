@@ -852,6 +852,35 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/users/{user-id}/exportPersonalData':
+    post:
+      tags:
+        - user
+      summary: export personal data of a user
+      operationId: ExportPersonalData
+      parameters:
+        - name: user-id
+          in: path
+          description: 'key: id or name of user'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: user
+      requestBody:
+        description: destination the file should be created at
+        content:
+          application/json:
+            schema:
+              properties:
+                storageLocation:
+                  type: string
+                  description: the path where the file should be created in the users personal space
+      responses:
+        200:
+          description: success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   '/users/{user-id}/appRoleAssignments':
     description: Provides operations to manage assignments of roles to users.
     get:
