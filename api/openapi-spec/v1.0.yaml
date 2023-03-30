@@ -2683,6 +2683,11 @@ components:
         displayName:
           type: string
           description: 'The display name for the group. This property is required when a group is created and cannot be cleared during updates. Returned by default. Supports $search and $orderBy.'
+        groupTypes:
+          description: 'Specifies the group types. In MS Graph a group can have multiple types, so this is an array. In libreGraph the possible group types deviate from the MS Graph. The only group type that we currently support is "ReadOnly", which is set for groups that cannot be modified on the current instance.'
+          type: array
+          items:
+            type: string
         members:
           type: array
           items:
