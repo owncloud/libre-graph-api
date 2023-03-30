@@ -876,7 +876,7 @@ paths:
                   type: string
                   description: the path where the file should be created in the users personal space
       responses:
-        200:
+        202:
           description: success
         default:
           $ref: '#/components/responses/error'
