@@ -20,10 +20,10 @@ if (WIN32)
     set(BUILD_SHARED_LIBS OFF)
 endif ()
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Network REQUIRED){{#authMethods}}{{#isOAuth}}
-find_package(Qt5Gui REQUIRED){{/isOAuth}}{{/authMethods}}{{#contentCompression}}
-find_package(ZLIB REQUIRED){{/contentCompression}}
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Network REQUIRED)
+
+find_package(ZLIB REQUIRED)
 
 add_library(client
 {{#models}}
@@ -50,7 +50,7 @@ target_include_directories(client PUBLIC
 
 add_library(OpenAPI::${TARGET_NAME} ALIAS client)
 
-target_link_libraries(client PRIVATE Qt5::Core Qt5::Network{{#authMethods}}{{#isOAuth}} Qt5::Gui{{/isOAuth}}{{/authMethods}}{{#contentCompression}} ${ZLIB_LIBRARIES}{{/contentCompression}})
+target_link_libraries(client PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Gui ZLIB::ZLIB)
 
 set_target_properties(client PROPERTIES
                 CXX_STANDARD 14
@@ -90,7 +90,9 @@ include(CMakePackageConfigHelpers)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/Config.cmake.in"
 "@PACKAGE_INIT@
 include(CMakeFindDependencyMacro)
-find_dependency(Qt5Core)
+find_dependency(Qt${QT_VERSION_MAJOR}Core)
+find_dependency(Qt${QT_VERSION_MAJOR}Gui)
+find_dependency(Qt${QT_VERSION_MAJOR}Network)
 
 include(\"\${CMAKE_CURRENT_LIST_DIR}/@TARGET_NAME@Targets.cmake\")"
 )
