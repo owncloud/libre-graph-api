@@ -223,9 +223,12 @@ def validate(lang):
 				"name": "validate-cpp",
 				"image": "owncloudci/client",
 				"commands": [
-					"cd %s/client" % config["languages"][lang]["src"],
-					"cmake -GNinja .",
-					"ninja -j1",
+					"mkdir build-qt",
+					"cd build-qt",
+					"cmake -GNinja -S ../%s/client" % config["languages"][lang]["src"],
+					"ninja",
+					"cd ..",
+					"rm -Rf build-qt",
 				]
 			}
 		],
