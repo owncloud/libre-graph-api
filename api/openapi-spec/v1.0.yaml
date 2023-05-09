@@ -2551,6 +2551,15 @@ components:
           $ref: '#/components/schemas/fileSystemInfo'
         folder:
            $ref: '#/components/schemas/folder'
+        driveAlias:
+          type: string
+          description: "The drive alias can be used in clients to make the urls user friendly. Example: 'personal/einstein'. This will be used to resolve to the correct driveID."
+        path:
+          type: string
+          description: "The relative path of the item in relation to its drive root."
+        rootId:
+          type: string
+          description: Unique identifier for the drive root of this item. Read-only.
         id:
           type: string
           description: Unique identifier for the remote item in its drive. Read-only.
