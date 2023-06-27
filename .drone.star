@@ -24,7 +24,7 @@ config = {
 			'branch': 'main',
 		},
 	},
-	'openapi-generator-image': 'openapitools/openapi-generator-cli:v6.2.0@sha256:e6153ebc2f1a54985a50c53942e40285f1fbe64f1c701317da290bfff4abe303'
+	'openapi-generator-image': 'openapitools/openapi-generator-cli:v6.6.0@sha256:ea027f3c48c1ee54b2e23d7434ef03050bc80c55d39205789608ae7f71e040d5'
 }
 
 def main(ctx):
