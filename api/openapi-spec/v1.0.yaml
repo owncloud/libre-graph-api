@@ -1203,6 +1203,7 @@ paths:
                 - id: 0e19303e-8144-44bd-86d8-35cc8ac9c255
                   displayName: Gymnasium Musterstadt
                   schoolNumber: '0123'
+                  terminationDate: 2023-06-30T00:00:00Z
                 - id: 43b879c4-14c6-4e0a-9b3f-b1b33c5a4bd4
                   displayName: Realschule Musterstadt
                   schoolNumber: '1234'
@@ -1286,8 +1287,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/educationSchool'
-            example:
-              schoolNumber: '1234'
+            examples:
+              schoolNumber:
+                $ref: '#/components/examples/educationSchool_patchNumber'
+              schoolTerminationDate:
+                $ref: '#/components/examples/educationSchool_patchTerminationDate'
+              deleteSchoolTerminationDate:
+                $ref: '#/components/examples/educationSchool_deleteTerminationDate'
         required: true
       responses:
         '200':
@@ -1305,6 +1311,7 @@ paths:
       tags:
         - educationSchool
       summary: Delete school
+      description: Deletes a school. A school can only be delete if it has the terminationDate property set. And if that termination Date is in the past.
       security:
         - bearerAuth: []
       operationId: DeleteSchool
@@ -2038,6 +2045,11 @@ components:
         schoolNumber:
           type: string
           description: School number
+        terminationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time at which the service for this organization is scheduled to be terminated
     educationClass:
       description: And extension of group representing a class or course
       type: object
@@ -3009,6 +3021,18 @@ components:
       value:
         displayName: Realschule Musterstadt
         schoolNumber: '1234'
+    educationSchool_patchNumber:
+      value:
+        schoolNumber: '1234'
+      summary: Update Schoolnumber
+    educationSchool_patchTerminationDate:
+      value:
+        terminationDate: 2023-06-30T00:00:00Z
+      summary: Set a termination date for a school
+    educationSchool_deleteTerminationDate:
+      value:
+        terminationDate: null
+      summary: Delete termination date from school
     educationClass:
       value:
         id: 86948e45-96a6-43df-b83d-46e92afd30de
