@@ -2,7 +2,7 @@ config = {
 	'name': 'libre-graph-api',
 	'rocketchat': {
 		'channel': 'builds',
-		'from_secret': 'private_rocketchat'
+		'from_secret': 'rocketchat_chat_webhook'
 	},
 	'branches': [
 		'main'
