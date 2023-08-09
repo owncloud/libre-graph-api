@@ -275,6 +275,589 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/drives/{drive-id}/items/{item-id}/createLink':
+    post:
+      tags:
+        - drives.permissions
+      summary: Create a sharing link for a DriveItem
+      operationId: CreateLink
+      description: |
+        You can use createLink action to share a driveItem via a sharing link.
+
+        The **createLink** action will create a new sharing link if the specified link type doesn't already exist
+        for the calling application. If a sharing link of the specified type already exists for the app, the
+        existing sharing link will be returned.
+
+        DriveItem resources inherit sharing permissions from their ancestors.
+      
+        ## Link types
+
+        For now, The following values are allowed for the type parameter.
+        
+        | Type value      | Description                                                                                                                                                                                                           |
+        | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | view            | Creates a read-only link to the driveItem.                                                                                                                                                                            |
+        | edit            | Creates an read-write link to the driveItem.                                                                                                                                                                          |
+        | blocksDownload  | Creates a read-only link that blocks download to the driveItem.                                                                                                                                                       |
+        | createOnly      | Creates an upload-only link to the driveItem.                                                                                                                                                                         |
+
+        More built in types might be added with a speaking value but clients **MUST** treat the value as an
+        opaque identifier as custom types will be using UUIDs.
+
+      #  | embed           | Creates an embeddable link to the driveItem.                                                                                                                                                                          |
+      #  | review          | Creates a review link to the driveItem.                                                                                                                                                                               |
+      #  | addressBar      | Creates the default link that is shown in the browser address bars for newly created files. The organization admin configures whether this link type is supported, and what features are supported by this link type. |
+      #  | adminDefault    | Creates the default link to the driveItem as determined by the administrator of the organization. The policy is enforced for the organization by the admin                                                            |
+
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+      requestBody:
+        description: In the request body, provide a JSON object with the following parameters.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Optional. The type of sharing link to create.
+                expirationDateTime:
+                  type: string
+                  description: Optional. A String with format of yyyy-MM-ddTHH:mm:ssZ of DateTime indicates the expiration time of the permission.
+                  format: date-time
+                password: 
+                  type: string
+                  description: Optional.The password of the sharing link that is set by the creator.
+
+                # to invite guests or specify which users should be sent the link we could add this
+                #recipients:
+                #  type: array
+                #  items:
+                #    $ref: '#/components/schemas/driveRecipient'
+                #  description: A collection of recipients who will receive access and the sharing link.
+
+                # can be added later
+                #scope:
+                #  type: string
+                #  description: Optional. The scope of link to create. Either `anonymous`, `organization`, or `users`.
+
+                # In ocis recipients configure if they want to be notified
+                #sendNotification:
+                #  type: boolean
+                #  description: Optional. If `true`, this method sends a sharing link in an email to users specified in recipients. The default value is `false`. Optional.
+
+                # not supported by ocis
+                #retainInheritedPermissions:
+                #  type: boolean
+                #  description: Optional. If `true` (default), any existing inherited permissions are retained on the shared item when sharing this item for the first time. If `false`, all existing permissions are removed when sharing for the first time.
+            examples:
+                create viewer link:
+                  value:
+                    type: "view"
+                create editor link with expiry:
+                  value:
+                    type: "edit"
+                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permission'
+              examples:
+                send viewer invite:
+                  value:
+                    - id: "7181275c-557e-4adf-8e44-abdcf5389b6a"
+                      link:
+                        type: "view"
+                        webUrl: "https://cloud.example.org/s/YlaySZdHCRHUDeE"
+                send editor invite with expiry:
+                  value:
+                    - id: "a373c812-d786-42ae-a65f-ed87ee4abd49"
+                      link:
+                        type: "edit"
+                        webUrl: "https://cloud.example.org/s/MlnTDkhcBlihNzO"
+        '207':
+          description: Partial success response TODO
+        default:
+          $ref: '#/components/responses/error'
+          # TODO add SendNotification errors as per https://learn.microsoft.com/en-us/graph/api/driveitem-invite?view=graph-rest-beta&tabs=http#sendnotification-errors
+      x-ms-docs-operation-type: operation
+  '/drives/{drive-id}/items/{item-id}/invite':
+    post:
+      tags:
+        - drives.permissions
+      summary: Send a sharing invitation
+      operationId: Invite
+      description: |
+        Sends a sharing invitation for a `driveItem`. A sharing invitation provides permissions to the
+        recipients and optionally sends them an email with a sharing link.
+
+        ## Roles property values
+        For now, roles are only identified by a uuid. There are no hardcoded aliases like `read` or `write` because role actions can be completely customized.
+      # FIXME we should add isBuiltIn and isEnabled to unifiedRoleDefinition so we can use speaking role ids in examples and establish a well defined set of roles.
+      # By throwing around only uuids we increase the risk of someone choosing an ambiguous or misleading displayname. We will have to define a set of default
+      # sharing permissions. For those we should use speaking ids.
+      #
+      #  For now, the following roles are considered built in:
+      #  
+      #  | Role    | Value   | Description                                                                                                           |
+      #  | ------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
+      #  | Viewer  | `read`  | Provides the ability to read the metadata and contents of the item.                                                   |
+      #  | Editor  | `write` | Provides the ability to read and modify the metadata and contents of the item.                                        |
+      #  | Manager | `owner` | For project drives this represents the Manager role to mimic ms graph                                                 |
+      #
+      #  More built in roles will be added with a speaking value but clients **MUST** treat the value as an
+      #  opaque identifier as custom roles will be using UUIDs.
+
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+      requestBody:
+        description: In the request body, provide a JSON object with the following parameters. To create a custom role submit a list of actions instead of roles.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/driveItemInvite'
+            examples:
+                send viewer invite:
+                  value:
+                    recipients:
+                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                send viewer invite to multiple recipients:
+                  value:
+                    recipients:
+                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                send editor invite with expiry:
+                  value:
+                    recipients:
+                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+                send manager invite to group:
+                  description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
+                  value:
+                    recipients:
+                    - "@libre.graph.recipient.type": group
+                      objectId: "167cbee2-0518-455a-bfb2-031fe0621e5d"
+                    roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                send invite to user granting custom actions:
+                  description: "A Custom role is just a collection of actions, in this case allowing the user to stat and move driveItems"
+                  value:
+                    recipients:
+                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    actions: [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permission'
+              examples:
+                send viewer invite:
+                  value:
+                    - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
+                      roles: [ "read" ]
+                      grantedToV2:
+                        - user:
+                            id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                            displayName: "Albert Einstein"
+                send editor invite with expiry:
+                  value:
+                    - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                      roles: [ "write" ]
+                      grantedToV2:
+                        - user:
+                            id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                            displayName: "Albert Einstein"
+                send viewer invite to multiple recipients:
+                  description: multiple permissions are returned as each has received a dedicated sharing id
+                  value:
+                    - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                      roles: [ "write" ]
+                      grantedToV2:
+                        - user:
+                            id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                            displayName: "Albert Einstein"
+                    - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
+                      roles: [ "write" ]
+                      grantedToV2:
+                        - user:
+                            id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
+                            displayName: "Marie Skłodowska Curie"
+                send manager invite to group:
+                  value:
+                    - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                      roles: [ "owner" ]
+                      grantedToV2:
+                        - group:
+                            id: "167cbee2-0518-455a-bfb2-031fe0621e5d"
+                            displayName: "Philosophy Haters"
+        '207':
+          description: Partial success response TODO
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/odata.error'
+              examples:
+                secureSharingInvalidRequest:
+                  description: If the recipient was given via email, but does not belong to a known user account.
+                  value:
+                    - error:
+                      - code: invalidRequest
+                        message: Some users in the request cannot be invited securely.
+                        innerError:
+                          - code: secureSharingInvalidRequest
+                            date: "2023-09-14T12:27:15"
+                            request-id: b49f582d-9a0f-4731-ab0c-b9e50246ef58
+                            client-request-id: 832c7206-1a40-395c-e0d9-e85649b8b0b0
+        default:
+          $ref: '#/components/responses/error'
+          # TODO add SendNotification errors as per https://learn.microsoft.com/en-us/graph/api/driveitem-invite?view=graph-rest-beta&tabs=http#sendnotification-errors
+      x-ms-docs-operation-type: operation
+  '/drives/{drive-id}/items/{item-id}/permissions':
+    get:
+      tags:
+        - drives.permissions
+      summary: List the effective sharing permissions on a driveItem.
+      operationId: ListPermissions
+      description: |
+        The permissions collection includes potentially sensitive information and may not be available for every caller.
+
+        * For the owner of the item, all sharing permissions will be returned. This includes co-owners.
+        * For a non-owner caller, only the sharing permissions that apply to the caller are returned.
+        * Sharing permission properties that contain secrets (e.g. `shareId` and `webUrl`) are only returned for callers that are able to create the sharing permission.
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+      responses:
+        '200':
+          description: Retrieved resource
+          content:
+            application/json:
+              schema:
+                title: Collection of permissions
+                type: object
+                properties:
+                  '@libre.graph.permissions.roles.allowedValues':
+                    type: array
+                    description: A list of role definitions that can be chosen for the resource.
+                    items:
+                      $ref: '#/components/schemas/unifiedRoleDefinition'
+                  '@libre.graph.permissions.actions.allowedValues':
+                    type: array
+                    description: |
+                      A list of actions that can be chosen for a custom role.
+
+                      Following the CS3 API we can represent the CS3 permissions by mapping them to driveItem properties or relations like this:
+                      | [CS3 ResourcePermission](https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourcePermissions) | action | comment |
+                      | ------------------------------------------------------------------------------------------------------------ | ------ | ------- |
+                      | `stat` | `libre.graph/driveItem/basic/read` | `basic` because it does not include versions or trashed items |
+                      | `get_quota` | `libre.graph/driveItem/quota/read` | read only the `quota` property |
+                      | `get_path` | `libre.graph/driveItem/path/read` | read only the `path` property |
+                      | `move` | `libre.graph/driveItem/path/update` | allows updating the `path` property of a CS3 resource |
+                      | `delete` | `libre.graph/driveItem/standard/delete` | `standard` because deleting is a common update operation |
+                      | `list_container` | `libre.graph/driveItem/children/read` | |
+                      | `create_container` | `libre.graph/driveItem/children/create` | |
+                      | `initiate_file_download` | `libre.graph/driveItem/content/read` | `content` is the property read when initiating a download |
+                      | `initiate_file_upload` | `libre.graph/driveItem/upload/create` | `uploads` are a separate property. postprocessing creates the `content` |
+                      | `add_grant` | `libre.graph/driveItem/permissions/create` | |
+                      | `list_grant` | `libre.graph/driveItem/permissions/read` | |
+                      | `update_grant` | `libre.graph/driveItem/permissions/update` | |
+                      | `remove_grant` | `libre.graph/driveItem/permissions/delete` | |
+                      | `deny_grant` | `libre.graph/driveItem/permissions/deny` | uses a non CRUD action `deny` |
+                      | `list_file_versions` | `libre.graph/driveItem/versions/read` | `versions` is a `driveItemVersion` collection |
+                      | `restore_file_version` | `libre.graph/driveItem/versions/update` | the only `update` action is restore |
+                      | `list_recycle` | `libre.graph/driveItem/deleted/read` | reading a driveItem `deleted` property implies listing |
+                      | `restore_recycle_item` | `libre.graph/driveItem/deleted/update` | the only `update` action is restore |
+                      | `purge_recycle` | `libre.graph/driveItem/deleted/delete` | allows purging deleted `driveItems` |
+                    items:
+                      type: string
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/permission'
+                  #  maxItems: 100
+                  #'@odata.nextLink':
+                  #  type: string
+              example:
+                '@libre.graph.permissions.roles.allowedValues':
+                  - id: 7ccc2a61-9615-4063-a80a-eb7cd8e59d8
+                    description: "Allows reading the shared file or folder"
+                    displayName: Viewer
+                    # we don't want to reproduce all the individual role permissions, that is what the /roleManagement/permissions/roleDefinitions endpoint is for
+                    # to build a custom role 
+                    #rolePermissions:
+                    #  - allowedResourceActions:
+                    #    - libre.graph/driveItem/basic/read
+                    #    - libre.graph/driveItem/permissions/read
+                    #    - libre.graph/driveItem/upload/create
+                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 1
+                  - id: a1c6f73e-482e-4078-a629-bbecb205abb
+                    description: "Allows reading and writing the shared file or folder"
+                    displayName: Editor
+                    #rolePermissions:
+                    #  - allowedResourceActions:
+                    #    - libre.graph/driveItem/standard/allTasks
+                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 2
+                  - id: dfa16e02-3d88-45d8-8894-5b33a7df637
+                    description: "Allows managing a space"
+                    displayName: Manager
+                    #rolePermissions:
+                    #  - allowedResourceActions:
+                    #    - libre.graph/drive/standard/allTasks 
+                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 3
+                  - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
+                    description: "Allows creating new files"
+                    displayName: File Drop
+                    #rolePermissions:
+                    #  - allowedResourceActions:
+                    #      libre.graph/driveItem/upload/create
+                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 4
+                '@libre.graph.permissions.actions.allowedValues': [
+                    "libre.graph/driveItem/basic/read",
+                    "libre.graph/driveItem/permissions/read",
+                    "libre.graph/driveItem/upload/create",
+                    "libre.graph/driveItem/standard/allTasks",
+                    "libre.graph/driveItem/upload/create"
+                ]
+
+                value:
+                  - id: "67445fde-a647-4dd4-b015-fc5dafd2821d"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    link:
+                      type: "view"
+                      webUrl: "https://cloud.example.org/s/fhGBMIkKFEHWysj"
+                  - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+                    grantedToV2:
+                      - user:
+                          id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                          displayName: "Albert Einstein"
+                    link:
+                      webUrl: "https://cloud.example.org/s/kXJpiJmMnQxVlaT"
+                  - id: "dda0bb77-ffe7-4867-a2bf-28af65b46aa3"
+                    actions: [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
+                    grantedToV2:
+                      - user:
+                          id: "058bff95-6708-4fe5-91e4-9ea3d377588b"
+                          displayName: "Maurice Moss"
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/drives/{drive-id}/items/{item-id}/permissions/{perm-id}':
+    get:
+      tags:
+        - drives.permissions
+      summary: Get sharing permission for a file or folder
+      operationId: GetPermission
+      description: |
+        Return the effective sharing permission for a particular permission resource.
+
+      # TODO do we need to implement inherited permissions from the start?
+      #  Effective permissions of an item can come from two sources: permissions set directly on the item itself or permissions that are inherited from the item's ancestors.
+      #
+      #  Callers can differentiate if the permission is inherited or not by checking the `inheritedFrom` property. This property is an ItemReference resource referencing the ancestor that the permission is inherited from.
+      #
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+        - name: perm-id
+          in: path
+          description: 'key: id of permission'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: permission
+      responses:
+        '200':
+          description: Retrieved resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permission'
+              examples:
+                edit permission:
+                  value:
+                    id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                    roles: [ "write" ]
+                    grantedToV2:
+                      - user:
+                          id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                          displayName: "Albert Einstein"
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - drives.permissions
+      summary: Update sharing permission
+      operationId: UpdatePermission
+      description: |
+        Update the properties of a sharing permission by patching the permission resource.
+
+        Only the `roles`, `expirationDateTime` and `password` properties can be modified this way.
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+        - name: perm-id
+          in: path
+          description: 'key: id of permission'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: permission
+        #- name: If-Match
+        #  in: header
+        #  description: |
+        #    If this request header is included and the eTag (or cTag) provided does not match the current tag on the item,
+        #    a `412 Precondition Failed`` response is returned and the item will not be updated.
+        #  schema:
+        #    type: string
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/permission'
+              example:
+                roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+        required: true
+      responses:
+        '200':
+          description: Updated permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permission'
+              example:
+                  id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                  expirationDateTime: "2018-07-15T14:00:00.000Z"
+                  grantedToV2:
+                    - user:
+                        id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                        displayName: "Albert Einstein"
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - drives.permissions
+      summary: Delete entity from groups
+      operationId: DeletePermission
+      description: |
+        Remove access to a DriveItem.
+
+        Only sharing permissions that are not inherited can be deleted. The `inheritedFrom` property must be `null`.
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+        - name: perm-id
+          in: path
+          description: 'key: id of permission'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: permission
+        #- name: If-Match
+        #  in: header
+        #  description: |
+        #    If this request header is included and the eTag (or cTag) provided does not match the current tag on the item,
+        #    a `412 Precondition Failed`` response is returned and the item will not be updated.
+        #  schema:
+        #    type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   '/drives/{drive-id}/root':
     get:
       tags:
@@ -645,6 +1228,110 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  /me/drive/sharedByMe:
+    get:
+      tags:
+        - me.drive
+      summary: Get a list of driveItem objects shared by the current user.
+      operationId: ListSharedByMe
+      description: |
+        The `driveItems` returned from the `sharedByMe` method always include the `permissions` relation that indicates they are shared items.
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Collection of driveItems
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/driveItem'
+                  #  maxItems: 20
+                  #'@odata.nextLink':
+                  #  type: string
+              example:
+                value:
+                  - id: 78363031-03ef-4eda-84a2-243a691a13cd
+                    createdDateTime: "2020-02-19T14:23:25.52Z"
+                    # not yet supported by ocis
+                    #cTag: "adDpDMTI2NDRBMTRCMEE3NzUwITEzNzkuNjM3NjYyNzQ5NjU1MDMwMDAw"
+                    eTag: "aQzEyNjQ0QTE0QjBBNzc1MCExMzc5LjQ"
+                    lastModifiedDateTime: "2021-09-03T14:09:25.503Z"
+                    name: "March Proposal.docx"
+                    parentReference:
+                      driveId: "1991210caf"
+                      driveType: personal
+                    permissions:
+                      - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                        roles: [ "write" ]
+                        grantedToV2:
+                          - user:
+                              id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                              displayName: "Albert Einstein"
+                      - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                        roles: [ "read" ]
+                        grantedToV2:
+                          - user:
+                              id: "48016357-346a-443e-bf7a-945c9448a99b"
+                              displayName: "Marie Curie"
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+
+  /me/drive/sharedWithMe:
+    get:
+      tags:
+        - me.drive
+      summary: Get a list of driveItem objects shared with the owner of a drive.
+      operationId: ListSharedWithMe
+      description: |
+        The `driveItems` returned from the `sharedWithMe` method always include the `remoteItem` facet that indicates they are items from a different drive.
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Collection of driveItems
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/driveItem'
+                  #  maxItems: 20
+                  #'@odata.nextLink':
+                  #  type: string
+              example:
+                value:
+                  - id: 78363031-03ef-4eda-84a2-243a691a13cd
+                    createdDateTime: "2020-02-19T14:23:25.52Z"
+                    cTag: "adDpDMTI2NDRBMTRCMEE3NzUwITEzNzkuNjM3NjYyNzQ5NjU1MDMwMDAw"
+                    eTag: "aQzEyNjQ0QTE0QjBBNzc1MCExMzc5LjQ"
+                    lastModifiedDateTime: "2021-09-03T14:09:25.503Z"
+                    name: "March Proposal.docx"
+                    parentReference:
+                      driveId: "1991210caf"
+                      driveType: personal
+                    remoteItem:
+                      id: 02d7a7df-a6f7-44cc-848a-3c98f7dd5046
+                      name: "March Proposal.docx"
+                      size: 19121
+                      shared: 
+                        sharedDateTime: "2020-02-19T14:23:25.52Z"
+                        owner:
+                          user:
+                            displayName: "Albert Einstein"
+                            id: "44feab10d55e9871"
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+                        
   /users:
     get:
       tags:
@@ -2071,11 +2758,9 @@ paths:
               examples:
                 Viewer:
                   value:
-                    id: read
+                    id: 7ccc2a61-9615-4063-a80a-eb7cd8e59d8
                     description: "Allows reading the shared file or folder"
                     displayName: Viewer
-                    #isBuiltIn: true
-                    #isEnabled: true
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/driveItem/basic/read
@@ -2083,11 +2768,9 @@ paths:
                     weight: 1
                 Editor:
                   value:
-                    id: write
+                    id: a1c6f73e-482e-4078-a629-bbecb205abb
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
-                    #isBuiltIn: true
-                    #isEnabled: true
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/allTasks 
@@ -2095,11 +2778,9 @@ paths:
                     weight: 2
                 Manager:
                   value:
-                    id: owner
+                    id: dfa16e02-3d88-45d8-8894-5b33a7df637
                     description: "Allows managing a space"
                     displayName: Manager
-                    #isBuiltIn: true
-                    #isEnabled: true
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/drive/standard/allTasks 
@@ -2107,11 +2788,9 @@ paths:
                     weight: 3
                 File Drop:
                   value:
-                    id: a-u-u-id or uniquerolename?
+                    id: 4916f47e-66d5-49bb-9ac9-748ad00334b
                     description: "Allows creating new files"
                     displayName: File Drop
-                    #isBuiltIn: false
-                    #isEnabled: false
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/create
@@ -2354,6 +3033,27 @@ components:
           items:
               $ref: '#/components/schemas/driveItem'
           description: A collection of special drive resources.
+    driveRecipient:
+      type: object
+      description: |
+        Represents a person, group, or other recipient to share a drive item with using the invite action.
+
+        When using invite to add permissions, the `driveRecipient` object would specify the `email`, `alias`,
+        or `objectId` of the recipient. Only one of these values is required; multiple values are not accepted.
+      properties:
+        #alias:
+        #  type: string
+        #  description: The alias of the domain object, for cases where an email address is unavailable (e.g. groups).
+        #email:
+        #  type: string
+        #  description: The email address for the recipient, if the recipient has an associated email address.
+        objectId:
+          type: string
+          description: The unique identifier for the recipient in the directory.
+        "@libre.graph.recipient.type":
+          type: string
+          description: When the recipient is referenced by objectId this annotation is used to differentiate `user` and `group` recipients.
+          default: user
     identitySet:
       type: object
       description: Optional. User account.
@@ -2367,9 +3067,27 @@ components:
         user:
           $ref: '#/components/schemas/identity'
           description: Optional. The user associated with this action.
+        # this is not part of the ms graph api. there, only the sharepointIdentitySet used in grantedToV2 has a group 
         group:
           $ref: '#/components/schemas/identity'
           description: Optional. The group associated with this action.
+    sharePointIdentitySet:
+      type: object
+      description: This resource is used to represent a set of identities associated with various events for an item, such as created by or last modified by.
+      properties:     
+        #application:
+        #  $ref: '#/components/schemas/identity'
+        #  description: Optional. The application associated with this action.
+        #device:
+        #  $ref: '#/components/schemas/identity'
+        #  description: Optional. The device associated with this action.
+        user:
+          $ref: '#/components/schemas/identity'
+          description: Optional. The user associated with this action.
+        group:
+          $ref: '#/components/schemas/identity'
+          description: Optional. The group associated with this action.
+        # other properties omitted for now
     identity:
       type: object
       required:
@@ -2403,6 +3121,70 @@ components:
           type: string
           writeOnly: true
           description: The user's password
+    sharingInvitation:
+      description: The `SharingInvitation` resource groups invitation-related data items into a single structure.
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address provided for the recipient of the sharing invitation.
+          readOnly: true
+        invitedBy:
+          $ref: '#/components/schemas/identitySet'
+          description: Provides information about who sent the invitation that created this permission, if that information is available.
+          readOnly: true
+        signInRequired:
+          type: boolean
+          description: If `true` the recipient of the invitation needs to sign in in order to access the shared item.
+          readOnly: true
+    sharingLink:
+      description: |
+        The `SharingLink` resource groups link-related data items into a single structure.
+
+        If a `permission` resource has a non-null `sharingLink` facet, the permission represents a sharing link (as opposed to permissions granted to a person or group).
+      type: object
+      properties:
+        application:
+          $ref: '#/components/schemas/identity'
+          description: The app the link is associated with.
+        type:
+          type: string
+          enum: [view, edit, blocksDownload, createOnly]
+          description: |
+            The type of the link created.
+
+            | Value          | Description                                                                                                                                                                                                           |
+            | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+            | view           | Creates a read-only link to the driveItem.                                                                                                                                                                            |
+            | edit           | Creates an read-write link to the driveItem.                                                                                                                                                                          |
+            | blocksDownload | Creates a read-only link that blocks download to the driveItem.                                                                                                                                                       |
+            | createOnly     | Creates an upload-only link to the driveItem.                                                                                                                                                                         |
+          # there are more link types available in https://learn.microsoft.com/en-us/graph/api/driveitem-createlink?view=graph-rest-beta&tabs=http#link-types
+          #  | review         | Creates a review link to the driveItem.                                                                                                                                                                               |
+          #  | embed          | Creates an embeddable link to the driveItem.                                                                                                                                                                          |
+          #  | addressBar     | Creates the default link that is shown in the browser address bars for newly created files. The organization admin configures whether this link type is supported, and what features are supported by this link type. |
+          #  | adminDefault   | Creates the default link to the driveItem as determined by the administrator of the organization. The policy is enforced for the organization by the admin                                                            |            
+        scope:
+          type: string
+          enum: [anonymous, organization, existingAccess, users]
+          description: |
+            The scope of the link represented by this permission. Value `anonymous` indicates the link is usable by anyone, `organization` indicates the link is only usable for users signed into the same tenant.
+
+            | Value          | Description                                                                                                           |
+            | -------------- | --------------------------------------------------------------------------------------------------------------------- |
+            | anonymous      | Anyone with the link has access, without needing to sign in. This may include people outside of your organization.    |
+            | organization   | Anyone signed into your organization (tenant) can use the link to get access.                                         |
+            | existingAccess | Only people who have already been granted access to the item through other means can access the item using this link. |
+            | users          | The link grants access only to a specific list of people.                                                             |
+        preventsDownload:
+          type: boolean
+          description: If `true` then the user can only use this link to view the item on the web, and cannot use it to download the contents of the item.
+        webHtml:
+          type: string
+          description: For `embed` links, this property contains the HTML code for an `<iframe>` element that will embed the item in a webpage.
+        webUrl:
+          type: string
+          description: A URL that opens the item in the browser on the website.
     user:
       description: Represents an Active Directory user object.
       type: object
@@ -2584,6 +3366,54 @@ components:
             $ref: '#/components/schemas/permission'
           description: The set of permissions for the item. Read-only. Nullable.
           readOnly: true
+    driveItemInvite:
+      type: object
+      properties:
+        recipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/driveRecipient'
+          description: A collection of recipients who will receive access and the sharing invitation. Currently, only internal users or gorups are supported.
+        roles:
+          type: array
+          items:
+            type: string
+          description: Specifies the roles that are to be granted to the recipients of the sharing invitation.
+        actions:
+          type: array
+          items:
+            type: string
+          description: Specifies the actions that are to be granted to the recipients of the sharing invitation, in effect creating a custom role.
+        expirationDateTime:
+          type: string
+          description: Specifies the dateTime after which the permission expires.
+          format: date-time
+
+        # Can be added later
+        #message:
+        #  type: string
+        #  description: A plain text formatted message that is included in the sharing invitation.
+        #  maxLength: 2000
+
+        # Internal shares always require login
+        #requireSignIn:
+        #  type: boolean
+        #  description: Specifies whether the recipient of the invitation is required to sign-in to view the shared item.
+
+        # In ocis recipients configure if they want to be notified
+        #sendInvitation:
+        #  type: boolean
+        #  description: If `true`, a sharing link is sent to the recipient. Otherwise, a permission is granted directly without sending a notification.
+        
+        # internal shares do not have a password
+        #password: 
+        #  type: string
+        #  description: The password set on the invite by the creator. Optional .
+
+        # not supported by ocis
+        #retainInheritedPermissions:
+        #  type: boolean
+        #  description: Optional. If `true` (default), any existing inherited permissions are retained on the shared item when sharing this item for the first time. If `false`, all existing permissions are removed when sharing for the first time.
     deleted:
       type: object
       description: Information about the deleted state of the item. Read-only.
@@ -2699,6 +3529,9 @@ components:
         driveAlias:
           type: string
           description: "The drive alias can be used in clients to make the urls user friendly. Example: 'personal/einstein'. This will be used to resolve to the correct driveID."
+        #driveType:
+        # wie kommt man zum drive? web möchte im ui den pfad anzeigen, der wird aus dem driveAlias gebaut, aber die brauchen auch den driveType um das datenmodell konsistent zu haben
+        # momentan machen sie einen ocs list shares request und sichen sich dann den mountpoint anhand der id raus, aber cern möchte IMMER den personal space dazu sehen, incl pfad
         path:
           type: string
           description: "The relative path of the item in relation to its drive root."
@@ -2871,21 +3704,67 @@ components:
       description: 'Represents a Directory object. Read-only.'
     permission:
       type: object
-      description: 'The Permission resource provides information about a sharing permission granted for a DriveItem resource.'
+      description: |
+        The Permission resource provides information about a sharing permission granted for a DriveItem resource.
+
+        ### Remarks
+
+        The Permission resource uses *facets* to provide information about the kind of permission represented by the resource.
+
+        Permissions with a `link` facet represent sharing links created on the item. Sharing links contain a unique token that provides access to the item for anyone with the link.
+
+        Permissions with a `invitation` facet represent permissions added by inviting specific users or groups to have access to the file.
       readOnly: true
       properties:
+        id:
+          type: string
+          description: The unique identifier of the permission among all permissions on the item. Read-only.
+        hasPassword:
+          type: boolean
+          description: |
+            Indicates whether the password is set for this permission. This property only
+            appears in the response. Optional. Read-only.
         expirationDateTime:
           type: string
           description: An optional expiration date which limits the permission in time.
           format: date-time
-        grantedToIdentities:
-          type: array
-          items:
-            $ref: '#/components/schemas/identitySet'
+        grantedToV2:
+        # this is always a single identity set because a permission always is tied to a single recipient (which can be a group).
+          description: For user type permissions, the details of the users and applications for this permission. Only part of responses. Use the invitation property when creating shares.
+          $ref: '#/components/schemas/sharePointIdentitySet'
+
+        # We could use grantedToIdentitiesV2 to share with guest or external members. 'Identities' here means that an external user is identified by an email aka a guest.
+        #grantedToIdentitiesV2:
+        #  description: For link type permissions, the details of the users to whom permission was granted. Read-only.
+        #  type: array
+        #  items:
+        #    $ref: '#/components/schemas/sharePointIdentitySet'
+
+        invitation:
+          description: |
+            Details of any associated sharing invitation for this permission. For now only used when creating shares with
+            internal users or groups. An invitation is converted into a grant and will not be part of responses.
+          $ref: '#/components/schemas/sharingInvitation'
+        link:
+          description: Provides the link details of the current permission, if it is a link type permissions. 
+          $ref: '#/components/schemas/sharingLink'
         roles:
           type: array
           items:
             type: string
+        actions:
+          description: Use this to create a permission with custom actions.
+          type: array
+          items:
+            type: string
+        #shareId left out for now because it is part of the link
+        grantedToIdentities:
+          deprecated: true
+          # TODO should be deprecated in favor of properly using grantedToV2 with arrays of permissions
+          description: For link type permissions, the details of the identity to whom permission was granted. This could be used to grant access to a an external user that can be identified by email, aka guest accounts.
+          type: array
+          items:
+            $ref: '#/components/schemas/identitySet'
     unifiedRoleDefinition:
       type: object
       description: |
