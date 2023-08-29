@@ -37,5 +37,6 @@ That generates the output in out/cpp.
 ### Available client libraries
 - [C++/Qt](https://github.com/owncloud/libre-graph-api-cpp-qt-client)
 - [go](https://github.com/owncloud/libre-graph-api-go)
+- [php](https://github.com/owncloud/libre-graph-api-php)
 - [typescript-axios](https://github.com/owncloud/libre-graph-api-typescript-axios)
 

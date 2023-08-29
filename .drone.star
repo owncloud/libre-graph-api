@@ -23,6 +23,11 @@ config = {
 			'repo-slug': "libre-graph-api-cpp-qt-client",
 			'branch': 'main',
 		},
+		'php': {
+			'src': "out-php",
+			'repo-slug': "libre-graph-api-php",
+			'branch': 'main',
+		},
 	},
 	'openapi-generator-image': 'openapitools/openapi-generator-cli:v6.2.0@sha256:e6153ebc2f1a54985a50c53942e40285f1fbe64f1c701317da290bfff4abe303'
 }
@@ -39,7 +44,7 @@ def main(ctx):
 
 def stagePipelines(ctx):
 	linters = linting(ctx)
-	generators = generate(ctx, "go") + generate(ctx, "typescript-axios") + generate(ctx, "cpp-qt-client")
+	generators = generate(ctx, "go") + generate(ctx, "typescript-axios") + generate(ctx, "cpp-qt-client") + generate(ctx, "php")
 	dependsOn(linters, generators)
 	return linters + generators
 
@@ -257,6 +262,16 @@ def validate(lang):
 				"commands": [
 					"cd %s" % config["languages"][lang]["src"],
 					"golangci-lint run -v",
+				]
+			},
+		],
+		"php": [
+			{
+				"name": "validate-php",
+				"image": "owncloudci/php:8.0",
+				"commands": [
+					"composer install",
+					"vendor/bin/parallel-lint %s" % config["languages"][lang]["src"],
 				]
 			},
 		],
