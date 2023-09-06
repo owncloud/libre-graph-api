@@ -27,6 +27,7 @@ config = {
 			'src': "out-php",
 			'repo-slug': "libre-graph-api-php",
 			'branch': 'main',
+			'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.0.0@sha256:08088a4625ebb8744b5cce414fe91396dbf8082e19aa32a44addcffc413dabde'
 		},
 	},
 	'openapi-generator-image': 'openapitools/openapi-generator-cli:v6.2.0@sha256:e6153ebc2f1a54985a50c53942e40285f1fbe64f1c701317da290bfff4abe303'
@@ -156,9 +157,10 @@ def generate(ctx, lang):
 					},
 				},
 			},
+			] + lint(lang) + [
 			{
 				'name': 'generate-%s' % lang,
-				'image': config['openapi-generator-image'],
+				'image': getGeneratorImageVersion(lang),
 				'pull': 'always',
 				'commands': [
 					'test -d "templates/{0}" && TEMPLATE_ARG="-t templates/{0}" || TEMPLATE_ARG=""'.format(lang),
@@ -279,3 +281,24 @@ def validate(lang):
 	}
 
 	return steps[lang]
+
+def lint(lang):
+	if "openapi-generator-image" in config["languages"][lang]:
+		# there is a specific openapi-generator-image to use for this language, so validate the yaml spec using that image
+		return [
+			{
+				'name': 'lint',
+				'image': config["languages"][lang]["openapi-generator-image"],
+				'pull': 'always',
+				'commands': [
+					'/usr/local/bin/docker-entrypoint.sh validate -i api/openapi-spec/v1.0.yaml',
+				],
+			}
+		]
+
+	return []
+
+def getGeneratorImageVersion(lang):
+	if "openapi-generator-image" in config["languages"][lang]:
+		return config["languages"][lang]["openapi-generator-image"]
+	return config["openapi-generator-image"]
