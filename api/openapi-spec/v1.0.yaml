@@ -2018,6 +2018,7 @@ paths:
                         - libre.graph/driveItem/permissions/read
                         - libre.graph/driveItem/upload/create
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 1
                   - id: a1c6f73e-482e-4078-a629-bbecb205abb
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
@@ -2025,6 +2026,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/allTasks
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 2
                   - id: dfa16e02-3d88-45d8-8894-5b33a7df637
                     description: "Allows managing a space"
                     displayName: Manager
@@ -2032,6 +2034,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/drive/standard/allTasks 
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
                     description: "Allows creating new files"
                     displayName: File Drop
@@ -2039,6 +2042,7 @@ paths:
                       - allowedResourceActions:
                           libre.graph/driveItem/upload/create
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 4
         default:
           $ref: '#/components/responses/error'
   /roleManagement/permissions/roleDefinitions/{role-id}:
@@ -2076,6 +2080,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/basic/read
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 1
                 Editor:
                   value:
                     id: write
@@ -2087,6 +2092,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/allTasks 
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 2
                 Manager:
                   value:
                     id: owner
@@ -2098,6 +2104,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/drive/standard/allTasks 
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 3
                 File Drop:
                   value:
                     id: a-u-u-id or uniquerolename?
@@ -2109,6 +2116,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/create
                         condition: "@Subject.objectId Any_of @Resource.grantee"
+                    weight: 4
         default:
           $ref: '#/components/responses/error'
 components:
@@ -2921,6 +2929,12 @@ components:
         # version:
         #   description: Indicates version of the role definition. Read-only when **isBuiltIn** is `true`.
         #   type: string
+        weight:
+          description: |
+            When presenting a list of roles the weight can be used to order them in a meaningful way.
+            Lower weight gets higher precedence. So content with lower weight will come first. If set,
+            weights should be non-zero, as 0 is interpreted as an unset weight.
+          type: integer
     unifiedRolePermission:
       type: object
       description: |
