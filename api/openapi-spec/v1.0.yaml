@@ -3094,19 +3094,23 @@ components:
     sharePointIdentitySet:
       type: object
       description: This resource is used to represent a set of identities associated with various events for an item, such as created by or last modified by.
-      properties:     
-        #application:
-        #  $ref: '#/components/schemas/identity'
-        #  description: Optional. The application associated with this action.
-        #device:
-        #  $ref: '#/components/schemas/identity'
-        #  description: Optional. The device associated with this action.
+      properties:
         user:
           $ref: '#/components/schemas/identity'
           description: Optional. The user associated with this action.
         group:
           $ref: '#/components/schemas/identity'
           description: Optional. The group associated with this action.
+
+        # unused  
+        #application:
+        #  $ref: '#/components/schemas/identity'
+        #  description: Optional. The application associated with this action.
+
+        # unused
+        #device:
+        #  $ref: '#/components/schemas/identity'
+        #  description: Optional. The device associated with this action.
         # other properties omitted for now
     identity:
       type: object
@@ -3161,12 +3165,18 @@ components:
         '@libre.graph.displayName':
           type: string
           description: Provides a user-visible display name of the link. Optional. Libregraph only.
+
+        # unused
         #webHtml:
         #  type: string
         #  description: For `embed` links, this property contains the HTML code for an `<iframe>` element that will embed the item in a webpage.
+
+        # unused
         #application:
         #  description: The app the link is associated with.
         #  $ref: '#/components/schemas/identity'
+
+        # unused
         #scope:
         #  type: string
         #  enum: [anonymous, organization, existingAccess, users]
@@ -3393,24 +3403,24 @@ components:
         displayName:
           type: string
           description: Provides a user-visible display name of the link. Optional. Libregraph only.
-        # to invite guests or specify which users should be sent the link we could add this
+        # unused. we could add thisto invite guests or specify which users should be sent the link
         #recipients:
         #  type: array
         #  items:
         #    $ref: '#/components/schemas/driveRecipient'
         #  description: A collection of recipients who will receive access and the sharing link.
 
-        # can be added later
+        # unused. can be added later
         #scope:
         #  type: string
         #  description: Optional. The scope of link to create. Either `anonymous`, `organization`, or `users`.
 
-        # In ocis recipients configure if they want to be notified
+        # unused. In ocis recipients configure if they want to be notified
         #sendNotification:
         #  type: boolean
         #  description: Optional. If `true`, this method sends a sharing link in an email to users specified in recipients. The default value is `false`. Optional.
 
-        # not supported by ocis
+        # unused. not supported by ocis
         #retainInheritedPermissions:
         #  type: boolean
         #  description: Optional. If `true` (default), any existing inherited permissions are retained on the shared item when sharing this item for the first time. If `false`, all existing permissions are removed when sharing for the first time.
@@ -3579,7 +3589,7 @@ components:
           description: "The drive alias can be used in clients to make the urls user friendly. Example: 'personal/einstein'. This will be used to resolve to the correct driveID."
         #driveType:
         # wie kommt man zum drive? web möchte im ui den pfad anzeigen, der wird aus dem driveAlias gebaut, aber die brauchen auch den driveType um das datenmodell konsistent zu haben
-        # momentan machen sie einen ocs list shares request und sichen sich dann den mountpoint anhand der id raus, aber cern möchte IMMER den personal space dazu sehen, incl pfad
+        # momentan machen sie einen ocs list shares request und sichen sich dann den mountpoint anhand der id raus, aber einige möchten IMMER den personal space dazu sehen, incl pfad
         path:
           type: string
           description: "The relative path of the item in relation to its drive root."
