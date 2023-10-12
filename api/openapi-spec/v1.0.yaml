@@ -3260,9 +3260,10 @@ components:
           type: string
           description: Path that can be used to navigate to the item. Read-only.
           readOnly: true
-        shareId:
-          type: string
-          description: 'A unique identifier for a shared resource that can be accessed via the [Shares][] API.'
+        # unused. this is the token but we reference shares, even links, by id
+        #shareId:
+        #  type: string
+        #  description: 'A unique identifier for a shared resource that can be accessed via the [Shares][] API.'
     driveItem:
       description: Reprensents a resource inside a drive. Read-only.
       readOnly: true
