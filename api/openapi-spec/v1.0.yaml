@@ -282,32 +282,21 @@ paths:
       summary: Create a sharing link for a DriveItem
       operationId: CreateLink
       description: |
-        You can use createLink action to share a driveItem via a sharing link.
+        You can use the createLink action to share a driveItem via a sharing link.
 
-        The **createLink** action will create a new sharing link if the specified link type doesn't already exist
-        for the calling application. If a sharing link of the specified type already exists for the app, the
-        existing sharing link will be returned.
+        The response will be a permission object with the link facet containing the created link details.
 
-        DriveItem resources inherit sharing permissions from their ancestors.
-      
         ## Link types
 
         For now, The following values are allowed for the type parameter.
         
-        | Type value      | Description                                                                                                                                                                                                           |
-        | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | view            | Creates a read-only link to the driveItem.                                                                                                                                                                            |
-        | edit            | Creates an read-write link to the driveItem.                                                                                                                                                                          |
-        | blocksDownload  | Creates a read-only link that blocks download to the driveItem.                                                                                                                                                       |
-        | createOnly      | Creates an upload-only link to the driveItem.                                                                                                                                                                         |
-
-        More built in types might be added with a speaking value but clients **MUST** treat the value as an
-        opaque identifier as custom types will be using UUIDs.
-
-      #  | embed           | Creates an embeddable link to the driveItem.                                                                                                                                                                          |
-      #  | review          | Creates a review link to the driveItem.                                                                                                                                                                               |
-      #  | addressBar      | Creates the default link that is shown in the browser address bars for newly created files. The organization admin configures whether this link type is supported, and what features are supported by this link type. |
-      #  | adminDefault    | Creates the default link to the driveItem as determined by the administrator of the organization. The policy is enforced for the organization by the admin                                                            |
+        | Value          | Display name      | Description                                                     |
+        | -------------- | ----------------- | --------------------------------------------------------------- |
+        | view           | View              | Creates a read-only link to the driveItem.                      |
+        | upload         | Upload            | Creates a read-write link to the folder driveItem.              |
+        | edit           | Edit              | Creates a read-write link to the driveItem.                     |
+        | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            |
+        | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. |
 
       parameters:
         - name: drive-id
@@ -329,44 +318,15 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  description: Optional. The type of sharing link to create.
-                expirationDateTime:
-                  type: string
-                  description: Optional. A String with format of yyyy-MM-ddTHH:mm:ssZ of DateTime indicates the expiration time of the permission.
-                  format: date-time
-                password: 
-                  type: string
-                  description: Optional.The password of the sharing link that is set by the creator.
-
-                # to invite guests or specify which users should be sent the link we could add this
-                #recipients:
-                #  type: array
-                #  items:
-                #    $ref: '#/components/schemas/driveRecipient'
-                #  description: A collection of recipients who will receive access and the sharing link.
-
-                # can be added later
-                #scope:
-                #  type: string
-                #  description: Optional. The scope of link to create. Either `anonymous`, `organization`, or `users`.
-
-                # In ocis recipients configure if they want to be notified
-                #sendNotification:
-                #  type: boolean
-                #  description: Optional. If `true`, this method sends a sharing link in an email to users specified in recipients. The default value is `false`. Optional.
-
-                # not supported by ocis
-                #retainInheritedPermissions:
-                #  type: boolean
-                #  description: Optional. If `true` (default), any existing inherited permissions are retained on the shared item when sharing this item for the first time. If `false`, all existing permissions are removed when sharing for the first time.
+              $ref: '#/components/schemas/driveItemCreateLink'
             examples:
                 create viewer link:
                   value:
                     type: "view"
+                create editor link with custom display name:
+                  value:
+                    type: "edit"
+                    displayName: "Homework"
                 create editor link with expiry:
                   value:
                     type: "edit"
@@ -379,19 +339,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/permission'
               examples:
-                send viewer invite:
+                create viewer link:
                   value:
                     - id: "7181275c-557e-4adf-8e44-abdcf5389b6a"
                       link:
                         type: "view"
                         webUrl: "https://cloud.example.org/s/YlaySZdHCRHUDeE"
-                send editor invite with expiry:
+                create editor link with custom display name:
+                  value:
+                    - id: "7181275c-557e-4adf-8e44-abdcf5389b6a"
+                      link:
+                        type: "edit"
+                        displayName: "Homework"
+                        webUrl: "https://cloud.example.org/s/fdleMyGeerkIZTJ"
+                create editor link with expiry:
                   value:
                     - id: "a373c812-d786-42ae-a65f-ed87ee4abd49"
                       link:
                         type: "edit"
                         webUrl: "https://cloud.example.org/s/MlnTDkhcBlihNzO"
         '207':
+        # FIXME describe partial success response
           description: Partial success response TODO
         default:
           $ref: '#/components/responses/error'
@@ -406,6 +374,8 @@ paths:
       description: |
         Sends a sharing invitation for a `driveItem`. A sharing invitation provides permissions to the
         recipients and optionally sends them an email with a sharing link.
+
+        The response will be a permission object with the grantedToV2 property containing the created grant details.
 
         ## Roles property values
         For now, roles are only identified by a uuid. There are no hardcoded aliases like `read` or `write` because role actions can be completely customized.
@@ -467,7 +437,7 @@ paths:
                   description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
                   value:
                     recipients:
-                    - "@libre.graph.recipient.type": group
+                    - '@libre.graph.recipient.type': group
                       objectId: "167cbee2-0518-455a-bfb2-031fe0621e5d"
                     roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
                 send invite to user granting custom actions:
@@ -475,7 +445,7 @@ paths:
                   value:
                     recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    actions: [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
+                    '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
       responses:
         '200':
           description: Response
@@ -487,15 +457,7 @@ paths:
                 send viewer invite:
                   value:
                     - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
-                      roles: [ "read" ]
-                      grantedToV2:
-                        - user:
-                            id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                            displayName: "Albert Einstein"
-                send editor invite with expiry:
-                  value:
-                    - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                      roles: [ "write" ]
+                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
@@ -504,26 +466,44 @@ paths:
                   description: multiple permissions are returned as each has received a dedicated sharing id
                   value:
                     - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                      roles: [ "write" ]
+                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                             displayName: "Albert Einstein"
                     - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
-                      roles: [ "write" ]
+                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
                       grantedToV2:
                         - user:
                             id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
                             displayName: "Marie Skłodowska Curie"
+                send editor invite with expiry:
+                  value:
+                    - id: "453b02be-4ec2-4e7d-b576-09fc153de812"
+                      roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                      grantedToV2:
+                        - user:
+                            id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                            displayName: "Albert Einstein"
+                      expirationDateTime: "2018-07-15T14:00:00.000Z"
                 send manager invite to group:
                   value:
-                    - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                      roles: [ "owner" ]
+                    - id: "86765c0d-3905-444a-9b07-76201f8cf7df"
+                      roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
                       grantedToV2:
                         - group:
                             id: "167cbee2-0518-455a-bfb2-031fe0621e5d"
                             displayName: "Philosophy Haters"
+                send invite to user granting custom actions:
+                  value:
+                    - id: "c42b5cbd-2d65-42cf-b0b6-fb6d2b762256"
+                      grantedToV2:
+                        - user:
+                            id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                            displayName: "Albert Einstein"
+                      '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
         '207':
+        # FIXME describe partial success response
           description: Partial success response TODO
         '400':
           description: Bad request
@@ -558,7 +538,25 @@ paths:
 
         * For the owner of the item, all sharing permissions will be returned. This includes co-owners.
         * For a non-owner caller, only the sharing permissions that apply to the caller are returned.
-        * Sharing permission properties that contain secrets (e.g. `shareId` and `webUrl`) are only returned for callers that are able to create the sharing permission.
+        * Sharing permission properties that contain secrets (e.g. `webUrl`) are only returned for callers that are able to create the sharing permission.
+
+        All permission objects have an `id`. A permission representing
+        * a link has the `link` facet filled with details. 
+        * a share has the `roles` property set and the `grantedToV2` property filled with the grant recipient details.
+
+      # TODO hm, the ms graph api seems to always fill the `roles` property to indicate the actions granted by the link.
+      # | Value          | Display name      | Description                                                     | role?          |
+      # | -------------- | ----------------- | --------------------------------------------------------------- | -------------- |
+      # | view           | View              | Creates a read-only link to the driveItem.                      | viewer         |
+      # | upload         | Upload            | Creates a read-write link to the folder driveItem.              | uploader       |
+      # | edit           | Edit              | Creates a read-write link to the driveItem.                     | editor         |
+      # | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            | createOnly     |
+      # | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. | blocksDownload |
+      # AFAICT we wcill have to define the actions granted by a link type when we start to implement this
+      # but e.g. a createOnly role and blocksDownload should not show up in the drop down for sharing files internally ... 
+      # when we need to hardcode this anyway ... we should indicate that by using the buildIn flag ... but how do we prevent some roles from showing up in the internal sharing dialog ...
+      # for now leave out the roles property and hardcode the actions allowed by the link type
+
       parameters:
         - name: drive-id
           in: path
@@ -672,25 +670,47 @@ paths:
 
                 value:
                   - id: "67445fde-a647-4dd4-b015-fc5dafd2821d"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
                     link:
                       type: "view"
                       webUrl: "https://cloud.example.org/s/fhGBMIkKFEHWysj"
-                  - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
-                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+
+                  - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
                     grantedToV2:
                       - user:
                           id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                           displayName: "Albert Einstein"
-                    link:
-                      webUrl: "https://cloud.example.org/s/kXJpiJmMnQxVlaT"
-                  - id: "dda0bb77-ffe7-4867-a2bf-28af65b46aa3"
-                    actions: [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
+                  - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
                     grantedToV2:
                       - user:
-                          id: "058bff95-6708-4fe5-91e4-9ea3d377588b"
-                          displayName: "Maurice Moss"
+                          id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                          displayName: "Albert Einstein"
+                  - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    grantedToV2:
+                      - user:
+                          id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
+                          displayName: "Marie Skłodowska Curie"
+                  - id: "453b02be-4ec2-4e7d-b576-09fc153de812"
+                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                    grantedToV2:
+                      - user:
+                          id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                          displayName: "Albert Einstein"
+                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+                  - id: "86765c0d-3905-444a-9b07-76201f8cf7df"
+                    roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                    grantedToV2:
+                      - group:
+                          id: "167cbee2-0518-455a-bfb2-031fe0621e5d"
+                          displayName: "Philosophy Haters"
+                  - id: "c42b5cbd-2d65-42cf-b0b6-fb6d2b762256"
+                    grantedToV2:
+                      - user:
+                          id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                          displayName: "Albert Einstein"
+                    '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
@@ -3121,22 +3141,6 @@ components:
           type: string
           writeOnly: true
           description: The user's password
-    sharingInvitation:
-      description: The `SharingInvitation` resource groups invitation-related data items into a single structure.
-      type: object
-      properties:
-        email:
-          type: string
-          description: The email address provided for the recipient of the sharing invitation.
-          readOnly: true
-        invitedBy:
-          $ref: '#/components/schemas/identitySet'
-          description: Provides information about who sent the invitation that created this permission, if that information is available.
-          readOnly: true
-        signInRequired:
-          type: boolean
-          description: If `true` the recipient of the invitation needs to sign in in order to access the shared item.
-          readOnly: true
     sharingLink:
       description: |
         The `SharingLink` resource groups link-related data items into a single structure.
@@ -3144,47 +3148,36 @@ components:
         If a `permission` resource has a non-null `sharingLink` facet, the permission represents a sharing link (as opposed to permissions granted to a person or group).
       type: object
       properties:
-        application:
-          $ref: '#/components/schemas/identity'
-          description: The app the link is associated with.
         type:
-          type: string
-          enum: [view, edit, blocksDownload, createOnly]
-          description: |
-            The type of the link created.
-
-            | Value          | Description                                                                                                                                                                                                           |
-            | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-            | view           | Creates a read-only link to the driveItem.                                                                                                                                                                            |
-            | edit           | Creates an read-write link to the driveItem.                                                                                                                                                                          |
-            | blocksDownload | Creates a read-only link that blocks download to the driveItem.                                                                                                                                                       |
-            | createOnly     | Creates an upload-only link to the driveItem.                                                                                                                                                                         |
-          # there are more link types available in https://learn.microsoft.com/en-us/graph/api/driveitem-createlink?view=graph-rest-beta&tabs=http#link-types
-          #  | review         | Creates a review link to the driveItem.                                                                                                                                                                               |
-          #  | embed          | Creates an embeddable link to the driveItem.                                                                                                                                                                          |
-          #  | addressBar     | Creates the default link that is shown in the browser address bars for newly created files. The organization admin configures whether this link type is supported, and what features are supported by this link type. |
-          #  | adminDefault   | Creates the default link to the driveItem as determined by the administrator of the organization. The policy is enforced for the organization by the admin                                                            |            
-        scope:
-          type: string
-          enum: [anonymous, organization, existingAccess, users]
-          description: |
-            The scope of the link represented by this permission. Value `anonymous` indicates the link is usable by anyone, `organization` indicates the link is only usable for users signed into the same tenant.
-
-            | Value          | Description                                                                                                           |
-            | -------------- | --------------------------------------------------------------------------------------------------------------------- |
-            | anonymous      | Anyone with the link has access, without needing to sign in. This may include people outside of your organization.    |
-            | organization   | Anyone signed into your organization (tenant) can use the link to get access.                                         |
-            | existingAccess | Only people who have already been granted access to the item through other means can access the item using this link. |
-            | users          | The link grants access only to a specific list of people.                                                             |
+          $ref: '#/components/schemas/sharingLinkType'
         preventsDownload:
           type: boolean
           description: If `true` then the user can only use this link to view the item on the web, and cannot use it to download the contents of the item.
-        webHtml:
-          type: string
-          description: For `embed` links, this property contains the HTML code for an `<iframe>` element that will embed the item in a webpage.
+          readOnly: true
         webUrl:
           type: string
           description: A URL that opens the item in the browser on the website.
+          readOnly: true
+        '@libre.graph.displayName':
+          type: string
+          description: Provides a user-visible display name of the link. Optional. Libregraph only.
+        #webHtml:
+        #  type: string
+        #  description: For `embed` links, this property contains the HTML code for an `<iframe>` element that will embed the item in a webpage.
+        #application:
+        #  description: The app the link is associated with.
+        #  $ref: '#/components/schemas/identity'
+        #scope:
+        #  type: string
+        #  enum: [anonymous, organization, existingAccess, users]
+        #  description: |
+        #    The scope of the link represented by this permission. Value `anonymous` indicates the link is usable by anyone, `organization` indicates the link is only usable for users signed into the same tenant.
+        #    | Value          | Description                                                                                                           |
+        #    | -------------- | --------------------------------------------------------------------------------------------------------------------- |
+        #    | anonymous      | Anyone with the link has access, without needing to sign in. This may include people outside of your organization.    |
+        #    | organization   | Anyone signed into your organization (tenant) can use the link to get access.                                         |
+        #    | existingAccess | Only people who have already been granted access to the item through other means can access the item using this link. |
+        #    | users          | The link grants access only to a specific list of people.                                                             |
     user:
       description: Represents an Active Directory user object.
       type: object
@@ -3366,6 +3359,60 @@ components:
             $ref: '#/components/schemas/permission'
           description: The set of permissions for the item. Read-only. Nullable.
           readOnly: true
+    sharingLinkType:      
+        type: string
+        enum: [view, upload, edit, createOnly, blocksDownload]
+        description: |
+          The type of the link created.
+
+          | Value          | Display name      | Description                                                     |
+          | -------------- | ----------------- | --------------------------------------------------------------- |
+          | view           | View              | Creates a read-only link to the driveItem.                      |
+          | upload         | Upload            | Creates a read-write link to the folder driveItem.              |
+          | edit           | Edit              | Creates a read-write link to the driveItem.                     |
+          | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            |
+          | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. |
+        # there are more link types available in https://learn.microsoft.com/en-us/graph/api/driveitem-createlink?view=graph-rest-beta&tabs=http#link-types
+        #  | review         | Creates a review link to the driveItem.                                                                                                                                                                               |
+        #  | embed          | Creates an embeddable link to the driveItem.                                                                                                                                                                          |
+        #  | addressBar     | Creates the default link that is shown in the browser address bars for newly created files. The organization admin configures whether this link type is supported, and what features are supported by this link type. |
+        #  | adminDefault   | Creates the default link to the driveItem as determined by the administrator of the organization. The policy is enforced for the organization by the admin                                                            |
+    driveItemCreateLink:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/sharingLinkType'
+        expirationDateTime:
+          type: string
+          description: Optional. A String with format of yyyy-MM-ddTHH:mm:ssZ of DateTime indicates the expiration time of the permission.
+          format: date-time
+        password: 
+          type: string
+          description: Optional.The password of the sharing link that is set by the creator.
+        displayName:
+          type: string
+          description: Provides a user-visible display name of the link. Optional. Libregraph only.
+        # to invite guests or specify which users should be sent the link we could add this
+        #recipients:
+        #  type: array
+        #  items:
+        #    $ref: '#/components/schemas/driveRecipient'
+        #  description: A collection of recipients who will receive access and the sharing link.
+
+        # can be added later
+        #scope:
+        #  type: string
+        #  description: Optional. The scope of link to create. Either `anonymous`, `organization`, or `users`.
+
+        # In ocis recipients configure if they want to be notified
+        #sendNotification:
+        #  type: boolean
+        #  description: Optional. If `true`, this method sends a sharing link in an email to users specified in recipients. The default value is `false`. Optional.
+
+        # not supported by ocis
+        #retainInheritedPermissions:
+        #  type: boolean
+        #  description: Optional. If `true` (default), any existing inherited permissions are retained on the shared item when sharing this item for the first time. If `false`, all existing permissions are removed when sharing for the first time.
     driveItemInvite:
       type: object
       properties:
@@ -3379,7 +3426,7 @@ components:
           items:
             type: string
           description: Specifies the roles that are to be granted to the recipients of the sharing invitation.
-        actions:
+        '@libre.graph.permissions.actions':
           type: array
           items:
             type: string
@@ -3719,11 +3766,13 @@ components:
         id:
           type: string
           description: The unique identifier of the permission among all permissions on the item. Read-only.
+          readOnly: true
         hasPassword:
           type: boolean
           description: |
             Indicates whether the password is set for this permission. This property only
             appears in the response. Optional. Read-only.
+          readOnly: true
         expirationDateTime:
           type: string
           description: An optional expiration date which limits the permission in time.
@@ -3732,19 +3781,6 @@ components:
         # this is always a single identity set because a permission always is tied to a single recipient (which can be a group).
           description: For user type permissions, the details of the users and applications for this permission. Only part of responses. Use the invitation property when creating shares.
           $ref: '#/components/schemas/sharePointIdentitySet'
-
-        # We could use grantedToIdentitiesV2 to share with guest or external members. 'Identities' here means that an external user is identified by an email aka a guest.
-        #grantedToIdentitiesV2:
-        #  description: For link type permissions, the details of the users to whom permission was granted. Read-only.
-        #  type: array
-        #  items:
-        #    $ref: '#/components/schemas/sharePointIdentitySet'
-
-        invitation:
-          description: |
-            Details of any associated sharing invitation for this permission. For now only used when creating shares with
-            internal users or groups. An invitation is converted into a grant and will not be part of responses.
-          $ref: '#/components/schemas/sharingInvitation'
         link:
           description: Provides the link details of the current permission, if it is a link type permissions. 
           $ref: '#/components/schemas/sharingLink'
@@ -3752,19 +3788,41 @@ components:
           type: array
           items:
             type: string
-        actions:
-          description: Use this to create a permission with custom actions.
-          type: array
-          items:
-            type: string
-        #shareId left out for now because it is part of the link
         grantedToIdentities:
           deprecated: true
-          # TODO should be deprecated in favor of properly using grantedToV2 with arrays of permissions
           description: For link type permissions, the details of the identity to whom permission was granted. This could be used to grant access to a an external user that can be identified by email, aka guest accounts.
           type: array
           items:
             $ref: '#/components/schemas/identitySet'
+        '@libre.graph.permissions.actions':
+          description: Use this to create a permission with custom actions.
+          type: array
+          items:
+            type: string
+        # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
+        '@UI.Hidden':
+          description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
+          type: boolean
+
+        # unused. We could put public link token in here, but we currently only need the link property, anyway
+        #shareId:
+        #  description: A unique token that can be used to access this shared item via the shares API.
+        #  readOnly: true
+        #  type: string
+
+        # unused. We could use grantedToIdentitiesV2 to share with guest or external members. 'Identities' here means that an external user is identified by an email aka a guest.
+        #grantedToIdentitiesV2:
+        #  description: For link type permissions, the details of the users to whom permission was granted. Read-only.
+        #  type: array
+        #  items:
+        #    $ref: '#/components/schemas/sharePointIdentitySet'
+
+        # unused. invites are created with the driveItemInvite resource
+        #invitation:
+        #  description: |
+        #    Details of any associated sharing invitation for this permission. For now only used when creating shares with
+        #    internal users or groups. An invitation is converted into a grant and will not be part of responses.
+        #  $ref: '#/components/schemas/sharingInvitation'
     unifiedRoleDefinition:
       type: object
       description: |
@@ -3782,38 +3840,48 @@ components:
         id:
           description: The unique identifier for the role definition. Key, not nullable, Read-only. Inherited from entity. Supports $filter (`eq`, `in`).
           type: string
-        # isBuiltIn:
-        #   description: Flag indicating whether the role definition is part of the default set included in libre graph or a custom definition. Read-only. Supports $filter (`eq`, `in`).
-        #   type: boolean
-        # isEnabled:
-        #   description: Flag indicating whether the role is enabled for assignment. If `false` the role is not available for assignment. Read-only when **isBuiltIn** is `true`.
-        #   type: boolean
-        # leaving this out as it is already deprecated in msgraph and I do not think we need it right now
-        #resourceScopes:
-        #  type: string
-        #  description: |
-        #    List of the scopes or permissions the role definition applies to. Currently only / is supported.
-        #    Read-only when isBuiltIn is true. DO NOT USE. This will be deprecated soon. Attach scope to role assignment.
         rolePermissions:
           description: List of permissions included in the role.
           #description: List of permissions included in the role. Read-only when **isBuiltIn** is `true`.
           type: array
           items:
             $ref: '#/components/schemas/unifiedRolePermission'
-        # templateId:
-        #   description: |
-        #     Custom template identifier that can be set when isBuiltIn is `false` but is read-only when isBuiltIn is `true`.
-        #     This identifier is typically used if one needs an identifier to be the same across different directories.
-        #   type: string
-        # version:
-        #   description: Indicates version of the role definition. Read-only when **isBuiltIn** is `true`.
-        #   type: string
-        weight:
+        # follows the hugo weight
+        '@libre.graph.weight':
           description: |
             When presenting a list of roles the weight can be used to order them in a meaningful way.
             Lower weight gets higher precedence. So content with lower weight will come first. If set,
             weights should be non-zero, as 0 is interpreted as an unset weight.
           type: integer
+
+        # unused.
+        #isBuiltIn:
+        #  description: Flag indicating whether the role definition is part of the default set included in libre graph or a custom definition. Read-only. Supports $filter (`eq`, `in`).
+        #  type: boolean
+
+        # unused.
+        #isEnabled:
+        #  description: Flag indicating whether the role is enabled for assignment. If `false` the role is not available for assignment. Read-only when **isBuiltIn** is `true`.
+        #  type: boolean
+
+        # unused. already deprecated in msgraph and I do not think we need it right now
+        #resourceScopes:
+        #  type: string
+        #  description: |
+        #    List of the scopes or permissions the role definition applies to. Currently only / is supported.
+        #    Read-only when isBuiltIn is true. DO NOT USE. This will be deprecated soon. Attach scope to role assignment.
+
+        # unused. only useful for custom role definitions
+        #templateId:
+        #  description: |
+        #    Custom template identifier that can be set when isBuiltIn is `false` but is read-only when isBuiltIn is `true`.
+        #    This identifier is typically used if one needs an identifier to be the same across different directories.
+        #  type: string
+
+        # unused. only needed when versioning custom role definitions
+        #version:
+        #  description: Indicates version of the role definition. Read-only when **isBuiltIn** is `true`.
+        #  type: string
     unifiedRolePermission:
       type: object
       description: |
@@ -3905,11 +3973,13 @@ components:
             ```
             Conditions aren't supported for custom roles.
           type: string
-    #     excludedResourceActions:
-    #       description: Set of tasks that may not be performed on a resource. Not yet supported.
-    #       type: array
-    #       items:
-    #         type: string
+
+        # unused. not even supported in ms graph
+        #excludedResourceActions:
+        #  description: Set of tasks that may not be performed on a resource. Not yet supported.
+        #  type: array
+        #  items:
+        #    type: string
     odata.error:
       required:
         - error
