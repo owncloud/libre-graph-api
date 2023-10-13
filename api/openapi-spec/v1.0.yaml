@@ -3275,7 +3275,7 @@ components:
         #  type: string
         #  description: 'A unique identifier for a shared resource that can be accessed via the [Shares][] API.'
     driveItem:
-      description: Reprensents a resource inside a drive. Read-only.
+      description: Represents a resource inside a drive. Read-only.
       readOnly: true
       type: object
       properties:
@@ -3348,7 +3348,7 @@ components:
         specialFolder:
           $ref: '#/components/schemas/specialFolder'
         remoteItem:
-            $ref: '#/components/schemas/remoteItem'
+          $ref: '#/components/schemas/remoteItem'
         size:
           type: integer
           description: Size of the item in bytes. Read-only.
@@ -3370,6 +3370,9 @@ components:
             $ref: '#/components/schemas/permission'
           description: The set of permissions for the item. Read-only. Nullable.
           readOnly: true
+        audio:
+          description: Audio metadata, if the item is an audio file. Read-only.
+          $ref: '#/components/schemas/audio'
     sharingLinkType:      
         type: string
         enum: [view, upload, edit, createOnly, blocksDownload]
@@ -3834,6 +3837,69 @@ components:
         #    Details of any associated sharing invitation for this permission. For now only used when creating shares with
         #    internal users or groups. An invitation is converted into a grant and will not be part of responses.
         #  $ref: '#/components/schemas/sharingInvitation'
+    audio:
+      type: object
+      description: |
+        The Audio resource groups audio-related properties on an item into a single structure.
+
+        If a DriveItem has a non-null audio facet, the item represents an audio file. The properties of the Audio resource are populated by extracting metadata from the file.
+      properties:
+        album:
+          type: string
+          description: The title of the album for this audio file.
+        albumArtist:
+          type: string
+          description: The artist named on the album for the audio file.
+        artist:
+          type: string
+          description: The performing artist for the audio file.
+        bitrate:
+          type: integer
+          format: int64
+          description: Bitrate expressed in kbps.
+        composers:
+          type: string
+          description: The name of the composer of the audio file.
+        copyright:
+          type: string
+          description: Copyright information for the audio file.
+        disc:
+          type: integer
+          format: int16
+          description: The number of the disc this audio file came from.
+        discCount:
+          type: integer
+          format: int16
+          description: The total number of discs in this album.
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the audio file, expressed in milliseconds
+        genre:
+          type: string
+          description: The genre of this audio file.
+        hasDrm:
+          type: boolean
+          description: Indicates if the file is protected with digital rights management.
+        isVariableBitrate:
+          type: boolean
+          description: Indicates if the file is encoded with a variable bitrate.
+        title:
+          type: string
+          description: The title of the audio file.
+        track:
+          type: integer
+          format: int32
+          description: The number of the track on the original disc for this audio file.
+        trackCount:
+          type: integer
+          format: int32
+          description: The total number of tracks on the original disc for this audio file.
+        year:
+          type: integer
+          format: int32
+          description: The year the audio file was recorded.
+        
     unifiedRoleDefinition:
       type: object
       description: |
