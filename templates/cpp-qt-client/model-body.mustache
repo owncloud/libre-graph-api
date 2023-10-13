@@ -21,7 +21,7 @@ class {{classname}}Private {
      bool {{name}}_isSet;
      bool {{name}}_isValid;
 {{/vars}}{{/isEnum}}{{#isEnum}}
-     e{{classname}} value;
+     {{classname}}::e{{classname}} value;
      bool value_isSet;
      bool value_isValid;
 {{/isEnum}}};
@@ -61,14 +61,20 @@ void {{classname}}::initializeModel() {
 }
 
 void {{classname}}::fromJson(QString jsonString) {
-    {{^isEnum}}QByteArray array(jsonString.toUtf8());
+    {{^isEnum}}
+    QByteArray array(jsonString.toUtf8());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
-    this->fromJsonObject(jsonObject);{{/isEnum}}{{#isEnum}}{{#allowableValues}}{{#enumVars}}
+    this->fromJsonObject(jsonObject);
+    {{/isEnum}}
+    {{#isEnum}}
+    Q_D({{classname}});
+    {{#allowableValues}}{{#enumVars}}
     {{#-first}}if{{/-first}}{{^-first}}else if{{/-first}} ( jsonString.compare({{#isString}}"{{value}}"{{/isString}}{{^isString}}QString::number({{value}}){{/isString}}, Qt::CaseInsensitive) == 0) {
         d->value = e{{classname}}::{{name}};
         d->value_isSet = d->value_isValid = true;
-    }{{/enumVars}}{{/allowableValues}}{{/isEnum}}
+    }{{/enumVars}}{{/allowableValues}}
+    {{/isEnum}}
 }
 
 void {{classname}}::fromJson{{^isEnum}}Object{{/isEnum}}{{#isEnum}}Value{{/isEnum}}(QJson{{^isEnum}}Object{{/isEnum}}{{#isEnum}}Value{{/isEnum}} json) {
@@ -110,10 +116,14 @@ void {{classname}}::fromJson{{^isEnum}}Object{{/isEnum}}{{#isEnum}}Value{{/isEnu
 }
 
 QString {{classname}}::asJson() const {
-    {{^isEnum}}QJsonObject obj = this->asJsonObject();
+    {{^isEnum}}
+    QJsonObject obj = this->asJsonObject();
     QJsonDocument doc(obj);
     QByteArray bytes = doc.toJson();
-    return QString(bytes);{{/isEnum}}{{#isEnum}}
+    return QString(bytes);
+    {{/isEnum}}
+    {{#isEnum}}
+    Q_D(const {{classname}});
     QString val;
     {{#allowableValues}}
     switch (d->value){
@@ -125,7 +135,8 @@ QString {{classname}}::asJson() const {
             break;{{/-last}}
         {{/enumVars}}
     }{{/allowableValues}}
-    return val;{{/isEnum}}
+    return val;
+    {{/isEnum}}
 }
 
 QJson{{^isEnum}}Object{{/isEnum}}{{#isEnum}}Value{{/isEnum}} {{classname}}::asJson{{^isEnum}}Object{{/isEnum}}{{#isEnum}}Value{{/isEnum}}() const {
