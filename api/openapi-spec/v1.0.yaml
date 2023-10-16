@@ -21,7 +21,7 @@ paths:
   '/me':
     get:
       tags:
-        - me.user
+        - me
       summary: Get current user
       operationId: GetOwnUser
       parameters:
@@ -50,7 +50,7 @@ paths:
   /me/changePassword:
     post:
       tags:
-        - me.changepassword
+        - me
       summary: Chanage your own password
       operationId: ChangeOwnPassword
       requestBody:
@@ -78,7 +78,7 @@ paths:
   /me/drives:
     get:
       tags:
-        - me.drives
+        - me
       summary: Get all drives where the current user is a regular member of
       operationId: ListMyDrives
       parameters:
@@ -112,7 +112,7 @@ paths:
   '/drives':
     get:
       tags:
-        - drives.GetDrives
+        - drives
       summary: Get all available drives
       operationId: ListAllDrives
       parameters:
@@ -278,7 +278,7 @@ paths:
   '/drives/{drive-id}/items/{item-id}/createLink':
     post:
       tags:
-        - drives.permissions
+        - driveItems.permissions
       summary: Create a sharing link for a DriveItem
       operationId: CreateLink
       description: |
@@ -368,7 +368,7 @@ paths:
   '/drives/{drive-id}/items/{item-id}/invite':
     post:
       tags:
-        - drives.permissions
+        - driveItems.permissions
       summary: Send a sharing invitation
       operationId: Invite
       description: |
@@ -530,7 +530,7 @@ paths:
   '/drives/{drive-id}/items/{item-id}/permissions':
     get:
       tags:
-        - drives.permissions
+        - driveItems.permissions
       summary: List the effective sharing permissions on a driveItem.
       operationId: ListPermissions
       description: |
@@ -717,7 +717,7 @@ paths:
   '/drives/{drive-id}/items/{item-id}/permissions/{perm-id}':
     get:
       tags:
-        - drives.permissions
+        - driveItems.permissions
       summary: Get sharing permission for a file or folder
       operationId: GetPermission
       description: |
@@ -771,7 +771,7 @@ paths:
       x-ms-docs-operation-type: operation
     patch:
       tags:
-        - drives.permissions
+        - driveItems.permissions
       summary: Update sharing permission
       operationId: UpdatePermission
       description: |
@@ -836,7 +836,7 @@ paths:
       x-ms-docs-operation-type: operation
     delete:
       tags:
-        - drives.permissions
+        - driveItems.permissions
       summary: Delete entity from groups
       operationId: DeletePermission
       description: |
@@ -881,8 +881,8 @@ paths:
   '/drives/{drive-id}/root':
     get:
       tags:
-        - drives.root
-      summary: Get root from arbitrary space
+        - drives
+      summary: Get root driveItem from arbitrary space
       operationId: GetRoot
       parameters:
         - name: drive-id
@@ -1194,7 +1194,7 @@ paths:
   /me/drive:
     get:
       tags:
-        - me.drive
+        - me
       summary: Get personal space for user
       operationId: GetHome
       responses:
@@ -1210,7 +1210,7 @@ paths:
   /me/drive/root:
     get:
       tags:
-        - me.drive.root
+        - me
       summary: Get root from personal space
       operationId: HomeGetRoot
       responses:
@@ -1226,7 +1226,7 @@ paths:
   /me/drive/root/children:
     get:
       tags:
-        - me.drive.root.children
+        - me
       summary: Get children from drive
       operationId: HomeGetChildren
       responses:
@@ -1251,7 +1251,7 @@ paths:
   /me/drive/sharedByMe:
     get:
       tags:
-        - me.drive
+        - me
       summary: Get a list of driveItem objects shared by the current user.
       operationId: ListSharedByMe
       description: |
@@ -1305,7 +1305,7 @@ paths:
   /me/drive/sharedWithMe:
     get:
       tags:
-        - me.drive
+        - me
       summary: Get a list of driveItem objects shared with the owner of a drive.
       operationId: ListSharedWithMe
       description: |
