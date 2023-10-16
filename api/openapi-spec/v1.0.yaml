@@ -275,6 +275,169 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/drives/{drive-id}/items/{item-id}':
+    get:
+      tags:
+        - driveItems
+      summary: Get a driveItem resource
+      operationId: GetItem
+      description: |
+        Retrieve the metadata for a driveItem in a drive. `item-id` is the ID of a driveItem.
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/driveItem'
+              examples:
+                folder:
+                  value:
+                  - id: "storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62"
+                    folder: {}
+                    lastModifiedDateTime: "2023-09-25T14:46:40.894719508+02:00"
+                    # TODO hm ms graph docs show quoted etag, but the actual api does not
+                    eTag: "\"1812478c1f1d24f189ce05688faef503\""
+                    # TODO add cTag
+                    # FIXME we need to return the real driveItem name and `root` for the root item
+                    name: "My Folder"
+                    # FIXME where do we return the treesize?
+                    size: 0
+                file:
+                  value:
+                  - id: "storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!a22b63a4-5ffd-4dcd-a32d-40a12bf35595"
+                    file: 
+                        mimeType: "image/jpeg"
+                    lastModifiedDateTime:
+                    eTag: \"f2d5df28db4e970ad9130291572a7a01\"
+                    name: "My Image.jpg"
+                    size: 741925
+                mountpoint:
+                  description: A driveItem representing a mountpoint contains a `remoteItem`
+                  value:
+                  # FIXME the current implementation does not return the mountpoint with a remoteItem, only the granted driveItem. That is definitely wrong
+                  - id: "a0ca6a90-a365-4782-871e-d44447bbc668$a0ca6a90-a365-4782-871e-d44447bbc668!storage-users-1:f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c:6c98c0e7-dae0-4261-b16d-dde1ba0d9bc6"
+                    folder: {}
+                    lastModifiedDateTime:
+                    eTag: \"8ea0783f4c4193448ca70ec0f18e5fa0\"
+                    name: "My Folder"
+                    remoteItem:
+                    - id: "storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62"
+                      folder: {}
+                      lastModifiedDateTime: "2023-09-25T14:46:40.894719508+02:00"
+                      eTag: "\"1812478c1f1d24f189ce05688faef503\""
+                      name: "My Folder"
+                      size: 0
+                    size: 0
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/drives/{drive-id}/items/{parent-item-id}/children':
+    post:
+      tags:
+        - driveItems
+      summary: Create a new folder in a drive
+      operationId: CreateItem
+      description: |
+        Create a new folder or DriveItem in a Drive with a specified parent item or path.
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: parent-item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/driveItem'
+            examples:
+              folder:
+                description: create a new folder
+                value:
+                - name: "New Folder"
+                  folder: {}
+                  # TODO add and document "@microsoft.graph.conflictBehavior": "rename"
+              mountpoint:
+                description: |
+                  To mount a shared driveItem the `drive-id` and `parent-item-id` have to match the share jail.
+                  The `remoteItem` has to contain the `driveItem` `id` and the `permission` `id` as returned in
+                  the `/me/drive/sharedWithMe` endpoint . LibreGraph only.
+                # technically we could create mountpoints anywhere, but we want to collect them in the share jail.
+                value:
+                - lastModifiedDateTime:
+                  name: "My Mountpoint"
+                  remoteItem:
+                  - id: "storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62"
+                    permissions: {
+                      id: "storage-users-1:f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c:6c98c0e7-dae0-4261-b16d-dde1ba0d9bc6"
+                    }
+      responses:
+        '201':
+          description: Created item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/driveItem'
+              examples:
+                folder:
+                  description: created a new folder
+                  value:
+                  - id: "storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62"
+                    folder: {}
+                    lastModifiedDateTime: "2023-09-25T14:46:40.894719508+02:00"
+                    # TODO hm ms graph docs show quoted etag, but the actual api does not
+                    eTag: "\"1812478c1f1d24f189ce05688faef503\""
+                    # TODO add cTag
+                    # FIXME we need to return the real driveItem name and `root` for the root item
+                    name: "New Folder"
+                    # FIXME where do we return the treesize?
+                    size: 0
+                mountpoint:
+                  description: To mount a shared driveItem the `drive-id` and `parent-item-id` have to match the share jail.
+                  # technically we could create mountpoints anywhere, but we want to collect them in the share jail.
+                  value:
+                  - id: "a0ca6a90-a365-4782-871e-d44447bbc668$a0ca6a90-a365-4782-871e-d44447bbc668!storage-users-1:f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c:6c98c0e7-dae0-4261-b16d-dde1ba0d9bc6"
+                    folder: {}
+                    lastModifiedDateTime:
+                    eTag: \"8ea0783f4c4193448ca70ec0f18e5fa0\"
+                    name: "My Folder"
+                    remoteItem:
+                    - id: "storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62"
+                      folder: {}
+                      lastModifiedDateTime: "2023-09-25T14:46:40.894719508+02:00"
+                      eTag: "\"1812478c1f1d24f189ce05688faef503\""
+                      name: "My Folder"
+                      size: 0
+                    size: 0
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+
   '/drives/{drive-id}/items/{item-id}/createLink':
     post:
       tags:
@@ -1306,7 +1469,7 @@ paths:
     get:
       tags:
         - me
-      summary: Get a list of driveItem objects shared with the owner of a drive.
+      summary: Get a list of driveItem objects shared with the current user.
       operationId: ListSharedWithMe
       description: |
         The `driveItems` returned from the `sharedWithMe` method always include the `remoteItem` facet that indicates they are items from a different drive.
@@ -1327,19 +1490,10 @@ paths:
                   #  maxItems: 20
                   #'@odata.nextLink':
                   #  type: string
-              example:
-                value:
-                  - id: 78363031-03ef-4eda-84a2-243a691a13cd
-                    createdDateTime: "2020-02-19T14:23:25.52Z"
-                    cTag: "adDpDMTI2NDRBMTRCMEE3NzUwITEzNzkuNjM3NjYyNzQ5NjU1MDMwMDAw"
-                    eTag: "aQzEyNjQ0QTE0QjBBNzc1MCExMzc5LjQ"
-                    lastModifiedDateTime: "2021-09-03T14:09:25.503Z"
-                    name: "March Proposal.docx"
-                    parentReference:
-                      driveId: "1991210caf"
-                      driveType: personal
-                    remoteItem:
-                      id: 02d7a7df-a6f7-44cc-848a-3c98f7dd5046
+              examples:
+                unmounted:
+                  value:
+                    - id: storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62
                       name: "March Proposal.docx"
                       size: 19121
                       shared: 
@@ -1348,10 +1502,82 @@ paths:
                           user:
                             displayName: "Albert Einstein"
                             id: "44feab10d55e9871"
+                mounted:
+                  description: A mounted remote `driveItem` becomes a `remoteItem` embedded in a `driveItem` representing the mountpoint
+                  value:
+                    - id: a0ca6a90-a365-4782-871e-d44447bbc668$a0ca6a90-a365-4782-871e-d44447bbc668!storage-users-1:f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c:6c98c0e7-dae0-4261-b16d-dde1ba0d9bc6
+                      createdDateTime: "2020-02-19T14:23:25.52Z"
+                      cTag: "adDpDMTI2NDRBMTRCMEE3NzUwITEzNzkuNjM3NjYyNzQ5NjU1MDMwMDAw"
+                      eTag: "aQzEyNjQ0QTE0QjBBNzc1MCExMzc5LjQ"
+                      lastModifiedDateTime: "2021-09-03T14:09:25.503Z"
+                      name: "March Proposal.docx"
+                      parentReference:
+                        driveId: "1991210caf"
+                        driveType: personal
+                      remoteItem:
+                        id: storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62
+                        name: "March Proposal.docx"
+                        size: 19121
+                        shared: 
+                          sharedDateTime: "2020-02-19T14:23:25.52Z"
+                          owner:
+                            user:
+                              displayName: "Albert Einstein"
+                              id: "44feab10d55e9871"
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
                         
+  /me/drive/sharedWithMe?$expand=permissions:
+    get:
+      tags:
+        - me
+      summary: Get a list of driveItem objects and permissions shared with the current user.
+      operationId: ListSharedWithMe
+      description: |
+        The `driveItems` returned from the `sharedWithMe` method always include the `remoteItem` facet that indicates they are items from a different drive.
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Collection of driveItems
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/driveItem'
+                  #  maxItems: 20
+                  #'@odata.nextLink':
+                  #  type: string
+              examples:
+                unmounted:
+                  value:
+                    - id: storage-users-1$f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c!5ad3bac1-0d66-4b3f-bb00-1b0b8ac19c62
+                      name: "March Proposal.docx"
+                      size: 19121
+                      shared: 
+                        sharedDateTime: "2020-02-19T14:23:25.52Z"
+                        owner:
+                          user:
+                            displayName: "Albert Einstein"
+                            id: "44feab10d55e9871"
+                      permissions:
+                        # The permission id is the share id from the share manager
+                        - id: "storage-users-1:f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c:6c98c0e7-dae0-4261-b16d-dde1ba0d9bc6"
+                          roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                          grantedToV2:
+                            - user:
+                                id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
+                                displayName: "Marie Skłodowska Curie"
+                        
+
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   /users:
     get:
       tags:
