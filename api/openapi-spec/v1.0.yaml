@@ -3344,6 +3344,9 @@ components:
         photo:
           description: Photo metadata, if the item is a photo. Read-only.
           $ref: '#/components/schemas/photo'
+        location:
+          description: Location metadata, if the item has location data. Read-only.
+          $ref: '#/components/schemas/geoCoordinates'
         root:
           $ref: '#/components/schemas/root'
         trash:
@@ -3585,6 +3588,25 @@ components:
           type: string
           format: date-time
           description: Represents the date and time the photo was taken. Read-only.
+    geoCoordinates:
+      type: object
+      readOnly: true
+      description: |
+        The GeoCoordinates resource provides geographic coordinates and elevation of a location based on metadata contained within the file.
+        If a DriveItem has a non-null location facet, the item represents a file with a known location assocaited with it.
+      properties:
+        altitude:
+          type: number
+          format: double
+          description: The altitude (height), in feet, above sea level for the item. Read-only.
+        latitude:
+          type: number
+          format: double
+          description: The latitude, in decimal, for the item. Read-only.
+        longitude:
+          type: number
+          format: double
+          description: The longitude, in decimal, for the item. Read-only.
     root:
       type: object
       description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
