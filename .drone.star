@@ -27,10 +27,9 @@ config = {
 			'src': "out-php",
 			'repo-slug': "libre-graph-api-php",
 			'branch': 'main',
-			'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.0.0@sha256:08088a4625ebb8744b5cce414fe91396dbf8082e19aa32a44addcffc413dabde'
 		},
 	},
-	'openapi-generator-image': 'openapitools/openapi-generator-cli:v6.2.0@sha256:e6153ebc2f1a54985a50c53942e40285f1fbe64f1c701317da290bfff4abe303'
+	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.0.1@sha256:1894bae95de139bd81b6fc2ba8d2e423a2bf1b0266518d175bd26218fe42a89b'
 }
 
 def main(ctx):
