@@ -12,6 +12,7 @@ config = {
 			'src': "out-go",
 			'repo-slug': "libre-graph-api-go",
 			'branch': 'main',
+			'openapi-generator-image': 'openapitools/openapi-generator-cli:v6.6.0@sha256:08088a4625ebb8744b5cce414fe91396dbf8082e19aa32a44addcffc413dabde',
 		},
 		'typescript-axios': {
 			'src': "out-typescript-axios",
@@ -29,7 +30,7 @@ config = {
 			'branch': 'main',
 		},
 	},
-	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.0.1@sha256:1894bae95de139bd81b6fc2ba8d2e423a2bf1b0266518d175bd26218fe42a89b'
+	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.0.1@sha256:1894bae95de139bd81b6fc2ba8d2e423a2bf1b0266518d175bd26218fe42a89b',
 }
 
 def main(ctx):
