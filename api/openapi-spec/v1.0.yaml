@@ -3341,6 +3341,9 @@ components:
           $ref: '#/components/schemas/folder'
         image:
           $ref: '#/components/schemas/image'
+        photo:
+          description: Photo metadata, if the item is a photo. Read-only.
+          $ref: '#/components/schemas/photo'
         root:
           $ref: '#/components/schemas/root'
         trash:
@@ -3370,7 +3373,7 @@ components:
             $ref: '#/components/schemas/permission'
           description: The set of permissions for the item. Read-only. Nullable.
           readOnly: true
-    sharingLinkType:      
+    sharingLinkType:
         type: string
         enum: [view, upload, edit, createOnly, blocksDownload]
         description: |
@@ -3541,6 +3544,47 @@ components:
           description: 'Optional. Width of the image, in pixels. Read-only.'
           format: int32
           readOnly: true
+    photo:
+      type: object
+      readOnly: true
+      description: |
+        The photo resource provides photo and camera properties, for example, EXIF metadata, on a driveItem.
+      properties:
+        cameraMake:
+          type: string
+          description: Camera manufacturer. Read-only.
+        cameraModel:
+          type: string
+          description: Camera model. Read-only.
+        exposureDenominator:
+          type: number
+          format: double
+          description: The denominator for the exposure time fraction from the camera. Read-only.
+        exposureNumerator:
+          type: number
+          format: double
+          description: The numerator for the exposure time fraction from the camera. Read-only.
+        fNumber:
+          type: number
+          format: double
+          description: The F-stop value from the camera. Read-only.
+        focalLength:
+          type: number
+          format: double
+          description: The focal length from the camera. Read-only.
+        iso:
+          type: integer
+          format: int32
+          description: The ISO value from the camera. Read-only.
+        orientation:
+          type: integer
+          format: int16
+          description: The orientation value from the camera. Read-only.
+        takenDateTime:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          format: date-time
+          description: Represents the date and time the photo was taken. Read-only.
     root:
       type: object
       description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
