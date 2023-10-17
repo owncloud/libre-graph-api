@@ -243,7 +243,7 @@ def validate(lang):
 		"go": [
 			{
 				"name": "go-fmt",
-				"image": "owncloudci/golang:1.17",
+				"image": "owncloudci/golang:1.18",
 				"commands": [
 					"cd %s" % config["languages"][lang]["src"],
 					"gofmt -w .",
@@ -251,7 +251,7 @@ def validate(lang):
 			},
 			{
 				"name": "go-mod",
-				"image": "owncloudci/golang:1.17",
+				"image": "owncloudci/golang:1.18",
 				"commands": [
 					"cd %s" % config["languages"][lang]["src"],
 					"go mod tidy",
