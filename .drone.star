@@ -18,19 +18,16 @@ config = {
 			'src': "out-typescript-axios",
 			'repo-slug': "libre-graph-api-typescript-axios",
 			'branch': 'main',
-			'generator-args': "",
 		},
 		'cpp-qt-client': {
 			'src': "out-cpp-qt-client",
 			'repo-slug': "libre-graph-api-cpp-qt-client",
 			'branch': 'main',
-			'generator-args': "",
 		},
 		'php': {
 			'src': "out-php",
 			'repo-slug': "libre-graph-api-php",
 			'branch': 'main',
-			'generator-args': "",
 		},
 	},
 	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.0.1@sha256:1894bae95de139bd81b6fc2ba8d2e423a2bf1b0266518d175bd26218fe42a89b',
@@ -168,7 +165,7 @@ def generate(ctx, lang):
 				'commands': [
 					'test -d "templates/{0}" && TEMPLATE_ARG="-t templates/{0}" || TEMPLATE_ARG=""'.format(lang),
 					'rm -Rf %s/*' % config["languages"][lang]["src"],
-					'/usr/local/bin/docker-entrypoint.sh generate --enable-post-process-file -i api/openapi-spec/v1.0.yaml $${TEMPLATE_ARG} --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"], config["languages"][lang]["generator-args"]),
+					'/usr/local/bin/docker-entrypoint.sh generate --enable-post-process-file -i api/openapi-spec/v1.0.yaml $${TEMPLATE_ARG} --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"], config["languages"][lang].get('generator-args', '') ),
 					'cp LICENSE %s/LICENSE' % config["languages"][lang]["src"],
 				],
 			}
