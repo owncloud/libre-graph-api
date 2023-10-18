@@ -12,7 +12,6 @@ config = {
 			'src': "out-go",
 			'repo-slug': "libre-graph-api-go",
 			'branch': 'main',
-			'openapi-generator-image': 'openapitools/openapi-generator-cli:v6.6.0@sha256:08088a4625ebb8744b5cce414fe91396dbf8082e19aa32a44addcffc413dabde',
 		},
 		'typescript-axios': {
 			'src': "out-typescript-axios",
