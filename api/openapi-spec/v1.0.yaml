@@ -3347,6 +3347,11 @@ components:
         location:
           description: Location metadata, if the item has location data. Read-only.
           $ref: '#/components/schemas/geoCoordinates'
+        thumbnails:
+          description: Collection containing ThumbnailSet objects associated with the item. Read-only. Nullable.
+          type: array
+          items:
+            $ref: '#/components/schemas/thumbnailSet'
         root:
           $ref: '#/components/schemas/root'
         trash:
@@ -3406,7 +3411,7 @@ components:
           type: string
           description: Optional. A String with format of yyyy-MM-ddTHH:mm:ssZ of DateTime indicates the expiration time of the permission.
           format: date-time
-        password: 
+        password:
           type: string
           description: Optional.The password of the sharing link that is set by the creator.
         displayName:
@@ -3610,6 +3615,52 @@ components:
           type: number
           format: double
           description: The longitude, in decimal, for the item. Read-only.
+    thumbnail:
+      type: object
+      readOnly: true
+      description: |
+        The thumbnail resource type represents a thumbnail for an image, video, document, or any item that has a bitmap representation.
+      properties:
+        content:
+          type: string
+          format: base64url
+          description: The content stream for the thumbnail.
+        height:
+          type: integer
+          format: int32
+          description: The height of the thumbnail, in pixels.
+        sourceItemId:
+          type: string
+          description: The unique identifier of the item that provided the thumbnail. This is only available when a folder thumbnail is requested.
+        url:
+          type: string
+          description: The URL used to fetch the thumbnail content.
+        width:
+          type: integer
+          format: int32
+          description: The width of the thumbnail, in pixels.
+    thumbnailSet:
+      type: object
+      readOnly: true
+      description: |
+        The ThumbnailSet resource is a keyed collection of thumbnail resources.
+        It's used to represent a set of thumbnails associated with a DriveItem.
+      properties:
+        id:
+          type: string
+          description: The ID within the item. Read-only.
+        large:
+          $ref: '#/components/schemas/thumbnail'
+          description: A 1920x1920 scaled thumbnail.
+        medium:
+          $ref: '#/components/schemas/thumbnail'
+          description: A 176x176 scaled thumbnail.
+        small:
+          $ref: '#/components/schemas/thumbnail'
+          description: A 48x48 cropped thumbnail.
+        source:
+          $ref: '#/components/schemas/thumbnail'
+          description: A custom thumbnail image or the original image used to generate other thumbnails.
     root:
       type: object
       description: 'If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.'
