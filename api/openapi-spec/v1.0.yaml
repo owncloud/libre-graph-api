@@ -837,7 +837,7 @@ paths:
     delete:
       tags:
         - drives.permissions
-      summary: Delete entity from groups
+      summary: Delete a share to a file or folder
       operationId: DeletePermission
       description: |
         Remove access to a DriveItem.
