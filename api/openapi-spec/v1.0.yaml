@@ -3247,6 +3247,8 @@ components:
         userType:
           type: string
           description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
+        preferredLanguage:
+            $ref: '#/components/schemas/language'
     itemReference:
       type: object
       properties:
@@ -3274,6 +3276,12 @@ components:
         #shareId:
         #  type: string
         #  description: 'A unique identifier for a shared resource that can be accessed via the [Shares][] API.'
+    language:
+      # https://www.rfc-editor.org/rfc/rfc2798.html#section-2.7
+      # https://www.rfc-editor.org/rfc/rfc2068#section-14.4
+      description: 'Represents the users language setting, ISO-639-1 Code'
+      readOnly: false
+      type: string
     driveItem:
       description: Represents a resource inside a drive. Read-only.
       readOnly: true
