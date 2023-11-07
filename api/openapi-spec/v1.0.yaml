@@ -7,9 +7,9 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: https://ocis.ocis-traefik.latest.owncloud.works/graph/v1.0
+  - url: https://ocis.ocis-traefik.latest.owncloud.works/graph
     description: ownCloud Infinite Scale Latest
-  - url: https://localhost:9200/graph/v1.0
+  - url: https://localhost:9200/graph
     description: ownCloud Infinite Scale Development Setup
 # commented for now because it is unrelated to the PR but allows describing and linking to external docs
 # tags:
@@ -18,7 +18,7 @@ servers:
 #    externalDocs:
 #      url: https://owncloud.dev/ocis/roles-and-permissions
 paths:
-  '/me':
+  '/v1.0/me':
     get:
       tags:
         - me.user
@@ -47,7 +47,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  /me/changePassword:
+  /v1.0/me/changePassword:
     post:
       tags:
         - me.changepassword
@@ -75,7 +75,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  /me/drives:
+  /v1.0/me/drives:
     get:
       tags:
         - me.drives
@@ -109,7 +109,7 @@ paths:
         nextLinkName: '@odata.nextLink'
         operationName: listMore
       x-ms-docs-operation-type: operation
-  '/drives':
+  '/v1.0/drives':
     get:
       tags:
         - drives.GetDrives
@@ -169,7 +169,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/drives/{drive-id}':
+  '/v1.0/drives/{drive-id}':
     get:
       tags:
         - drives
@@ -275,7 +275,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/drives/{drive-id}/items/{item-id}/createLink':
+  '/v1beta1/drives/{drive-id}/items/{item-id}/createLink':
     post:
       tags:
         - drives.permissions
@@ -365,7 +365,7 @@ paths:
           $ref: '#/components/responses/error'
           # TODO add SendNotification errors as per https://learn.microsoft.com/en-us/graph/api/driveitem-invite?view=graph-rest-beta&tabs=http#sendnotification-errors
       x-ms-docs-operation-type: operation
-  '/drives/{drive-id}/items/{item-id}/invite':
+  '/v1beta1/drives/{drive-id}/items/{item-id}/invite':
     post:
       tags:
         - drives.permissions
@@ -527,7 +527,7 @@ paths:
           $ref: '#/components/responses/error'
           # TODO add SendNotification errors as per https://learn.microsoft.com/en-us/graph/api/driveitem-invite?view=graph-rest-beta&tabs=http#sendnotification-errors
       x-ms-docs-operation-type: operation
-  '/drives/{drive-id}/items/{item-id}/permissions':
+  '/v1beta1/drives/{drive-id}/items/{item-id}/permissions':
     get:
       tags:
         - drives.permissions
@@ -714,7 +714,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/drives/{drive-id}/items/{item-id}/permissions/{perm-id}':
+  '/v1beta1/drives/{drive-id}/items/{item-id}/permissions/{perm-id}':
     get:
       tags:
         - drives.permissions
@@ -878,7 +878,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/drives/{drive-id}/root':
+  '/v1.0/drives/{drive-id}/root':
     get:
       tags:
         - drives.root
@@ -902,7 +902,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  /groups:
+  /v1.0/groups:
     get:
       tags:
         - groups
@@ -994,7 +994,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/groups/{group-id}':
+  '/v1.0/groups/{group-id}':
     get:
       tags:
         - group
@@ -1095,7 +1095,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/groups/{group-id}/members':
+  '/v1.0/groups/{group-id}/members':
     get:
       tags:
         - group
@@ -1129,7 +1129,7 @@ paths:
                   mail: max.musterman@example.org
         default:
           $ref: '#/components/responses/error'
-  '/groups/{group-id}/members/$ref':
+  '/v1.0/groups/{group-id}/members/$ref':
     post:
       tags:
         - group
@@ -1160,7 +1160,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/groups/{group-id}/members/{directory-object-id}/$ref':
+  '/v1.0/groups/{group-id}/members/{directory-object-id}/$ref':
     delete:
       tags:
         - group
@@ -1191,7 +1191,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  /me/drive:
+  /v1.0/me/drive:
     get:
       tags:
         - me.drive
@@ -1207,7 +1207,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  /me/drive/root:
+  /v1.0/me/drive/root:
     get:
       tags:
         - me.drive.root
@@ -1223,7 +1223,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  /me/drive/root/children:
+  /v1.0/me/drive/root/children:
     get:
       tags:
         - me.drive.root.children
@@ -1248,7 +1248,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  /me/drive/sharedByMe:
+  /v1beta1/me/drive/sharedByMe:
     get:
       tags:
         - me.drive
@@ -1302,7 +1302,7 @@ paths:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
 
-  /me/drive/sharedWithMe:
+  /v1beta1/me/drive/sharedWithMe:
     get:
       tags:
         - me.drive
@@ -1352,7 +1352,7 @@ paths:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
                         
-  /users:
+  /v1.0/users:
     get:
       tags:
         - users
@@ -1453,7 +1453,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/users/{user-id}':
+  '/v1.0/users/{user-id}':
     get:
       tags:
         - user
@@ -1565,7 +1565,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/users/{user-id}/exportPersonalData':
+  '/v1.0/users/{user-id}/exportPersonalData':
     post:
       tags:
         - user
@@ -1594,7 +1594,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-  '/users/{user-id}/appRoleAssignments':
+  '/v1.0/users/{user-id}/appRoleAssignments':
     description: Provides operations to manage assignments of roles to users.
     get:
       tags:
@@ -1654,7 +1654,7 @@ paths:
         style: simple
         schema:
           type: string
-  '/users/{user-id}/appRoleAssignments/{appRoleAssignment-id}':
+  '/v1.0/users/{user-id}/appRoleAssignments/{appRoleAssignment-id}':
     description: Provides operations to manage a global role for an assigned user.
     delete:
       tags:
@@ -1688,7 +1688,7 @@ paths:
         style: simple
         schema:
           type: string
-  /education/users:
+  /v1.0/education/users:
     get:
       tags:
         - educationUser
@@ -1781,7 +1781,7 @@ paths:
                   $ref: '#/components/examples/educationUser'
         default:
           $ref: '#/components/responses/error'
-  '/education/users/{user-id}':
+  '/v1.0/education/users/{user-id}':
     get:
       tags:
         - educationUser
@@ -1891,7 +1891,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  /education/schools:
+  /v1.0/education/schools:
     get:
       tags:
         - educationSchool
@@ -1951,7 +1951,7 @@ paths:
                   $ref: '#/components/examples/educationSchool'
         default:
           $ref: '#/components/responses/error'
-  '/education/schools/{school-id}':
+  '/v1.0/education/schools/{school-id}':
     get:
       tags:
         - educationSchool
@@ -2041,7 +2041,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/schools/{school-id}/users':
+  '/v1.0/education/schools/{school-id}/users':
     get:
       tags:
         - educationSchool
@@ -2083,7 +2083,7 @@ paths:
                       issuerAssignedId: max.mustermann
         default:
           $ref: '#/components/responses/error'
-  '/education/schools/{school-id}/users/$ref':
+  '/v1.0/education/schools/{school-id}/users/$ref':
     post:
       tags:
         - educationSchool
@@ -2116,7 +2116,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/schools/{school-id}/users/{user-id}/$ref':
+  '/v1.0/education/schools/{school-id}/users/{user-id}/$ref':
     delete:
       tags:
         - educationSchool
@@ -2144,7 +2144,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/schools/{school-id}/classes':
+  '/v1.0/education/schools/{school-id}/classes':
     get:
       tags:
         - educationSchool
@@ -2184,7 +2184,7 @@ paths:
                   externalId: 0123_10b
         default:
           $ref: '#/components/responses/error'
-  '/education/schools/{school-id}/classes/$ref':
+  '/v1.0/education/schools/{school-id}/classes/$ref':
     post:
       tags:
         - educationSchool
@@ -2217,7 +2217,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/schools/{school-id}/classes/{class-id}/$ref':
+  '/v1.0/education/schools/{school-id}/classes/{class-id}/$ref':
     delete:
       tags:
         - educationSchool
@@ -2245,7 +2245,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  /education/classes:
+  /v1.0/education/classes:
     get:
       tags:
         - educationClass
@@ -2306,7 +2306,7 @@ paths:
                   $ref: '#/components/examples/educationClass'
         default:
           $ref: '#/components/responses/error'
-  '/education/classes/{class-id}':
+  '/v1.0/education/classes/{class-id}':
     get:
       tags:
         - educationClass
@@ -2395,7 +2395,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/classes/{class-id}/members':
+  '/v1.0/education/classes/{class-id}/members':
     get:
       tags:
         - educationClass
@@ -2437,7 +2437,7 @@ paths:
                       issuerAssignedId: max.mustermann
         default:
           $ref: '#/components/responses/error'
-  '/education/classes/{class-id}/members/$ref':
+  '/v1.0/education/classes/{class-id}/members/$ref':
     post:
       tags:
         - educationClass
@@ -2470,7 +2470,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/classes/{class-id}/members/{user-id}/$ref':
+  '/v1.0/education/classes/{class-id}/members/{user-id}/$ref':
     delete:
       tags:
         - educationClass
@@ -2497,7 +2497,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/classes/{class-id}/teachers':
+  '/v1.0/education/classes/{class-id}/teachers':
     get:
       tags:
         - educationClass.teachers
@@ -2539,7 +2539,7 @@ paths:
                       issuerAssignedId: max.mustermann
         default:
           $ref: '#/components/responses/error'
-  '/education/classes/{class-id}/teachers/$ref':
+  '/v1.0/education/classes/{class-id}/teachers/$ref':
     post:
       tags:
         - educationClass.teachers
@@ -2572,7 +2572,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/education/classes/{class-id}/teachers/{user-id}/$ref':
+  '/v1.0/education/classes/{class-id}/teachers/{user-id}/$ref':
     delete:
       tags:
         - educationClass.teachers
@@ -2599,7 +2599,7 @@ paths:
           description: Success
         default:
           $ref: '#/components/responses/error'
-  '/extensions/org.libregraph/tags':
+  '/v1.0/extensions/org.libregraph/tags':
     get:
       tags:
         - tags
@@ -2656,7 +2656,7 @@ paths:
           description: No content
         default:
           $ref: '#/components/responses/error'
-  /applications:
+  /v1.0/applications:
     get:
       tags:
         - applications
@@ -2677,7 +2677,7 @@ paths:
                       $ref: '#/components/schemas/application'
         default:
           $ref: '#/components/responses/error'
-  /applications/{application-id}:
+  /v1.0/applications/{application-id}:
     get:
       tags:
         - applications
@@ -2699,7 +2699,7 @@ paths:
                 $ref: '#/components/schemas/application'
         default:
           $ref: '#/components/responses/error'
-  /roleManagement/permissions/roleDefinitions:
+  /v1beta1/roleManagement/permissions/roleDefinitions:
     get:
       tags:
         - roleManagement
@@ -2752,7 +2752,7 @@ paths:
                     weight: 4
         default:
           $ref: '#/components/responses/error'
-  /roleManagement/permissions/roleDefinitions/{role-id}:
+  /v1beta1/roleManagement/permissions/roleDefinitions/{role-id}:
     get:
       tags:
         - roleManagement
