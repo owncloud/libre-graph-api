@@ -31,12 +31,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/user'
               examples:
-                change displayName:
-                  value:
-                    displayName: "Albert Einstein"
-                change email:
-                  value:
-                    mail: "einstein@example.com"
                 change preferred language:
                   value:
                     preferredLanguage: "en"
