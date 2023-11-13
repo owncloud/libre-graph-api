@@ -19,6 +19,30 @@ servers:
 #      url: https://owncloud.dev/ocis/roles-and-permissions
 paths:
   '/v1.0/me':
+    patch:
+      tags:
+        - me.user
+      summary: Update the current user
+      operationId: UpdateOwnUser
+      requestBody:
+          description: New user values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+              examples:
+                change preferred language:
+                  value:
+                    preferredLanguage: "en"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        default:
+          $ref: '#/components/responses/error'
     get:
       tags:
         - me.user
@@ -1530,6 +1554,16 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/user'
+            examples:
+                change displayName:
+                  value:
+                    displayName: "Marie Skłodowska Curie"
+                change email:
+                  value:
+                    mail: "marie@example.com"
+                change preferred language:
+                  value:
+                    preferredLanguage: "fr"
         required: true
       responses:
         '200':
@@ -3247,6 +3281,8 @@ components:
         userType:
           type: string
           description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
+        preferredLanguage:
+            $ref: '#/components/schemas/language'
     itemReference:
       type: object
       properties:
@@ -3274,6 +3310,12 @@ components:
         #shareId:
         #  type: string
         #  description: 'A unique identifier for a shared resource that can be accessed via the [Shares][] API.'
+    language:
+      # https://www.rfc-editor.org/rfc/rfc2798.html#section-2.7
+      # https://www.rfc-editor.org/rfc/rfc2068#section-14.4
+      description: 'Represents the users language setting, ISO-639-1 Code'
+      readOnly: false
+      type: string
     driveItem:
       description: Represents a resource inside a drive. Read-only.
       readOnly: true
