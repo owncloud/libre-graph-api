@@ -3199,7 +3199,9 @@ components:
         '@libre.graph.displayName':
           type: string
           description: Provides a user-visible display name of the link. Optional. Libregraph only.
-
+        '@libre.graph.quickLink':
+          type: boolean
+          description: The quicklink property can be assigned to only one link per resource. A quicklink can be used in the clients to provide a one-click copy to clipboard action. Optional. Libregraph only.
         # unused
         #webHtml:
         #  type: string
@@ -3423,12 +3425,13 @@ components:
           $ref: '#/components/schemas/audio'
     sharingLinkType:
         type: string
-        enum: [view, upload, edit, createOnly, blocksDownload]
+        enum: [internal, view, upload, edit, createOnly, blocksDownload]
         description: |
           The type of the link created.
 
           | Value          | Display name      | Description                                                     |
           | -------------- | ----------------- | --------------------------------------------------------------- |
+          | internal       | Internal          | Creates an internal link without any permissions.               |
           | view           | View              | Creates a read-only link to the driveItem.                      |
           | upload         | Upload            | Creates a read-write link to the folder driveItem.              |
           | edit           | Edit              | Creates a read-write link to the driveItem.                     |
@@ -3454,6 +3457,9 @@ components:
         displayName:
           type: string
           description: Provides a user-visible display name of the link. Optional. Libregraph only.
+        '@libre.graph.quickLink':
+          type: boolean
+          description: The quicklink property can be assigned to only one link per resource. A quicklink can be used in the clients to provide a one-click copy to clipboard action. Optional. Libregraph only.
         # unused. we could add thisto invite guests or specify which users should be sent the link
         #recipients:
         #  type: array
