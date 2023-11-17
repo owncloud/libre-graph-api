@@ -4195,7 +4195,6 @@ components:
           items:
             $ref: '#/components/schemas/odata.error.detail'
         innererror:
-          type: object
           description: The structure of this object is service-specific
     odata.error.detail:
       required:
