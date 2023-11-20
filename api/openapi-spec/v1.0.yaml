@@ -4040,7 +4040,7 @@ components:
       properties:
         password:
           type: string
-          description: Password. It may reuquire a password policy.
+          description: Password. It may require a password policy.
     audio:
       type: object
       description: |
