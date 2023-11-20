@@ -2103,7 +2103,7 @@ paths:
                   value:
                     type: array
                     items:
-                      $ref: '#/components/schemas/educationClass'
+                      $ref: '#/components/schemas/educationUser'
               example:
                 - id: 90eedea1-dea1-90ee-a1de-ee90a1deee90
                   onPremisesSAMAccountName: max.mustermann
