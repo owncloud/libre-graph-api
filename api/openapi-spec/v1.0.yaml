@@ -659,7 +659,7 @@ paths:
                     #    - libre.graph/driveItem/permissions/read
                     #    - libre.graph/driveItem/upload/create
                     #    condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 1
+                    '@libre.graph.weight': 1
                   - id: a1c6f73e-482e-4078-a629-bbecb205abb
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
@@ -667,7 +667,7 @@ paths:
                     #  - allowedResourceActions:
                     #    - libre.graph/driveItem/standard/allTasks
                     #    condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 2
+                    '@libre.graph.weight': 2
                   - id: dfa16e02-3d88-45d8-8894-5b33a7df637
                     description: "Allows managing a space"
                     displayName: Manager
@@ -675,7 +675,7 @@ paths:
                     #  - allowedResourceActions:
                     #    - libre.graph/drive/standard/allTasks 
                     #    condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 3
+                    '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
                     description: "Allows creating new files"
                     displayName: File Drop
@@ -683,7 +683,7 @@ paths:
                     #  - allowedResourceActions:
                     #      libre.graph/driveItem/upload/create
                     #    condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 4
+                    '@libre.graph.weight': 4
                 '@libre.graph.permissions.actions.allowedValues': [
                     "libre.graph/driveItem/basic/read",
                     "libre.graph/driveItem/permissions/read",
@@ -2841,7 +2841,7 @@ paths:
                         - libre.graph/driveItem/permissions/read
                         - libre.graph/driveItem/upload/create
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 1
+                    '@libre.graph.weight': 1
                   - id: a1c6f73e-482e-4078-a629-bbecb205abb
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
@@ -2849,7 +2849,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/allTasks
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 2
+                    '@libre.graph.weight': 2
                   - id: dfa16e02-3d88-45d8-8894-5b33a7df637
                     description: "Allows managing a space"
                     displayName: Manager
@@ -2857,7 +2857,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/drive/standard/allTasks 
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 3
+                    '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
                     description: "Allows creating new files"
                     displayName: File Drop
@@ -2865,7 +2865,7 @@ paths:
                       - allowedResourceActions:
                           libre.graph/driveItem/upload/create
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 4
+                    '@libre.graph.weight': 4
         default:
           $ref: '#/components/responses/error'
   /v1beta1/roleManagement/permissions/roleDefinitions/{role-id}:
@@ -2901,7 +2901,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/basic/read
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 1
+                    '@libre.graph.weight': 1
                 Editor:
                   value:
                     id: a1c6f73e-482e-4078-a629-bbecb205abb
@@ -2911,7 +2911,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/allTasks 
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 2
+                    '@libre.graph.weight': 2
                 Manager:
                   value:
                     id: dfa16e02-3d88-45d8-8894-5b33a7df637
@@ -2921,7 +2921,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/drive/standard/allTasks 
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 3
+                    '@libre.graph.weight': 3
                 File Drop:
                   value:
                     id: 4916f47e-66d5-49bb-9ac9-748ad00334b
@@ -2931,7 +2931,7 @@ paths:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/create
                         condition: "@Subject.objectId Any_of @Resource.grantee"
-                    weight: 4
+                    '@libre.graph.weight': 4
         default:
           $ref: '#/components/responses/error'
 components:
