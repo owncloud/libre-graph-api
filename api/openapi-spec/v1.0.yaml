@@ -476,7 +476,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/permission'
+                title: Collection of permissions
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/permission'
               examples:
                 send viewer invite:
                   value:
@@ -602,7 +608,7 @@ paths:
           content:
             application/json:
               schema:
-                title: Collection of permissions
+                title: Collection of permissions with allowed values
                 type: object
                 properties:
                   '@libre.graph.permissions.roles.allowedValues':
