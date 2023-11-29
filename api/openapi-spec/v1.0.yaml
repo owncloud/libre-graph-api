@@ -471,7 +471,7 @@ paths:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                     '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
       responses:
-        '200':
+        '201':
           description: Response
           content:
             application/json:
