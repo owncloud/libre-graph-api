@@ -99,6 +99,42 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/v1beta1/me/drives':
+    # $ref is buggy in the openapi-generator v7.0.1
+    # $ref: '#/paths/~1v1.0~1me~1drives'
+    get:
+      tags:
+        - me.drives
+      summary: Alias for '/v1.0/drives', the difference is that grantedtoV2 is used and roles contain unified roles instead of cs3 roles
+      operationId: ListMyDrivesBeta
+      parameters:
+        - $ref: '#/components/parameters/orderby'
+        - $ref: '#/components/parameters/drivesFilter'
+      responses:
+        '200':
+          description: Retrieved spaces
+          content:
+            application/json:
+              schema:
+                title: Collection of drives
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/drive'
+                    maxItems: 100
+                  '@odata.nextLink':
+                    type: string
+          links:
+            root:
+              operationId: HomeGetRoot
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-pageable:
+        nextLinkName: '@odata.nextLink'
+        operationName: listMore
+      x-ms-docs-operation-type: operation
   /v1.0/me/drives:
     get:
       tags:
@@ -132,6 +168,36 @@ paths:
       x-ms-pageable:
         nextLinkName: '@odata.nextLink'
         operationName: listMore
+      x-ms-docs-operation-type: operation
+  '/v1beta1/drives':
+  # $ref is buggy in the openapi-generator v7.0.1
+  # $ref: '#/paths/~1v1.0~1drives'
+    get:
+      tags:
+        - drives.GetDrives
+      summary: Alias for '/v1.0/drives', the difference is that grantedtoV2 is used and roles contain unified roles instead of cs3 roles
+      operationId: ListAllDrivesBeta
+      parameters:
+        - $ref: '#/components/parameters/orderby'
+        - $ref: '#/components/parameters/drivesFilter'
+      responses:
+        '200':
+          description: Retrieved spaces
+          content:
+            application/json:
+              schema:
+                title: Collection of drives
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/drive'
+          links:
+            root:
+              operationId: GetRoot
+        default:
+          $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
   '/v1.0/drives':
     get:
@@ -313,7 +379,7 @@ paths:
         ## Link types
 
         For now, The following values are allowed for the type parameter.
-        
+
         | Value          | Display name      | Description                                                     |
         | -------------- | ----------------- | --------------------------------------------------------------- |
         | view           | View              | Creates a read-only link to the driveItem.                      |
@@ -408,7 +474,7 @@ paths:
       # sharing permissions. For those we should use speaking ids.
       #
       #  For now, the following roles are considered built in:
-      #  
+      #
       #  | Role    | Value   | Description                                                                                                           |
       #  | ------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
       #  | Viewer  | `read`  | Provides the ability to read the metadata and contents of the item.                                                   |
@@ -571,7 +637,7 @@ paths:
         * Sharing permission properties that contain secrets (e.g. `webUrl`) are only returned for callers that are able to create the sharing permission.
 
         All permission objects have an `id`. A permission representing
-        * a link has the `link` facet filled with details. 
+        * a link has the `link` facet filled with details.
         * a share has the `roles` property set and the `grantedToV2` property filled with the grant recipient details.
 
       # TODO hm, the ms graph api seems to always fill the `roles` property to indicate the actions granted by the link.
@@ -583,7 +649,7 @@ paths:
       # | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            | createOnly     |
       # | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. | blocksDownload |
       # AFAICT we wcill have to define the actions granted by a link type when we start to implement this
-      # but e.g. a createOnly role and blocksDownload should not show up in the drop down for sharing files internally ... 
+      # but e.g. a createOnly role and blocksDownload should not show up in the drop down for sharing files internally ...
       # when we need to hardcode this anyway ... we should indicate that by using the buildIn flag ... but how do we prevent some roles from showing up in the internal sharing dialog ...
       # for now leave out the roles property and hardcode the actions allowed by the link type
 
@@ -658,7 +724,7 @@ paths:
                     description: "Allows reading the shared file or folder"
                     displayName: Viewer
                     # we don't want to reproduce all the individual role permissions, that is what the /roleManagement/permissions/roleDefinitions endpoint is for
-                    # to build a custom role 
+                    # to build a custom role
                     #rolePermissions:
                     #  - allowedResourceActions:
                     #    - libre.graph/driveItem/basic/read
@@ -679,7 +745,7 @@ paths:
                     displayName: Manager
                     #rolePermissions:
                     #  - allowedResourceActions:
-                    #    - libre.graph/drive/standard/allTasks 
+                    #    - libre.graph/drive/standard/allTasks
                     #    condition: "@Subject.objectId Any_of @Resource.grantee"
                     '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
@@ -1454,7 +1520,7 @@ paths:
                       id: 02d7a7df-a6f7-44cc-848a-3c98f7dd5046
                       name: "March Proposal.docx"
                       size: 19121
-                      shared: 
+                      shared:
                         sharedDateTime: "2020-02-19T14:23:25.52Z"
                         owner:
                           user:
@@ -1463,7 +1529,7 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
-                        
+
   /v1.0/users:
     get:
       tags:
@@ -2826,7 +2892,7 @@ paths:
       tags:
         - roleManagement
       summary: List roleDefinitions
-      operationId: ListPermissionRoleDefinitions 
+      operationId: ListPermissionRoleDefinitions
       description: |
         Get a list of `unifiedRoleDefinition` objects for the permissions provider. This list determines the roles that can be selected when creating sharing invites.
       responses:
@@ -2861,7 +2927,7 @@ paths:
                     displayName: Manager
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/drive/standard/allTasks 
+                        - libre.graph/drive/standard/allTasks
                         condition: "@Subject.objectId Any_of @Resource.grantee"
                     '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
@@ -2915,7 +2981,7 @@ paths:
                     displayName: Editor
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/driveItem/standard/allTasks 
+                        - libre.graph/driveItem/standard/allTasks
                         condition: "@Subject.objectId Any_of @Resource.grantee"
                     '@libre.graph.weight': 2
                 Manager:
@@ -2925,7 +2991,7 @@ paths:
                     displayName: Manager
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/drive/standard/allTasks 
+                        - libre.graph/drive/standard/allTasks
                         condition: "@Subject.objectId Any_of @Resource.grantee"
                     '@libre.graph.weight': 3
                 File Drop:
@@ -3209,7 +3275,7 @@ components:
         user:
           $ref: '#/components/schemas/identity'
           description: Optional. The user associated with this action.
-        # this is not part of the ms graph api. there, only the sharepointIdentitySet used in grantedToV2 has a group 
+        # this is not part of the ms graph api. there, only the sharepointIdentitySet used in grantedToV2 has a group
         group:
           $ref: '#/components/schemas/identity'
           description: Optional. The group associated with this action.
@@ -3224,7 +3290,7 @@ components:
           $ref: '#/components/schemas/identity'
           description: Optional. The group associated with this action.
 
-        # unused  
+        # unused
         #application:
         #  $ref: '#/components/schemas/identity'
         #  description: Optional. The application associated with this action.
@@ -3539,7 +3605,7 @@ components:
           type: string
           description: Optional. A String with format of yyyy-MM-ddTHH:mm:ssZ of DateTime indicates the expiration time of the permission.
           format: date-time
-        password: 
+        password:
           type: string
           description: Optional.The password of the sharing link that is set by the creator.
         displayName:
@@ -3607,9 +3673,9 @@ components:
         #sendInvitation:
         #  type: boolean
         #  description: If `true`, a sharing link is sent to the recipient. Otherwise, a permission is granted directly without sending a notification.
-        
+
         # internal shares do not have a password
-        #password: 
+        #password:
         #  type: string
         #  description: The password set on the invite by the creator. Optional .
 
@@ -3999,7 +4065,7 @@ components:
           description: For user type permissions, the details of the users and applications for this permission. Only part of responses. Use the invitation property when creating shares.
           $ref: '#/components/schemas/sharePointIdentitySet'
         link:
-          description: Provides the link details of the current permission, if it is a link type permissions. 
+          description: Provides the link details of the current permission, if it is a link type permissions.
           $ref: '#/components/schemas/sharingLink'
         roles:
           type: array
@@ -4110,7 +4176,7 @@ components:
           type: integer
           format: int32
           description: The year the audio file was recorded.
-        
+
     unifiedRoleDefinition:
       type: object
       description: |
@@ -4188,7 +4254,7 @@ components:
            ```
 
             For example: `libre.graph/applications/credentials/update`
-            
+
             * *{Namespace}* - The services that exposes the task. For example, all tasks in libre graph use the namespace `libre.graph`.
             * *{Entity}* - The logical features or components exposed by the service in libre graph. For example, `applications`, `servicePrincipals`, or `groups`.
             * *{PropertySet}* - Optional. The specific properties or aspects of the entity for which access is being granted.
