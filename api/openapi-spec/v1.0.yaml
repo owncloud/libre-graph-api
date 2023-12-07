@@ -3577,6 +3577,9 @@ components:
         audio:
           description: Audio metadata, if the item is an audio file. Read-only.
           $ref: '#/components/schemas/audio'
+        video:
+          description: Video metadata, if the item is a video. Read-only.
+          $ref: '#/components/schemas/video'
     sharingLinkType:
         type: string
         enum: [internal, view, upload, edit, createOnly, blocksDownload]
@@ -4176,7 +4179,51 @@ components:
           type: integer
           format: int32
           description: The year the audio file was recorded.
+    video:
+      type: object
+      description: |
+        The video resource groups video-related data items into a single structure.
 
+        If a driveItem has a non-null video facet, the item represents a video file. The properties of the video resource are populated by extracting metadata from the file.
+      properties:
+        audioBitsPerSample:
+          type: integer
+          format: int32
+          description: Number of audio bits per sample.
+        audioChannels:
+          type: integer
+          format: int32
+          description: Number of audio channels.
+        audioFormat:
+          type: string
+          description: Name of the audio format (AAC, MP3, etc.).
+        audioSamplesPerSecond:
+          type: integer
+          format: int32
+          description: Number of audio samples per second.
+        bitrate:
+          type: integer
+          format: int32
+          description: Bit rate of the video in bits per second.
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the file in milliseconds.
+        fourCC:
+          type: string
+          description: \"Four character code\" name of the video format.
+        frameRate:
+          type: number
+          format: double
+          description: Frame rate of the video.
+        height:
+          type: integer
+          format: int32
+          description: Height of the video, in pixels.
+        width:
+          type: integer
+          format: int32
+          description: Width of the video, in pixels.
     unifiedRoleDefinition:
       type: object
       description: |
