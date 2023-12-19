@@ -3897,6 +3897,12 @@ components:
           $ref: '#/components/schemas/itemReference'
         shared:
           $ref: '#/components/schemas/shared'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permission'
+          description: The set of permissions for the item. Read-only. Nullable.
+          readOnly: true
         size:
           type: integer
           description: Size of the remote item. Read-only.
