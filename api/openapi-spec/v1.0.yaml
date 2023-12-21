@@ -599,8 +599,30 @@ paths:
                             displayName: "Albert Einstein"
                       '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
         '207':
-        # FIXME describe partial success response
-          description: Partial success response TODO
+          description: When partial success is returned, the response for each failed recipient will contain an error object with information about what went wrong and how to fix it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permission'
+              example:
+                value:
+                  - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    grantedToV2:
+                      - user:
+                          id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                          displayName: "Albert Einstein"
+                    error:
+                      - code: notAllowed
+                        message: Account verification needed to unblock sending emails.
+                        innerError:
+                          code: accountVerificationRequired
+                  - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    grantedToV2:
+                      - user:
+                          id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
+                          displayName: "Marie Skłodowska Curie"
         '400':
           description: Bad request
           content:
@@ -4095,6 +4117,9 @@ components:
         '@UI.Hidden':
           description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
           type: boolean
+        error:
+          description: An error describing what went wrong for this permission in a partial response. Optional. Read-only.
+          $ref: '#/components/schemas/odata.error'
 
         # unused. We could put public link token in here, but we currently only need the link property, anyway
         #shareId:
