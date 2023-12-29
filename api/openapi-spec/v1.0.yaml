@@ -4091,6 +4091,9 @@ components:
           type: array
           items:
             type: string
+        '@Client.Synchronize':
+            description: Indicates if the item is synchronized with the underlying storage provider. Read-only.
+            type: boolean
         # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
         '@UI.Hidden':
           description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
