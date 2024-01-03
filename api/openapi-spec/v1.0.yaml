@@ -3008,15 +3008,6 @@ paths:
           $ref: '#/components/responses/error'
 components:
   schemas:
-    entity:
-      description: Represents an entity.
-      readOnly: true
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique idenfier for an entity. Read-only.
-          readOnly: true
     tagAssignment:
       type: object
       required:
@@ -3041,16 +3032,6 @@ components:
           type: array
           items:
             type: string
-    educationOrganization:
-      description: Abstract. Represents an organization in educational context
-      properties:
-        id:
-          type: string
-          description: The unique idenfier for an entity. Read-only.
-          readOnly: true
-        displayName:
-          type: string
-          description: The organization name
     educationSchool:
       description: Represents a school
       type: object
@@ -4033,20 +4014,6 @@ components:
           minItems: 1
           maxItems: 20
           description: A list of member references to the members to be added. Up to 20 members can be added with a single request
-    directoryObject:
-      type: object
-      properties:
-        # entity
-        id:
-          type: string
-          description: The unique identifier for the object. 12345678-9abc-def0-1234-56789abcde. The value of the ID property is often, but not exclusively, in the form of a GUID. The value should be treated as an opaque identifier and not based in being a GUID. Null values are not allowed. Read-only.
-          readOnly: true
-        # directory object
-        deletedDateTime:
-          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-          type: string
-          format: date-time
-      description: 'Represents a Directory object. Read-only.'
     permission:
       type: object
       description: |
