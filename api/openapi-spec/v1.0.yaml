@@ -909,8 +909,16 @@ paths:
           application/json:
               schema:
                 $ref: '#/components/schemas/permission'
-              example:
-                roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+              examples:
+                update link:
+                  description: Updating a public link is done by setting the `type` property of the permission link.
+                  value:
+                    link:
+                      type: edit
+                update invite:
+                  description: Updating an invite is done by setting the `roles` property of the permission.
+                  value:
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
         required: true
       responses:
         '200':
@@ -919,14 +927,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/permission'
-              example:
-                  id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
-                  expirationDateTime: "2018-07-15T14:00:00.000Z"
-                  grantedToV2:
-                    - user:
-                        id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                        displayName: "Albert Einstein"
+              examples:
+                update link:
+                  value:
+                    id: "a373c812-d786-42ae-a65f-ed87ee4abd49"
+                    link:
+                      type: "edit"
+                      webUrl: "https://cloud.example.org/s/MlnTDkhcBlihNzO"
+                update invite:
+                  value:
+                    id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
+                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+                    grantedToV2:
+                      - user:
+                          id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                          displayName: "Albert Einstein"
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
