@@ -4004,13 +4004,6 @@ components:
           type: string
           description: URL that displays the resource in the browser. Read-only.
           title: shared
-        '@client.synchronize':
-            description: Indicates if the item is synchronized with the underlying storage provider. Read-only.
-            type: boolean
-          # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
-        '@ui.hidden':
-            description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
-            type: boolean
     shared:
       type: object
       properties:
@@ -4172,6 +4165,14 @@ components:
           type: array
           items:
             type: string
+        '@client.synchronize':
+            description: Indicates if the item is synchronized with the underlying storage provider. Read-only.
+            type: boolean
+        # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
+        '@ui.hidden':
+          description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
+          type: boolean
+
         # unused. We could put public link token in here, but we currently only need the link property, anyway
         #shareId:
         #  description: A unique token that can be used to access this shared item via the shares API.
