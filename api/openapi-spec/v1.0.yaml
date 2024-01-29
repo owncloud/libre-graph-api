@@ -3990,8 +3990,6 @@ components:
           readOnly: true
         parentReference:
           $ref: '#/components/schemas/itemReference'
-        shared:
-          $ref: '#/components/schemas/shared'
         permissions:
           type: array
           items:
@@ -4011,21 +4009,6 @@ components:
           type: string
           description: URL that displays the resource in the browser. Read-only.
           title: shared
-    shared:
-      type: object
-      properties:
-        owner:
-          $ref: '#/components/schemas/identitySet'
-        scope:
-          type: string
-          description: 'Indicates the scope of how the item is shared: anonymous, organization, or users. Read-only.'
-        sharedBy:
-          $ref: '#/components/schemas/identitySet'
-        sharedDateTime:
-          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$'
-          type: string
-          description: The UTC date and time when the item was shared. Read-only.
-          format: date-time
     quota:
       type: object
       description: Optional. Information about the drive's storage space quota. Read-only.
@@ -4172,6 +4155,10 @@ components:
           type: array
           items:
             type: string
+        invitation:
+          description: |
+            Details of any associated sharing invitation for this permission.
+          $ref: '#/components/schemas/sharingInvitation'
 
         # unused. We could put public link token in here, but we currently only need the link property, anyway
         #shareId:
@@ -4187,11 +4174,14 @@ components:
         #    $ref: '#/components/schemas/sharePointIdentitySet'
 
         # unused. invites are created with the driveItemInvite resource
-        #invitation:
-        #  description: |
-        #    Details of any associated sharing invitation for this permission. For now only used when creating shares with
-        #    internal users or groups. An invitation is converted into a grant and will not be part of responses.
-        #  $ref: '#/components/schemas/sharingInvitation'
+    sharingInvitation:
+      type: object
+      description: |
+        invitation-related data items
+      properties:
+        invitedBy:
+          description: Provides information about who sent the invitation that created this permission, if that information is available. Read-only.
+          $ref: '#/components/schemas/identitySet'
     sharingLinkPassword:
       type: object
       description: |
