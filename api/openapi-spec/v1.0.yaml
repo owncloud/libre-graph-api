@@ -372,7 +372,7 @@ paths:
       summary: Create a drive item
       operationId: CreateDriveItem
       description: |
-        You can use the root childrens endpoint to mount a remoteItem in the share jail. The `@client.synchronize` property of the `remoteItem` in the [sharedWithMe](#/me.drive/ListSharedWithMe) endpoint will change to true.
+        You can use the root childrens endpoint to mount a remoteItem in the share jail. The `@client.synchronize` property of the `driveItem` in the [sharedWithMe](#/me.drive/ListSharedWithMe) endpoint will change to true.
       parameters:
         - name: drive-id
           in: path
@@ -425,7 +425,7 @@ paths:
         
         Deleting items using this method moves the items to the recycle bin instead of permanently deleting the item.
         
-        Mounted shares in the share jail are unmounted. The `@client.synchronize` property of the `remoteItem` in the [sharedWithMe](#/me.drive/ListSharedWithMe) endpoint will change to false.
+        Mounted shares in the share jail are unmounted. The `@client.synchronize` property of the `driveItem` in the [sharedWithMe](#/me.drive/ListSharedWithMe) endpoint will change to false.
       parameters:
         - name: drive-id
           in: path
@@ -3668,6 +3668,13 @@ components:
         video:
           description: Video metadata, if the item is a video. Read-only.
           $ref: '#/components/schemas/video'
+        '@client.synchronize':
+            description: Indicates if the item is synchronized with the underlying storage provider. Read-only.
+            type: boolean
+        # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
+        '@UI.Hidden':
+          description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
+          type: boolean
     sharingLinkType:
         type: string
         enum: [internal, view, upload, edit, createOnly, blocksDownload]
@@ -4165,13 +4172,6 @@ components:
           type: array
           items:
             type: string
-        '@client.synchronize':
-            description: Indicates if the item is synchronized with the underlying storage provider. Read-only.
-            type: boolean
-        # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
-        '@ui.hidden':
-          description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
-          type: boolean
 
         # unused. We could put public link token in here, but we currently only need the link property, anyway
         #shareId:
