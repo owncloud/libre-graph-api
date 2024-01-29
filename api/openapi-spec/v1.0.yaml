@@ -1615,7 +1615,12 @@ paths:
               example:
                 value:
                   - id: 78363031-03ef-4eda-84a2-243a691a13cd
-                    createdDateTime: "2020-02-19T14:23:25.52Z"
+                    '@UI.hidden': false
+                    '@client.synchronize': true
+                    createdBy:
+                      user:
+                        displayName: "Albert Einstein"
+                        id: "44feab10d55e9871"
                     cTag: "adDpDMTI2NDRBMTRCMEE3NzUwITEzNzkuNjM3NjYyNzQ5NjU1MDMwMDAw"
                     eTag: "aQzEyNjQ0QTE0QjBBNzc1MCExMzc5LjQ"
                     lastModifiedDateTime: "2021-09-03T14:09:25.503Z"
@@ -1627,12 +1632,20 @@ paths:
                       id: 02d7a7df-a6f7-44cc-848a-3c98f7dd5046
                       name: "March Proposal.docx"
                       size: 19121
-                      shared:
-                        sharedDateTime: "2020-02-19T14:23:25.52Z"
-                        owner:
-                          user:
-                            displayName: "Albert Einstein"
-                            id: "44feab10d55e9871"
+                      lastModifiedDateTime: "2021-09-03T14:09:25.503Z"
+                      permissions:
+                        - id: 7310e99f-377b-4cba-a1f0-ffa3331fd32c
+                          roles:
+                            - b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
+                          grantedToV2: 
+                            group:
+                              displayName: "users"
+                              id: 509a9dcd-bb37-4f4f-a01a-19dca27d9cfa
+                          invitation:
+                            invitedBy:
+                              user:
+                                displayName: "Albert Einstein"
+                                id: "44feab10d55e9871"
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
