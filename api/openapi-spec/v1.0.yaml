@@ -1349,6 +1349,15 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/group'
+            examples:
+              update name:
+                value:
+                  displayName: GroupName
+              add multiple members:
+                value:
+                  '@members@odata.bind':
+                    - "https://localhost:9200/graph/v1.0/users/4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - "https://localhost:9200/graph/v1.0/users/c54b0588-7157-4521-bb52-c1c8ca84ea71"
         required: true
       responses:
         '204':
@@ -2663,9 +2672,15 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/educationClass'
-            example:
-              displayName: Musik
-              externalId: cb766da3-bab1-478a-9615-f99d4c59c09a
+            examples:
+              update name:
+                value:
+                  displayName: Musik
+              add multiple members:
+                value:
+                  '@members@odata.bind':
+                    - "https://localhost:9200/graph/v1.0/education/users/4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - "https://localhost:9200/graph/v1.0/education/users/c54b0588-7157-4521-bb52-c1c8ca84ea71"
         required: true
       responses:
         '200':
