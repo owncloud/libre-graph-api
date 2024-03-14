@@ -388,12 +388,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/driveItem'
-            example:
-              name: Einsteins project share
-              remoteItem:
-                id: a-storage-provider-id$a-space-id!a-node-id
-                permissions:
-                  - id: share-id
+            examples:
+              mount a shared remoteId:
+                value:
+                  name: Einsteins project share
+                  remoteItem:
+                    id: a-storage-provider-id$a-space-id!a-node-id
       responses:
         '200':
           description: Response
