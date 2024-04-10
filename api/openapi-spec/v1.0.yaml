@@ -757,7 +757,7 @@ paths:
                     #    - libre.graph/driveItem/basic/read
                     #    - libre.graph/driveItem/permissions/read
                     #    - libre.graph/driveItem/upload/create
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
                   - id: a1c6f73e-482e-4078-a629-bbecb205abb
                     description: "Allows reading and writing the shared file or folder"
@@ -765,7 +765,7 @@ paths:
                     #rolePermissions:
                     #  - allowedResourceActions:
                     #    - libre.graph/driveItem/standard/allTasks
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
                   - id: dfa16e02-3d88-45d8-8894-5b33a7df637
                     description: "Allows managing a space"
@@ -773,7 +773,7 @@ paths:
                     #rolePermissions:
                     #  - allowedResourceActions:
                     #    - libre.graph/drive/standard/allTasks
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
                     description: "Allows creating new files"
@@ -781,7 +781,7 @@ paths:
                     #rolePermissions:
                     #  - allowedResourceActions:
                     #      libre.graph/driveItem/upload/create
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 4
                 '@libre.graph.permissions.actions.allowedValues': [
                     "libre.graph/driveItem/basic/read",
@@ -1478,7 +1478,7 @@ paths:
                     #    - libre.graph/driveItem/basic/read
                     #    - libre.graph/driveItem/permissions/read
                     #    - libre.graph/driveItem/upload/create
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
                   - id: a1c6f73e-482e-4078-a629-bbecb205abb
                     description: "Allows reading and writing the shared file or folder"
@@ -1486,7 +1486,7 @@ paths:
                     #rolePermissions:
                     #  - allowedResourceActions:
                     #    - libre.graph/driveItem/standard/allTasks
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
                   - id: dfa16e02-3d88-45d8-8894-5b33a7df637
                     description: "Allows managing a space"
@@ -1494,7 +1494,7 @@ paths:
                     #rolePermissions:
                     #  - allowedResourceActions:
                     #    - libre.graph/drive/standard/allTasks
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
                     description: "Allows creating new files"
@@ -1502,7 +1502,7 @@ paths:
                     #rolePermissions:
                     #  - allowedResourceActions:
                     #      libre.graph/driveItem/upload/create
-                    #    condition: "@Subject.objectId Any_of @Resource.grantee"
+                    #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 4
                 '@libre.graph.permissions.actions.allowedValues': [
                     "libre.graph/driveItem/basic/read",
@@ -3704,7 +3704,7 @@ paths:
                         - libre.graph/driveItem/basic/read
                         - libre.graph/driveItem/permissions/read
                         - libre.graph/driveItem/upload/create
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
                   - id: a1c6f73e-482e-4078-a629-bbecb205abb
                     description: "Allows reading and writing the shared file or folder"
@@ -3712,7 +3712,7 @@ paths:
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/allTasks
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
                   - id: dfa16e02-3d88-45d8-8894-5b33a7df637
                     description: "Allows managing a space"
@@ -3720,7 +3720,7 @@ paths:
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/drive/standard/allTasks
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
                     description: "Allows creating new files"
@@ -3728,7 +3728,7 @@ paths:
                     rolePermissions:
                       - allowedResourceActions:
                           libre.graph/driveItem/upload/create
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 4
         default:
           $ref: '#/components/responses/error'
@@ -3764,7 +3764,7 @@ paths:
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/driveItem/basic/read
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
                 Editor:
                   value:
@@ -3774,7 +3774,7 @@ paths:
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/allTasks
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
                 Manager:
                   value:
@@ -3784,7 +3784,7 @@ paths:
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/drive/standard/allTasks
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 3
                 File Drop:
                   value:
@@ -3794,7 +3794,7 @@ paths:
                     rolePermissions:
                       - allowedResourceActions:
                         - libre.graph/driveItem/standard/create
-                        condition: "@Subject.objectId Any_of @Resource.grantee"
+                        condition: "exists @Resource.File"
                     '@libre.graph.weight': 4
         default:
           $ref: '#/components/responses/error'
@@ -5162,14 +5162,14 @@ components:
           description: |
             Optional constraints that must be met for the permission to be effective. Not supported for custom roles.
 
-            Conditions define constraints that must be met. For example, a requirement that the principal be an owner of the target resource.
+            Conditions define constraints that must be met. For example, a requirement that target resource must have a certain property.
             The following are the supported conditions:
 
-            * Self: `@Subject.objectId == @Resource.objectId`
-            * Owner: `@Subject.objectId Any_of @Resource.owners`
-            * Grantee: `@Subject.objectId Any_of @Resource.grantee` - does not exist in MS Graph, but we use it to express permissions on shared resources.
+            * Drive: `exists @Resource.Drive` - The target resource must be a drive/space
+            * Folder: `exists @Resource.Folder` - The target resource must be a folder
+            * File: `exists @Resource.File` - The target resource must be a file
 
-            The following is an example of a role permission with a condition that the principal be the owner of the target resource.
+            The following is an example of a role permission with a condition that the target resource is a folder:
             ```json
               "rolePermissions": [
                   {
@@ -5177,7 +5177,7 @@ components:
                           "libre.graph/applications/basic/update",
                           "libre.graph/applications/credentials/update"
                       ],
-                      "condition":  "@Subject.objectId Any_of @Resource.owners"
+                      "condition":  "exists @Resource.File"
                   }
               ]
             ```
