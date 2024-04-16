@@ -25,15 +25,15 @@ paths:
       summary: Update the current user
       operationId: UpdateOwnUser
       requestBody:
-          description: New user values
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/user'
-              examples:
-                change preferred language:
-                  value:
-                    preferredLanguage: "en"
+        description: New user values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+            examples:
+              change preferred language:
+                value:
+                  preferredLanguage: "en"
       responses:
         '200':
           description: Success
@@ -170,8 +170,8 @@ paths:
         operationName: listMore
       x-ms-docs-operation-type: operation
   '/v1beta1/drives':
-  # $ref is buggy in the openapi-generator v7.0.1
-  # $ref: '#/paths/~1v1.0~1drives'
+    # $ref is buggy in the openapi-generator v7.0.1
+    # $ref: '#/paths/~1v1.0~1drives'
     get:
       tags:
         - drives.GetDrives
@@ -239,15 +239,15 @@ paths:
             schema:
               $ref: '#/components/schemas/drive'
             examples:
-                multiple values:
-                  value:
-                    name: Mars
-                    quota:
-                      total: 1000000000
-                    description: Team space mars project
-                minimal:
-                  value:
-                    name: Venus
+              multiple values:
+                value:
+                  name: Mars
+                  quota:
+                    total: 1000000000
+                  description: Team space mars project
+              minimal:
+                value:
+                  name: Venus
         required: true
       responses:
         '201':
@@ -308,28 +308,28 @@ paths:
             schema:
               $ref: '#/components/schemas/drive'
             examples:
-                change quota:
-                  value:
-                    quota:
-                      total: 1000000000
-                change name:
-                  value:
-                    name: Physics
-                change description:
-                  value:
-                    description: Marketing team collaboration area
-                change drive image:
-                  value:
-                    special:
-                      id: 408f26e3-d6d8-4aa4-bd5c-3fd6f5032b51$aba2bafc-e1a0-421e-a37a-9acf5f655f83!14fd3432-e8d9-42a7-9446-2e3fd621afca
-                      specialFolder:
-                        name: image
-                change drive readme:
-                  value:
-                    special:
-                      id: 408f26e3-d6d8-4aa4-bd5c-3fd6f5032b51$aba2bafc-e1a0-421e-a37a-9acf5f655f83!14fd3432-e8d9-42a7-9446-2e3fd621afca
-                      specialFolder:
-                        name: readme
+              change quota:
+                value:
+                  quota:
+                    total: 1000000000
+              change name:
+                value:
+                  name: Physics
+              change description:
+                value:
+                  description: Marketing team collaboration area
+              change drive image:
+                value:
+                  special:
+                    id: 408f26e3-d6d8-4aa4-bd5c-3fd6f5032b51$aba2bafc-e1a0-421e-a37a-9acf5f655f83!14fd3432-e8d9-42a7-9446-2e3fd621afca
+                    specialFolder:
+                      name: image
+              change drive readme:
+                value:
+                  special:
+                    id: 408f26e3-d6d8-4aa4-bd5c-3fd6f5032b51$aba2bafc-e1a0-421e-a37a-9acf5f655f83!14fd3432-e8d9-42a7-9446-2e3fd621afca
+                    specialFolder:
+                      name: readme
         required: true
       responses:
         '200':
@@ -451,17 +451,17 @@ paths:
             schema:
               $ref: '#/components/schemas/driveItemCreateLink'
             examples:
-                create viewer link:
-                  value:
-                    type: "view"
-                create editor link with custom display name:
-                  value:
-                    type: "edit"
-                    displayName: "Homework"
-                create editor link with expiry:
-                  value:
-                    type: "edit"
-                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+              create viewer link:
+                value:
+                  type: "view"
+              create editor link with custom display name:
+                value:
+                  type: "edit"
+                  displayName: "Homework"
+              create editor link with expiry:
+                value:
+                  type: "edit"
+                  expirationDateTime: "2018-07-15T14:00:00.000Z"
       responses:
         '200':
           description: Response
@@ -490,7 +490,7 @@ paths:
                         type: "edit"
                         webUrl: "https://cloud.example.org/s/MlnTDkhcBlihNzO"
         '207':
-        # FIXME describe partial success response
+          # FIXME describe partial success response
           description: Partial success response TODO
         default:
           $ref: '#/components/responses/error'
@@ -540,36 +540,36 @@ paths:
             schema:
               $ref: '#/components/schemas/driveItemInvite'
             examples:
-                send viewer invite:
-                  value:
-                    recipients:
+              send viewer invite:
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
-                send viewer invite to multiple recipients:
-                  value:
-                    recipients:
+                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+              send viewer invite to multiple recipients:
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                     - objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
-                send editor invite with expiry:
-                  value:
-                    recipients:
+                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+              send editor invite with expiry:
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
-                    expirationDateTime: "2018-07-15T14:00:00.000Z"
-                send manager invite to group:
-                  description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
-                  value:
-                    recipients:
+                  roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                  expirationDateTime: "2018-07-15T14:00:00.000Z"
+              send manager invite to group:
+                description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
+                value:
+                  recipients:
                     - '@libre.graph.recipient.type': group
                       objectId: "167cbee2-0518-455a-bfb2-031fe0621e5d"
-                    roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
-                send invite to user granting custom actions:
-                  description: "A Custom role is just a collection of actions, in this case allowing the user to stat and move driveItems"
-                  value:
-                    recipients:
+                  roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+              send invite to user granting custom actions:
+                description: "A Custom role is just a collection of actions, in this case allowing the user to stat and move driveItems"
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
+                  '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
       responses:
         '200':
           description: Response
@@ -633,7 +633,7 @@ paths:
                             displayName: "Albert Einstein"
                       '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
         '207':
-        # FIXME describe partial success response
+          # FIXME describe partial success response
           description: Partial success response TODO
         '400':
           description: Bad request
@@ -646,13 +646,13 @@ paths:
                   description: If the recipient was given via email, but does not belong to a known user account.
                   value:
                     - error:
-                      - code: invalidRequest
-                        message: Some users in the request cannot be invited securely.
-                        innerError:
-                          - code: secureSharingInvalidRequest
-                            date: "2023-09-14T12:27:15"
-                            request-id: b49f582d-9a0f-4731-ab0c-b9e50246ef58
-                            client-request-id: 832c7206-1a40-395c-e0d9-e85649b8b0b0
+                        - code: invalidRequest
+                          message: Some users in the request cannot be invited securely.
+                          innerError:
+                            - code: secureSharingInvalidRequest
+                              date: "2023-09-14T12:27:15"
+                              request-id: b49f582d-9a0f-4731-ab0c-b9e50246ef58
+                              client-request-id: 832c7206-1a40-395c-e0d9-e85649b8b0b0
         default:
           $ref: '#/components/responses/error'
           # TODO add SendNotification errors as per https://learn.microsoft.com/en-us/graph/api/driveitem-invite?view=graph-rest-beta&tabs=http#sendnotification-errors
@@ -784,11 +784,11 @@ paths:
                     #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 4
                 '@libre.graph.permissions.actions.allowedValues': [
-                    "libre.graph/driveItem/basic/read",
-                    "libre.graph/driveItem/permissions/read",
-                    "libre.graph/driveItem/upload/create",
-                    "libre.graph/driveItem/standard/allTasks",
-                    "libre.graph/driveItem/upload/create"
+                  "libre.graph/driveItem/basic/read",
+                  "libre.graph/driveItem/permissions/read",
+                  "libre.graph/driveItem/upload/create",
+                  "libre.graph/driveItem/standard/allTasks",
+                  "libre.graph/driveItem/upload/create"
                 ]
 
                 value:
@@ -920,18 +920,18 @@ paths:
         description: New property values
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/permission'
-              examples:
-                update link:
-                  description: Updating a public link is done by setting the `type` property of the permission link.
-                  value:
-                    link:
-                      type: edit
-                update invite:
-                  description: Updating an invite is done by setting the `roles` property of the permission.
-                  value:
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+            schema:
+              $ref: '#/components/schemas/permission'
+            examples:
+              update link:
+                description: Updating a public link is done by setting the `type` property of the permission link.
+                value:
+                  link:
+                    type: edit
+              update invite:
+                description: Updating an invite is done by setting the `roles` property of the permission.
+                value:
+                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
         required: true
       responses:
         '200':
@@ -1032,15 +1032,15 @@ paths:
         description: New password value
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/sharingLinkPassword'
-              examples:
-                  set password:
-                    value:
-                      password: "TestPassword123!"
-                  set empty password:
-                    value:
-                      password: ""
+            schema:
+              $ref: '#/components/schemas/sharingLinkPassword'
+            examples:
+              set password:
+                value:
+                  password: "TestPassword123!"
+              set empty password:
+                value:
+                  password: ""
         required: true
       responses:
         '200':
@@ -1079,9 +1079,9 @@ paths:
       operationId: DeleteDriveItem
       description: |
         Delete a DriveItem by using its ID.
-        
+
         Deleting items using this method moves the items to the recycle bin instead of permanently deleting the item.
-        
+
         Mounted shares in the share jail are unmounted. The `@client.synchronize` property of the `driveItem` in the [sharedWithMe](#/me.drive/ListSharedWithMe) endpoint will change to false.
       parameters:
         - name: drive-id
@@ -1158,17 +1158,17 @@ paths:
             schema:
               $ref: '#/components/schemas/driveItemCreateLink'
             examples:
-                create viewer link:
-                  value:
-                    type: "view"
-                create editor link with custom display name:
-                  value:
-                    type: "edit"
-                    displayName: "Homework"
-                create editor link with expiry:
-                  value:
-                    type: "edit"
-                    expirationDateTime: "2018-07-15T14:00:00.000Z"
+              create viewer link:
+                value:
+                  type: "view"
+              create editor link with custom display name:
+                value:
+                  type: "edit"
+                  displayName: "Homework"
+              create editor link with expiry:
+                value:
+                  type: "edit"
+                  expirationDateTime: "2018-07-15T14:00:00.000Z"
       responses:
         '200':
           description: Response
@@ -1197,7 +1197,7 @@ paths:
                         type: "edit"
                         webUrl: "https://cloud.example.org/s/MlnTDkhcBlihNzO"
         '207':
-        # FIXME describe partial success response
+          # FIXME describe partial success response
           description: Partial success response TODO
         default:
           $ref: '#/components/responses/error'
@@ -1254,36 +1254,36 @@ paths:
             schema:
               $ref: '#/components/schemas/driveItemInvite'
             examples:
-                send viewer invite:
-                  value:
-                    recipients:
+              send viewer invite:
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
-                send viewer invite to multiple recipients:
-                  value:
-                    recipients:
+                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+              send viewer invite to multiple recipients:
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                     - objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
-                send editor invite with expiry:
-                  value:
-                    recipients:
+                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+              send editor invite with expiry:
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
-                    expirationDateTime: "2018-07-15T14:00:00.000Z"
-                send manager invite to group:
-                  description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
-                  value:
-                    recipients:
+                  roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                  expirationDateTime: "2018-07-15T14:00:00.000Z"
+              send manager invite to group:
+                description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
+                value:
+                  recipients:
                     - '@libre.graph.recipient.type': group
                       objectId: "167cbee2-0518-455a-bfb2-031fe0621e5d"
-                    roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
-                send invite to user granting custom actions:
-                  description: "A Custom role is just a collection of actions, in this case allowing the user to stat and move driveItems"
-                  value:
-                    recipients:
+                  roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+              send invite to user granting custom actions:
+                description: "A Custom role is just a collection of actions, in this case allowing the user to stat and move driveItems"
+                value:
+                  recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
+                  '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
       responses:
         '200':
           description: Response
@@ -1347,7 +1347,7 @@ paths:
                             displayName: "Albert Einstein"
                       '@libre.graph.permissions.actions': [ "libre.graph/driveItem/basic/read", "libre.graph/driveItem/path/update" ]
         '207':
-        # FIXME describe partial success response
+          # FIXME describe partial success response
           description: Partial success response TODO
         '400':
           description: Bad request
@@ -1360,13 +1360,13 @@ paths:
                   description: If the recipient was given via email, but does not belong to a known user account.
                   value:
                     - error:
-                      - code: invalidRequest
-                        message: Some users in the request cannot be invited securely.
-                        innerError:
-                          - code: secureSharingInvalidRequest
-                            date: "2023-09-14T12:27:15"
-                            request-id: b49f582d-9a0f-4731-ab0c-b9e50246ef58
-                            client-request-id: 832c7206-1a40-395c-e0d9-e85649b8b0b0
+                        - code: invalidRequest
+                          message: Some users in the request cannot be invited securely.
+                          innerError:
+                            - code: secureSharingInvalidRequest
+                              date: "2023-09-14T12:27:15"
+                              request-id: b49f582d-9a0f-4731-ab0c-b9e50246ef58
+                              client-request-id: 832c7206-1a40-395c-e0d9-e85649b8b0b0
         default:
           $ref: '#/components/responses/error'
           # TODO add SendNotification errors as per https://learn.microsoft.com/en-us/graph/api/driveitem-invite?view=graph-rest-beta&tabs=http#sendnotification-errors
@@ -1505,11 +1505,11 @@ paths:
                     #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 4
                 '@libre.graph.permissions.actions.allowedValues': [
-                    "libre.graph/driveItem/basic/read",
-                    "libre.graph/driveItem/permissions/read",
-                    "libre.graph/driveItem/upload/create",
-                    "libre.graph/driveItem/standard/allTasks",
-                    "libre.graph/driveItem/upload/create"
+                  "libre.graph/driveItem/basic/read",
+                  "libre.graph/driveItem/permissions/read",
+                  "libre.graph/driveItem/upload/create",
+                  "libre.graph/driveItem/standard/allTasks",
+                  "libre.graph/driveItem/upload/create"
                 ]
 
                 value:
@@ -1655,18 +1655,18 @@ paths:
         description: New property values
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/permission'
-              examples:
-                update link:
-                  description: Updating a public link is done by setting the `type` property of the permission link.
-                  value:
-                    link:
-                      type: edit
-                update invite:
-                  description: Updating an invite is done by setting the `roles` property of the permission.
-                  value:
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+            schema:
+              $ref: '#/components/schemas/permission'
+            examples:
+              update link:
+                description: Updating a public link is done by setting the `type` property of the permission link.
+                value:
+                  link:
+                    type: edit
+              update invite:
+                description: Updating an invite is done by setting the `roles` property of the permission.
+                value:
+                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
         required: true
       responses:
         '200':
@@ -1781,15 +1781,15 @@ paths:
         description: New password value
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/sharingLinkPassword'
-              examples:
-                  set password:
-                    value:
-                      password: "TestPassword123!"
-                  set empty password:
-                    value:
-                      password: ""
+            schema:
+              $ref: '#/components/schemas/sharingLinkPassword'
+            examples:
+              set password:
+                value:
+                  password: "TestPassword123!"
+              set empty password:
+                value:
+                  password: ""
         required: true
       responses:
         '200':
@@ -2207,7 +2207,7 @@ paths:
       operationId: ListSharedByMe
       description: |
         The `driveItems` returned from the `sharedByMe` method always include the `permissions` relation that indicates they are shared items.
-      parameters: []
+      parameters: [ ]
       responses:
         '200':
           description: OK
@@ -2261,7 +2261,7 @@ paths:
       operationId: ListSharedWithMe
       description: |
         The `driveItems` returned from the `sharedWithMe` method always include the `remoteItem` facet that indicates they are items from a different drive.
-      parameters: []
+      parameters: [ ]
       responses:
         '200':
           description: OK
@@ -2303,7 +2303,7 @@ paths:
                         - id: 7310e99f-377b-4cba-a1f0-ffa3331fd32c
                           roles:
                             - b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
-                          grantedToV2: 
+                          grantedToV2:
                             group:
                               displayName: "users"
                               id: 509a9dcd-bb37-4f4f-a01a-19dca27d9cfa
@@ -2495,15 +2495,15 @@ paths:
             schema:
               $ref: '#/components/schemas/user'
             examples:
-                change displayName:
-                  value:
-                    displayName: "Marie Skłodowska Curie"
-                change email:
-                  value:
-                    mail: "marie@example.com"
-                change preferred language:
-                  value:
-                    preferredLanguage: "fr"
+              change displayName:
+                value:
+                  displayName: "Marie Skłodowska Curie"
+              change email:
+                value:
+                  mail: "marie@example.com"
+              change preferred language:
+                value:
+                  preferredLanguage: "fr"
         required: true
       responses:
         '200':
@@ -2668,7 +2668,7 @@ paths:
         - educationUser
       summary: Get entities from education users
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: ListEducationUsers
       parameters:
         - name: $orderby
@@ -2731,7 +2731,7 @@ paths:
         - educationUser
       summary: Add new education user
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: CreateEducationUser
       requestBody:
         description: New entity
@@ -2761,7 +2761,7 @@ paths:
         - educationUser
       summary: Get properties of educationUser
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: GetEducationUser
       parameters:
         - name: user-id
@@ -2804,7 +2804,7 @@ paths:
         - educationUser
       summary: Update properties of educationUser
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: UpdateEducationUser
       parameters:
         - name: user-id
@@ -2850,7 +2850,7 @@ paths:
         - educationUser
       summary: Delete educationUser
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: DeleteEducationUser
       parameters:
         - name: user-id
@@ -2871,7 +2871,7 @@ paths:
         - educationSchool
       summary: Get a list of schools and their properties
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: ListSchools
       responses:
         '200':
@@ -2901,7 +2901,7 @@ paths:
         - educationSchool
       summary: Add new school
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: CreateSchool
       requestBody:
         description: New school
@@ -2931,7 +2931,7 @@ paths:
         - educationSchool
       summary: Get the properties of a specific school
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: GetSchool
       parameters:
         - name: school-id
@@ -2958,7 +2958,7 @@ paths:
         - educationSchool
       summary: Update properties of a school
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: UpdateSchool
       parameters:
         - name: school-id
@@ -3000,7 +3000,7 @@ paths:
       summary: Delete school
       description: Deletes a school. A school can only be delete if it has the terminationDate property set. And if that termination Date is in the past.
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: DeleteSchool
       parameters:
         - name: school-id
@@ -3021,7 +3021,7 @@ paths:
         - educationSchool
       summary: Get the educationUser resources associated with an educationSchool
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: ListSchoolUsers
       parameters:
         - name: school-id
@@ -3063,7 +3063,7 @@ paths:
         - educationSchool
       summary: Assign a user to a school
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: AddUserToSchool
       parameters:
         - name: school-id
@@ -3096,7 +3096,7 @@ paths:
         - educationSchool
       summary: Unassign user from a school
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: DeleteUserFromSchool
       parameters:
         - name: school-id
@@ -3124,7 +3124,7 @@ paths:
         - educationSchool
       summary: Get the educationClass resources owned by an educationSchool
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: ListSchoolClasses
       parameters:
         - name: school-id
@@ -3164,7 +3164,7 @@ paths:
         - educationSchool
       summary: Assign a class to a school
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: AddClassToSchool
       parameters:
         - name: school-id
@@ -3197,7 +3197,7 @@ paths:
         - educationSchool
       summary: Unassign class from a school
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: DeleteClassFromSchool
       parameters:
         - name: school-id
@@ -3226,7 +3226,7 @@ paths:
       summary: list education classes
       operationId: ListClasses
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       responses:
         '200':
           description: Retrieved entities
@@ -3256,7 +3256,7 @@ paths:
         - educationClass
       summary: Add new education class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: CreateClass
       requestBody:
         description: New entity
@@ -3286,7 +3286,7 @@ paths:
         - educationClass
       summary: Get class by key
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: GetClass
       parameters:
         - name: class-id
@@ -3313,7 +3313,7 @@ paths:
         - educationClass
       summary: Update properties of a education class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: UpdateClass
       parameters:
         - name: class-id
@@ -3360,7 +3360,7 @@ paths:
         - educationClass
       summary: Delete education class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: DeleteClass
       parameters:
         - name: class-id
@@ -3381,7 +3381,7 @@ paths:
         - educationClass
       summary: Get the educationClass resources owned by an educationSchool
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: ListClassMembers
       parameters:
         - name: class-id
@@ -3423,7 +3423,7 @@ paths:
         - educationClass
       summary: Assign a user to a class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: AddUserToClass
       parameters:
         - name: class-id
@@ -3456,7 +3456,7 @@ paths:
         - educationClass
       summary: Unassign user from a class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: DeleteUserFromClass
       parameters:
         - name: class-id
@@ -3483,7 +3483,7 @@ paths:
         - educationClass.teachers
       summary: Get the teachers for a class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: GetTeachers
       parameters:
         - name: class-id
@@ -3525,7 +3525,7 @@ paths:
         - educationClass.teachers
       summary: Assign a teacher to a class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: AddTeacherToClass
       parameters:
         - name: class-id
@@ -3558,7 +3558,7 @@ paths:
         - educationClass.teachers
       summary: Unassign user as teacher of a class
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       operationId: DeleteTeacherFromClass
       parameters:
         - name: class-id
@@ -3701,9 +3701,9 @@ paths:
                     displayName: Viewer
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/driveItem/basic/read
-                        - libre.graph/driveItem/permissions/read
-                        - libre.graph/driveItem/upload/create
+                          - libre.graph/driveItem/basic/read
+                          - libre.graph/driveItem/permissions/read
+                          - libre.graph/driveItem/upload/create
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
                   - id: a1c6f73e-482e-4078-a629-bbecb205abb
@@ -3711,7 +3711,7 @@ paths:
                     displayName: Editor
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/driveItem/standard/allTasks
+                          - libre.graph/driveItem/standard/allTasks
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
                   - id: dfa16e02-3d88-45d8-8894-5b33a7df637
@@ -3719,7 +3719,7 @@ paths:
                     displayName: Manager
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/drive/standard/allTasks
+                          - libre.graph/drive/standard/allTasks
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 3
                   - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
@@ -3763,7 +3763,7 @@ paths:
                     displayName: Viewer
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/driveItem/basic/read
+                          - libre.graph/driveItem/basic/read
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
                 Editor:
@@ -3773,7 +3773,7 @@ paths:
                     displayName: Editor
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/driveItem/standard/allTasks
+                          - libre.graph/driveItem/standard/allTasks
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
                 Manager:
@@ -3783,7 +3783,7 @@ paths:
                     displayName: Manager
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/drive/standard/allTasks
+                          - libre.graph/drive/standard/allTasks
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 3
                 File Drop:
@@ -3793,7 +3793,7 @@ paths:
                     displayName: File Drop
                     rolePermissions:
                       - allowedResourceActions:
-                        - libre.graph/driveItem/standard/create
+                          - libre.graph/driveItem/standard/create
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 4
         default:
@@ -3877,7 +3877,7 @@ components:
           description: A list of member references to the members to be added. Up to 20 members can be added with a single request
         classification:
           type: string
-          enum: [class, course]
+          enum: [ class, course ]
           description: 'Classification of the group, i.e. "class" or "course"'
         externalId:
           type: string
@@ -4012,7 +4012,7 @@ components:
         special:
           type: array
           items:
-              $ref: '#/components/schemas/driveItem'
+            $ref: '#/components/schemas/driveItem'
           description: A collection of special drive resources.
     driveRecipient:
       type: object
@@ -4211,7 +4211,7 @@ components:
           type: string
           description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
         preferredLanguage:
-            $ref: '#/components/schemas/language'
+          $ref: '#/components/schemas/language'
     itemReference:
       type: object
       properties:
@@ -4359,31 +4359,31 @@ components:
           description: Video metadata, if the item is a video. Read-only.
           $ref: '#/components/schemas/video'
         '@client.synchronize':
-            description: Indicates if the item is synchronized with the underlying storage provider. Read-only.
-            type: boolean
+          description: Indicates if the item is synchronized with the underlying storage provider. Read-only.
+          type: boolean
         # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
         '@UI.Hidden':
           description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
           type: boolean
     sharingLinkType:
-        type: string
-        enum: [internal, view, upload, edit, createOnly, blocksDownload]
-        description: |
-          The type of the link created.
+      type: string
+      enum: [ internal, view, upload, edit, createOnly, blocksDownload ]
+      description: |
+        The type of the link created.
 
-          | Value          | Display name      | Description                                                     |
-          | -------------- | ----------------- | --------------------------------------------------------------- |
-          | internal       | Internal          | Creates an internal link without any permissions.               |
-          | view           | View              | Creates a read-only link to the driveItem.                      |
-          | upload         | Upload            | Creates a read-write link to the folder driveItem.              |
-          | edit           | Edit              | Creates a read-write link to the driveItem.                     |
-          | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            |
-          | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. |
-        # there are more link types available in https://learn.microsoft.com/en-us/graph/api/driveitem-createlink?view=graph-rest-beta&tabs=http#link-types
-        #  | review         | Creates a review link to the driveItem.                                                                                                                                                                               |
-        #  | embed          | Creates an embeddable link to the driveItem.                                                                                                                                                                          |
-        #  | addressBar     | Creates the default link that is shown in the browser address bars for newly created files. The organization admin configures whether this link type is supported, and what features are supported by this link type. |
-        #  | adminDefault   | Creates the default link to the driveItem as determined by the administrator of the organization. The policy is enforced for the organization by the admin                                                            |
+        | Value          | Display name      | Description                                                     |
+        | -------------- | ----------------- | --------------------------------------------------------------- |
+        | internal       | Internal          | Creates an internal link without any permissions.               |
+        | view           | View              | Creates a read-only link to the driveItem.                      |
+        | upload         | Upload            | Creates a read-write link to the folder driveItem.              |
+        | edit           | Edit              | Creates a read-write link to the driveItem.                     |
+        | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            |
+        | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. |
+      # there are more link types available in https://learn.microsoft.com/en-us/graph/api/driveitem-createlink?view=graph-rest-beta&tabs=http#link-types
+      #  | review         | Creates a review link to the driveItem.                                                                                                                                                                               |
+      #  | embed          | Creates an embeddable link to the driveItem.                                                                                                                                                                          |
+      #  | addressBar     | Creates the default link that is shown in the browser address bars for newly created files. The organization admin configures whether this link type is supported, and what features are supported by this link type. |
+      #  | adminDefault   | Creates the default link to the driveItem as determined by the administrator of the organization. The policy is enforced for the organization by the admin                                                            |
     driveItemCreateLink:
       type: object
       properties:
@@ -4688,7 +4688,7 @@ components:
         fileSystemInfo:
           $ref: '#/components/schemas/fileSystemInfo'
         folder:
-           $ref: '#/components/schemas/folder'
+          $ref: '#/components/schemas/folder'
         driveAlias:
           type: string
           description: "The drive alias can be used in clients to make the urls user friendly. Example: 'personal/einstein'. This will be used to resolve to the correct driveID."
@@ -4870,7 +4870,7 @@ components:
           format: date-time
           nullable: true
         grantedToV2:
-        # this is always a single identity set because a permission always is tied to a single recipient (which can be a group).
+          # this is always a single identity set because a permission always is tied to a single recipient (which can be a group).
           description: For user type permissions, the details of the users and applications for this permission. Only part of responses. Use the invitation property when creating shares.
           $ref: '#/components/schemas/sharePointIdentitySet'
         link:
@@ -5101,58 +5101,58 @@ components:
       properties:
         allowedResourceActions:
           description: |
-           Set of tasks that can be performed on a resource. Required.
+            Set of tasks that can be performed on a resource. Required.
 
-           The following is the schema for resource actions:
+            The following is the schema for resource actions:
 
-           ```
-              {Namespace}/{Entity}/{PropertySet}/{Action}
-           ```
+            ```
+               {Namespace}/{Entity}/{PropertySet}/{Action}
+            ```
 
-            For example: `libre.graph/applications/credentials/update`
+             For example: `libre.graph/applications/credentials/update`
 
-            * *{Namespace}* - The services that exposes the task. For example, all tasks in libre graph use the namespace `libre.graph`.
-            * *{Entity}* - The logical features or components exposed by the service in libre graph. For example, `applications`, `servicePrincipals`, or `groups`.
-            * *{PropertySet}* - Optional. The specific properties or aspects of the entity for which access is being granted.
-              For example, `libre.graph/applications/authentication/read` grants the ability to read the reply URL, logout URL,
-              and implicit flow property on the **application** object in libre graph. The following are reserved names for common property sets:
-              * `allProperties` - Designates all properties of the entity, including privileged properties.
-                Examples include `libre.graph/applications/allProperties/read` and `libre.graph/applications/allProperties/update`.
-              * `basic` - Designates common read properties but excludes privileged ones.
-                For example, `libre.graph/applications/basic/update` includes the ability to update standard properties like display name.
-              * `standard` - Designates common update properties but excludes privileged ones.
-                For example, `libre.graph/applications/standard/read`.
-            * *{Actions}* - The operations being granted. In most circumstances, permissions should be expressed in terms of CRUD operations or allTasks. Actions include:
-              * `create` - The ability to create a new instance of the entity.
-              * `read` - The ability to read a given property set (including allProperties).
-              * `update` - The ability to update a given property set (including allProperties).
-              * `delete` - The ability to delete a given entity.
-              * `allTasks` - Represents all CRUD operations (create, read, update, and delete).
+             * *{Namespace}* - The services that exposes the task. For example, all tasks in libre graph use the namespace `libre.graph`.
+             * *{Entity}* - The logical features or components exposed by the service in libre graph. For example, `applications`, `servicePrincipals`, or `groups`.
+             * *{PropertySet}* - Optional. The specific properties or aspects of the entity for which access is being granted.
+               For example, `libre.graph/applications/authentication/read` grants the ability to read the reply URL, logout URL,
+               and implicit flow property on the **application** object in libre graph. The following are reserved names for common property sets:
+               * `allProperties` - Designates all properties of the entity, including privileged properties.
+                 Examples include `libre.graph/applications/allProperties/read` and `libre.graph/applications/allProperties/update`.
+               * `basic` - Designates common read properties but excludes privileged ones.
+                 For example, `libre.graph/applications/basic/update` includes the ability to update standard properties like display name.
+               * `standard` - Designates common update properties but excludes privileged ones.
+                 For example, `libre.graph/applications/standard/read`.
+             * *{Actions}* - The operations being granted. In most circumstances, permissions should be expressed in terms of CRUD operations or allTasks. Actions include:
+               * `create` - The ability to create a new instance of the entity.
+               * `read` - The ability to read a given property set (including allProperties).
+               * `update` - The ability to update a given property set (including allProperties).
+               * `delete` - The ability to delete a given entity.
+               * `allTasks` - Represents all CRUD operations (create, read, update, and delete).
 
-            Following the CS3 API we can represent the CS3 permissions by mapping them to driveItem properties or relations like this:
-            | [CS3 ResourcePermission](https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourcePermissions) | action | comment |
-            | ------------------------------------------------------------------------------------------------------------ | ------ | ------- |
-            | `stat` | `libre.graph/driveItem/basic/read` | `basic` because it does not include versions or trashed items |
-            | `get_quota` | `libre.graph/driveItem/quota/read` | read only the `quota` property |
-            | `get_path` | `libre.graph/driveItem/path/read` | read only the `path` property |
-            | `move` | `libre.graph/driveItem/path/update` | allows updating the `path` property of a CS3 resource |
-            | `delete` | `libre.graph/driveItem/standard/delete` | `standard` because deleting is a common update operation |
-            | `list_container` | `libre.graph/driveItem/children/read` | |
-            | `create_container` | `libre.graph/driveItem/children/create` | |
-            | `initiate_file_download` | `libre.graph/driveItem/content/read` | `content` is the property read when initiating a download |
-            | `initiate_file_upload` | `libre.graph/driveItem/upload/create` | `uploads` are a separate property. postprocessing creates the `content` |
-            | `add_grant` | `libre.graph/driveItem/permissions/create` | |
-            | `list_grant` | `libre.graph/driveItem/permissions/read` | |
-            | `update_grant` | `libre.graph/driveItem/permissions/update` | |
-            | `remove_grant` | `libre.graph/driveItem/permissions/delete` | |
-            | `deny_grant` | `libre.graph/driveItem/permissions/deny` | uses a non CRUD action `deny` |
-            | `list_file_versions` | `libre.graph/driveItem/versions/read` | `versions` is a `driveItemVersion` collection |
-            | `restore_file_version` | `libre.graph/driveItem/versions/update` | the only `update` action is restore |
-            | `list_recycle` | `libre.graph/driveItem/deleted/read` | reading a driveItem `deleted` property implies listing |
-            | `restore_recycle_item` | `libre.graph/driveItem/deleted/update` | the only `update` action is restore |
-            | `purge_recycle` | `libre.graph/driveItem/deleted/delete` | allows purging deleted `driveItems` |
+             Following the CS3 API we can represent the CS3 permissions by mapping them to driveItem properties or relations like this:
+             | [CS3 ResourcePermission](https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourcePermissions) | action | comment |
+             | ------------------------------------------------------------------------------------------------------------ | ------ | ------- |
+             | `stat` | `libre.graph/driveItem/basic/read` | `basic` because it does not include versions or trashed items |
+             | `get_quota` | `libre.graph/driveItem/quota/read` | read only the `quota` property |
+             | `get_path` | `libre.graph/driveItem/path/read` | read only the `path` property |
+             | `move` | `libre.graph/driveItem/path/update` | allows updating the `path` property of a CS3 resource |
+             | `delete` | `libre.graph/driveItem/standard/delete` | `standard` because deleting is a common update operation |
+             | `list_container` | `libre.graph/driveItem/children/read` | |
+             | `create_container` | `libre.graph/driveItem/children/create` | |
+             | `initiate_file_download` | `libre.graph/driveItem/content/read` | `content` is the property read when initiating a download |
+             | `initiate_file_upload` | `libre.graph/driveItem/upload/create` | `uploads` are a separate property. postprocessing creates the `content` |
+             | `add_grant` | `libre.graph/driveItem/permissions/create` | |
+             | `list_grant` | `libre.graph/driveItem/permissions/read` | |
+             | `update_grant` | `libre.graph/driveItem/permissions/update` | |
+             | `remove_grant` | `libre.graph/driveItem/permissions/delete` | |
+             | `deny_grant` | `libre.graph/driveItem/permissions/deny` | uses a non CRUD action `deny` |
+             | `list_file_versions` | `libre.graph/driveItem/versions/read` | `versions` is a `driveItemVersion` collection |
+             | `restore_file_version` | `libre.graph/driveItem/versions/update` | the only `update` action is restore |
+             | `list_recycle` | `libre.graph/driveItem/deleted/read` | reading a driveItem `deleted` property implies listing |
+             | `restore_recycle_item` | `libre.graph/driveItem/deleted/update` | the only `update` action is restore |
+             | `purge_recycle` | `libre.graph/driveItem/deleted/delete` | allows purging deleted `driveItems` |
 
-            Managing drives would be a different entity. A space manager role could be written as `libre.graph/drive/permission/allTasks`.
+             Managing drives would be a different entity. A space manager role could be written as `libre.graph/drive/permission/allTasks`.
 
           # microsoft.directory namespace has these built in roles and permissions: https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference
           type: array
@@ -5253,85 +5253,85 @@ components:
           description: 'Unique role identifier inside the appRoles collection. When creating a new app role, a new GUID identifier must be provided.'
           format: uuid
     appRoleAssignment:
-        type: object
-        required:
-          - appRoleId
-          - principalId
-          - resourceId
-        properties:
-          # entity
-          id:
-            type: string
-            description: The unique identifier for the object. 12345678-9abc-def0-1234-56789abcde. The value of the ID property is often, but not exclusively, in the form of a GUID. The value should be treated as an opaque identifier and not based in being a GUID. Null values are not allowed. Read-only.
-            readOnly: true
-          # directory object
-          deletedDateTime:
-            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
-            type: string
-            format: date-time
-          appRoleId:
-            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-            type: string
-            description: 'The identifier (id) for the app role which is assigned to the user. Required on create.'
-            format: uuid
-          createdDateTime:
-            pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$'
-            type: string
-            description: 'The time when the app role assignment was created. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.'
-            format: date-time
-            nullable: true
-          principalDisplayName:
-            type: string
-            description: 'The display name of the user, group, or service principal that was granted the app role assignment. Read-only.'
-            nullable: true
-          principalId:
-            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-            type: string
-            description: 'The unique identifier (id) for the user, security group, or service principal being granted the app role. Security groups with dynamic memberships are supported. Required on create.'
-            format: uuid
-            nullable: true
-          principalType:
-            type: string
-            description: 'The type of the assigned principal. This can either be User, Group, or ServicePrincipal. Read-only.'
-            nullable: true
-          resourceDisplayName:
-            type: string
-            description: The display name of the resource app's service principal to which the assignment is made.
-            nullable: true
-          resourceId:
-            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-            type: string
-            description: The unique identifier (id) for the resource service principal for which the assignment is made. Required on create.
-            format: uuid
-            nullable: true
+      type: object
+      required:
+        - appRoleId
+        - principalId
+        - resourceId
+      properties:
+        # entity
+        id:
+          type: string
+          description: The unique identifier for the object. 12345678-9abc-def0-1234-56789abcde. The value of the ID property is often, but not exclusively, in the form of a GUID. The value should be treated as an opaque identifier and not based in being a GUID. Null values are not allowed. Read-only.
+          readOnly: true
+        # directory object
+        deletedDateTime:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?([Zz]|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          format: date-time
+        appRoleId:
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          type: string
+          description: 'The identifier (id) for the app role which is assigned to the user. Required on create.'
+          format: uuid
+        createdDateTime:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$'
+          type: string
+          description: 'The time when the app role assignment was created. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.'
+          format: date-time
+          nullable: true
+        principalDisplayName:
+          type: string
+          description: 'The display name of the user, group, or service principal that was granted the app role assignment. Read-only.'
+          nullable: true
+        principalId:
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          type: string
+          description: 'The unique identifier (id) for the user, security group, or service principal being granted the app role. Security groups with dynamic memberships are supported. Required on create.'
+          format: uuid
+          nullable: true
+        principalType:
+          type: string
+          description: 'The type of the assigned principal. This can either be User, Group, or ServicePrincipal. Read-only.'
+          nullable: true
+        resourceDisplayName:
+          type: string
+          description: The display name of the resource app's service principal to which the assignment is made.
+          nullable: true
+        resourceId:
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          type: string
+          description: The unique identifier (id) for the resource service principal for which the assignment is made. Required on create.
+          format: uuid
+          nullable: true
     application:
       type: object
       required:
         - id
       properties:
-          # entity
-          id:
-            type: string
-            description: The unique identifier for the object. 12345678-9abc-def0-1234-56789abcde. The value of the ID property is often, but not exclusively, in the form of a GUID. The value should be treated as an opaque identifier and not based in being a GUID. Null values are not allowed. Read-only.
-            readOnly: true
-          # properties
-          appRoles:
-            type: array
-            description: 'The collection of roles defined for the application. With app role assignments, these roles can be assigned to users, groups, or service principals associated with other applications. Not nullable.'
-            items:
-              $ref: '#/components/schemas/appRole'
-            nullable: false
-          displayName:
-              type: string
-              description: 'The display name for the application.'
-              nullable: true
+        # entity
+        id:
+          type: string
+          description: The unique identifier for the object. 12345678-9abc-def0-1234-56789abcde. The value of the ID property is often, but not exclusively, in the form of a GUID. The value should be treated as an opaque identifier and not based in being a GUID. Null values are not allowed. Read-only.
+          readOnly: true
+        # properties
+        appRoles:
+          type: array
+          description: 'The collection of roles defined for the application. With app role assignments, these roles can be assigned to users, groups, or service principals associated with other applications. Not nullable.'
+          items:
+            $ref: '#/components/schemas/appRole'
+          nullable: false
+        displayName:
+          type: string
+          description: 'The display name for the application.'
+          nullable: true
   responses:
-      error:
-        description: error
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/odata.error'
+    error:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/odata.error'
   parameters:
     top:
       name: $top
@@ -5406,13 +5406,13 @@ components:
         name ascending:
           value: name asc
   securitySchemes:
-      openId:
-        type: openIdConnect
-        openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
-      bearerAuth:
-        type: http
-        scheme: bearer
-        bearerFormat: plain
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: plain
   examples:
     tags_put:
       value:
@@ -5482,4 +5482,4 @@ components:
         classification: course
         externalId: ac528aea-978e-415c-a733-c4ba235d3388
 security:
-  - openId: []
+  - openId: [ ]
