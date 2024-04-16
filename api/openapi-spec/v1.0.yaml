@@ -1072,6 +1072,54 @@ paths:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
   '/v1beta1/drives/{drive-id}/items/{item-id}':
+    patch:
+      tags:
+        - driveItem
+      summary: Update a DriveItem.
+      operationId: UpdateDriveItem
+      description: |
+        Update a DriveItem.
+
+        The request body must include a JSON object with the properties to update.
+        Only the properties that are provided will be updated.
+        
+        Currently it supports updating the following properties:
+        
+        * `@UI.Hidden` - Hides the item from the UI.
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          example: a0ca6a90-a365-4782-871e-d44447bbc668$a0ca6a90-a365-4782-871e-d44447bbc668
+          x-ms-docs-key-type: drive
+        - name: item-id
+          in: path
+          description: 'key: id of item'
+          required: true
+          schema:
+            type: string
+          example: a0ca6a90-a365-4782-871e-d44447bbc668$a0ca6a90-a365-4782-871e-d44447bbc668!share-id
+          x-ms-docs-key-type: item
+      requestBody:
+        description: DriveItem properties to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/driveItem'
+            examples:
+              change visibility:
+                value:
+                  "@UI.Hidden": true
+        required: true
+      responses:
+        '200':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
     delete:
       tags:
         - driveItem
