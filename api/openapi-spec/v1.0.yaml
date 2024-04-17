@@ -962,7 +962,7 @@ paths:
     delete:
       tags:
         - drives.root
-      summary: Remove access to a DriveItem
+      summary: Remove access to a Drive
       operationId: DeletePermissionSpaceRoot
       description: |
         Remove access to the root item of a drive.
