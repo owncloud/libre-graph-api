@@ -544,18 +544,18 @@ paths:
                 value:
                   recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                  roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send viewer invite to multiple recipients:
                 value:
                   recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                     - objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
-                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                  roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send editor invite with expiry:
                 value:
                   recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                  roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                  roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                   expirationDateTime: "2018-07-15T14:00:00.000Z"
               send manager invite to group:
                 description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
@@ -563,7 +563,7 @@ paths:
                   recipients:
                     - '@libre.graph.recipient.type': group
                       objectId: "167cbee2-0518-455a-bfb2-031fe0621e5d"
-                  roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                  roles: [ "312c0871-5ef7-4b3a-85b6-0e4074c64049" ]
               send invite to user granting custom actions:
                 description: "A Custom role is just a collection of actions, in this case allowing the user to stat and move driveItems"
                 value:
@@ -587,7 +587,7 @@ paths:
                 send viewer invite:
                   value:
                     - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
-                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                      roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
@@ -596,13 +596,13 @@ paths:
                   description: multiple permissions are returned as each has received a dedicated sharing id
                   value:
                     - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                      roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                             displayName: "Albert Einstein"
                     - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
-                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                      roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                       grantedToV2:
                         - user:
                             id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
@@ -610,7 +610,7 @@ paths:
                 send editor invite with expiry:
                   value:
                     - id: "453b02be-4ec2-4e7d-b576-09fc153de812"
-                      roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                      roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
@@ -619,7 +619,7 @@ paths:
                 send manager invite to group:
                   value:
                     - id: "86765c0d-3905-444a-9b07-76201f8cf7df"
-                      roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                      roles: [ "312c0871-5ef7-4b3a-85b6-0e4074c64049" ]
                       grantedToV2:
                         - group:
                             id: "167cbee2-0518-455a-bfb2-031fe0621e5d"
@@ -747,7 +747,7 @@ paths:
                   #  type: string
               example:
                 '@libre.graph.permissions.roles.allowedValues':
-                  - id: 7ccc2a61-9615-4063-a80a-eb7cd8e59d8
+                  - id: b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
                     description: "Allows reading the shared file or folder"
                     displayName: Viewer
                     # we don't want to reproduce all the individual role permissions, that is what the /roleManagement/permissions/roleDefinitions endpoint is for
@@ -759,7 +759,7 @@ paths:
                     #    - libre.graph/driveItem/upload/create
                     #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
-                  - id: a1c6f73e-482e-4078-a629-bbecb205abb
+                  - id: fb6c3e19-e378-47e5-b277-9732f9de6e21
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
                     #rolePermissions:
@@ -767,7 +767,7 @@ paths:
                     #    - libre.graph/driveItem/standard/allTasks
                     #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
-                  - id: dfa16e02-3d88-45d8-8894-5b33a7df637
+                  - id: 312c0871-5ef7-4b3a-85b6-0e4074c64049
                     description: "Allows managing a space"
                     displayName: Manager
                     #rolePermissions:
@@ -798,32 +798,32 @@ paths:
                       webUrl: "https://cloud.example.org/s/fhGBMIkKFEHWysj"
 
                   - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     grantedToV2:
                       - user:
                           id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                           displayName: "Albert Einstein"
                   - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     grantedToV2:
                       - user:
                           id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                           displayName: "Albert Einstein"
                   - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     grantedToV2:
                       - user:
                           id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
                           displayName: "Marie Skłodowska Curie"
                   - id: "453b02be-4ec2-4e7d-b576-09fc153de812"
-                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                    roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                     grantedToV2:
                       - user:
                           id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                           displayName: "Albert Einstein"
                     expirationDateTime: "2018-07-15T14:00:00.000Z"
                   - id: "86765c0d-3905-444a-9b07-76201f8cf7df"
-                    roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                    roles: [ "312c0871-5ef7-4b3a-85b6-0e4074c64049" ]
                     grantedToV2:
                       - group:
                           id: "167cbee2-0518-455a-bfb2-031fe0621e5d"
@@ -931,7 +931,7 @@ paths:
               update invite:
                 description: Updating an invite is done by setting the `roles` property of the permission.
                 value:
-                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                  roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
         required: true
       responses:
         '200':
@@ -950,7 +950,7 @@ paths:
                 update invite:
                   value:
                     id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     expirationDateTime: "2018-07-15T14:00:00.000Z"
                     grantedToV2:
                       - user:
@@ -1306,18 +1306,18 @@ paths:
                 value:
                   recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                  roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send viewer invite to multiple recipients:
                 value:
                   recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                     - objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
-                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                  roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send editor invite with expiry:
                 value:
                   recipients:
                     - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                  roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                  roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                   expirationDateTime: "2018-07-15T14:00:00.000Z"
               send manager invite to group:
                 description: "Sharing with a groups requires setting the @libre.graph.recipient.type annotation."
@@ -1325,7 +1325,7 @@ paths:
                   recipients:
                     - '@libre.graph.recipient.type': group
                       objectId: "167cbee2-0518-455a-bfb2-031fe0621e5d"
-                  roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                  roles: [ "312c0871-5ef7-4b3a-85b6-0e4074c64049" ]
               send invite to user granting custom actions:
                 description: "A Custom role is just a collection of actions, in this case allowing the user to stat and move driveItems"
                 value:
@@ -1349,7 +1349,7 @@ paths:
                 send viewer invite:
                   value:
                     - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
-                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                      roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
@@ -1358,13 +1358,13 @@ paths:
                   description: multiple permissions are returned as each has received a dedicated sharing id
                   value:
                     - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                      roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                             displayName: "Albert Einstein"
                     - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
-                      roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                      roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                       grantedToV2:
                         - user:
                             id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
@@ -1372,7 +1372,7 @@ paths:
                 send editor invite with expiry:
                   value:
                     - id: "453b02be-4ec2-4e7d-b576-09fc153de812"
-                      roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                      roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                       grantedToV2:
                         - user:
                             id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
@@ -1381,7 +1381,7 @@ paths:
                 send manager invite to group:
                   value:
                     - id: "86765c0d-3905-444a-9b07-76201f8cf7df"
-                      roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                      roles: [ "312c0871-5ef7-4b3a-85b6-0e4074c64049" ]
                       grantedToV2:
                         - group:
                             id: "167cbee2-0518-455a-bfb2-031fe0621e5d"
@@ -1516,7 +1516,7 @@ paths:
                   #  type: string
               example:
                 '@libre.graph.permissions.roles.allowedValues':
-                  - id: 7ccc2a61-9615-4063-a80a-eb7cd8e59d8
+                  - id: b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
                     description: "Allows reading the shared file or folder"
                     displayName: Viewer
                     # we don't want to reproduce all the individual role permissions, that is what the /roleManagement/permissions/roleDefinitions endpoint is for
@@ -1528,7 +1528,7 @@ paths:
                     #    - libre.graph/driveItem/upload/create
                     #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
-                  - id: a1c6f73e-482e-4078-a629-bbecb205abb
+                  - id: fb6c3e19-e378-47e5-b277-9732f9de6e21
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
                     #rolePermissions:
@@ -1536,7 +1536,7 @@ paths:
                     #    - libre.graph/driveItem/standard/allTasks
                     #    condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
-                  - id: dfa16e02-3d88-45d8-8894-5b33a7df637
+                  - id: 312c0871-5ef7-4b3a-85b6-0e4074c64049
                     description: "Allows managing a space"
                     displayName: Manager
                     #rolePermissions:
@@ -1567,32 +1567,32 @@ paths:
                       webUrl: "https://cloud.example.org/s/fhGBMIkKFEHWysj"
 
                   - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     grantedToV2:
                       - user:
                           id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                           displayName: "Albert Einstein"
                   - id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     grantedToV2:
                       - user:
                           id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                           displayName: "Albert Einstein"
                   - id: "b470677e-a7f5-4304-8ef5-f5056a21fff1"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     grantedToV2:
                       - user:
                           id: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
                           displayName: "Marie Skłodowska Curie"
                   - id: "453b02be-4ec2-4e7d-b576-09fc153de812"
-                    roles: [ "a1c6f73e-482e-4078-a629-bbecb205abb" ]
+                    roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                     grantedToV2:
                       - user:
                           id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                           displayName: "Albert Einstein"
                     expirationDateTime: "2018-07-15T14:00:00.000Z"
                   - id: "86765c0d-3905-444a-9b07-76201f8cf7df"
-                    roles: [ "dfa16e02-3d88-45d8-8894-5b33a7df637" ]
+                    roles: [ "312c0871-5ef7-4b3a-85b6-0e4074c64049" ]
                     grantedToV2:
                       - group:
                           id: "167cbee2-0518-455a-bfb2-031fe0621e5d"
@@ -1714,7 +1714,7 @@ paths:
               update invite:
                 description: Updating an invite is done by setting the `roles` property of the permission.
                 value:
-                  roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                  roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
         required: true
       responses:
         '200':
@@ -1733,7 +1733,7 @@ paths:
                 update invite:
                   value:
                     id: "81d5bad3-3eff-410a-a2ea-eda2d14d4474"
-                    roles: [ "7ccc2a61-9615-4063-a80a-eb7cd8e59d8" ]
+                    roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
                     expirationDateTime: "2018-07-15T14:00:00.000Z"
                     grantedToV2:
                       - user:
@@ -3744,7 +3744,7 @@ paths:
                 $ref: '#/components/schemas/unifiedRoleDefinition'
               example:
                 value:
-                  - id: 7ccc2a61-9615-4063-a80a-eb7cd8e59d8
+                  - id: b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
                     description: "Allows reading the shared file or folder"
                     displayName: Viewer
                     rolePermissions:
@@ -3754,7 +3754,7 @@ paths:
                           - libre.graph/driveItem/upload/create
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 1
-                  - id: a1c6f73e-482e-4078-a629-bbecb205abb
+                  - id: fb6c3e19-e378-47e5-b277-9732f9de6e21
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
                     rolePermissions:
@@ -3762,7 +3762,7 @@ paths:
                           - libre.graph/driveItem/standard/allTasks
                         condition: "exists @Resource.File"
                     '@libre.graph.weight': 2
-                  - id: dfa16e02-3d88-45d8-8894-5b33a7df637
+                  - id: 312c0871-5ef7-4b3a-85b6-0e4074c64049
                     description: "Allows managing a space"
                     displayName: Manager
                     rolePermissions:
@@ -3806,7 +3806,7 @@ paths:
               examples:
                 Viewer:
                   value:
-                    id: 7ccc2a61-9615-4063-a80a-eb7cd8e59d8
+                    id: b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
                     description: "Allows reading the shared file or folder"
                     displayName: Viewer
                     rolePermissions:
@@ -3816,7 +3816,7 @@ paths:
                     '@libre.graph.weight': 1
                 Editor:
                   value:
-                    id: a1c6f73e-482e-4078-a629-bbecb205abb
+                    id: fb6c3e19-e378-47e5-b277-9732f9de6e21
                     description: "Allows reading and writing the shared file or folder"
                     displayName: Editor
                     rolePermissions:
@@ -3826,7 +3826,7 @@ paths:
                     '@libre.graph.weight': 2
                 Manager:
                   value:
-                    id: dfa16e02-3d88-45d8-8894-5b33a7df637
+                    id: 312c0871-5ef7-4b3a-85b6-0e4074c64049
                     description: "Allows managing a space"
                     displayName: Manager
                     rolePermissions:
