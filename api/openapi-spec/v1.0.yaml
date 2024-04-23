@@ -543,18 +543,22 @@ paths:
               send viewer invite:
                 value:
                   recipients:
-                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                   roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send viewer invite to multiple recipients:
                 value:
                   recipients:
-                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    - objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
                   roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send editor invite with expiry:
                 value:
                   recipients:
-                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                   roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                   expirationDateTime: "2018-07-15T14:00:00.000Z"
               send manager invite to group:
@@ -1305,18 +1309,22 @@ paths:
               send viewer invite:
                 value:
                   recipients:
-                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                   roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send viewer invite to multiple recipients:
                 value:
                   recipients:
-                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
-                    - objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c"
                   roles: [ "b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5" ]
               send editor invite with expiry:
                 value:
                   recipients:
-                    - objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                    - '@libre.graph.recipient.type': user
+                      objectId: "4c510ada-c86b-4815-8820-42cdf82c3d51"
                   roles: [ "fb6c3e19-e378-47e5-b277-9732f9de6e21" ]
                   expirationDateTime: "2018-07-15T14:00:00.000Z"
               send manager invite to group:
