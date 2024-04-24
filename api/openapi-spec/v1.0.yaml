@@ -2376,6 +2376,28 @@ paths:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
 
+  /v1beta1/invitations:
+    post:
+      tags:
+        - invitations
+      summary: Invite a user to the organization
+      operationId: CreateInvitation
+      requestBody:
+        description: New invitation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/invitation'
+        required: true
+      responses:
+        '201':
+          description: Created invitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invitation'
+        default:
+          $ref: '#/components/responses/error'
   /v1.0/users:
     get:
       tags:
@@ -2503,12 +2525,14 @@ paths:
               enum:
                 - id
                 - displayName
+                - givenName
                 - drive
                 - drives
                 - mail
                 - memberOf
                 - onPremisesSamAccountName
                 - surname
+                - userType
               type: string
         - name: $expand
           in: query
@@ -2779,6 +2803,7 @@ paths:
                   displayName: Max Mustermann
                   mail: max.musterman@example.org
                   primaryRole: student
+                  userType: Member
                   identities:
                     - issuer: idp.school.com
                       issuerAssignedId: max.mustermann
@@ -2898,6 +2923,7 @@ paths:
                 givenName: Max
                 mail: max.musterman@new.domain
                 primaryRole: student
+                userType: Member
                 identities:
                   - issuer: idp.school.com
                     issuerAssignedId: max.mustermann
@@ -3112,6 +3138,7 @@ paths:
                   givenName: Max
                   mail: max.musterman@example.org
                   primariyRole: student
+                  userType: Member
                   identities:
                     - issuer: idp.school.com
                       issuerAssignedId: max.mustermann
@@ -3472,6 +3499,7 @@ paths:
                   givenName: Max
                   mail: max.musterman@example.org
                   primariyRole: student
+                  userType: Member
                   identities:
                     - issuer: idp.school.com
                       issuerAssignedId: max.mustermann
@@ -3574,6 +3602,7 @@ paths:
                   givenName: Max
                   mail: max.musterman@example.org
                   primariyRole: teacher
+                  userType: Member
                   identities:
                     - issuer: idp.school.com
                       issuerAssignedId: max.mustermann
@@ -3995,10 +4024,12 @@ components:
           description: The user's givenName. Returned by default.
         primaryRole:
           type: string
+          enum: [student, teacher]
           description: 'The user`s default role. Such as "student" or "teacher"'
         userType:
           type: string
-          description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
+          enum: [Member, Guest]
+          description: 'A string value that can be used to classify user types in your directory, such as ''Member'' and ''Guest''. Returned only on $select. Supports $filter.'
     drive:
       description: The drive represents a space on the storage.
       type: object
@@ -4144,6 +4175,31 @@ components:
         id:
           type: string
           description: Unique identifier for the identity.
+    invitation:
+      type: object
+      required:
+        - invitedUserEmailAddress
+        - inviteRedirectUrl
+      properties:
+        invitedUserDisplayName:
+          type: string
+          description: The display name of the user being invited.
+        invitedUserEmailAddress:
+          type: string
+          description: The email address of the user being invited. Required.
+        inviteRedirectUrl:
+          type: string
+          description: The URL the user should be redirected to once the invitation is redeemed. Required.
+        sendInvitationMessage:
+          type: boolean
+          description: Indicates whether an email should be sent to the user being invited. The default is false.
+        status:
+          type: string
+          enum: [PendingAcceptance, Completed, InProgress, Error]
+          description: 'The status of the invitation. Possible values are: ''PendingAcceptance'', ''Completed'', ''InProgress'', and ''Error''.'
+        invitedUser:
+          $ref: '#/components/schemas/user'
+          description: The user created as part of the invitation creation. Read-Only
     objectIdentity:
       description: Represents an identity used to sign in to a user account
       type: object
@@ -4269,7 +4325,8 @@ components:
           description: The user's givenName. Returned by default.
         userType:
           type: string
-          description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
+          enum: [Member, Guest]
+          description: 'A string value that can be used to classify user types in your directory, such as ''Member'' and ''Guest''. Returned only on $select. Supports $filter.'
         preferredLanguage:
           $ref: '#/components/schemas/language'
     itemReference:
@@ -5495,6 +5552,7 @@ components:
         givenName: Max
         mail: max.musterman@example.org
         primaryRole: student
+        userType: Member
         identities:
           - issuer: idp.school.com
             issuerAssignedId: max.mustermann
@@ -5506,6 +5564,7 @@ components:
         givenName: Max
         mail: max.musterman@example.org
         primaryRole: student
+        userType: Member
         identities:
           - issuer: idp.school.com
             issuerAssignedId: max.mustermann
