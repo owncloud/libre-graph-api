@@ -1121,6 +1121,10 @@ paths:
       responses:
         '200':
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/driveItem'
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
