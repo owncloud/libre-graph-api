@@ -4963,6 +4963,11 @@ components:
           description: An optional expiration date which limits the permission in time.
           format: date-time
           nullable: true
+        createdDateTime:
+          type: string
+          description: An optional creation date. Libregraph only.
+          format: date-time
+          nullable: true
         grantedToV2:
           # this is always a single identity set because a permission always is tied to a single recipient (which can be a group).
           description: For user type permissions, the details of the users and applications for this permission. Only part of responses. Use the invitation property when creating shares.
