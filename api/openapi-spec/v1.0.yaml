@@ -5512,6 +5512,10 @@ components:
       type: http
       scheme: bearer
       bearerFormat: plain
+    basicAuth:
+      description: HTTP Basic Authentication (discouraged for production environments)
+      type: http
+      scheme: basic
   examples:
     tags_put:
       value:
@@ -5582,3 +5586,4 @@ components:
         externalId: ac528aea-978e-415c-a733-c4ba235d3388
 security:
   - openId: [ ]
+  - basicAuth: [ ]
