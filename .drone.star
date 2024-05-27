@@ -31,7 +31,7 @@ config = {
 			'openapi-generator-image': 'openapitools/openapi-generator-cli@sha256:95ba4bf0bb5b219841c51a63e8776453b16cb93e74257cc65f781aa24472afda'
 		},
 	},
-	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.0.1@sha256:1894bae95de139bd81b6fc2ba8d2e423a2bf1b0266518d175bd26218fe42a89b',
+	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.6.0@sha256:424666401f3b05b3cfaf1fde96b2be0e2d47504bde34e9f41c8ebf15eba51b2d',
 }
 
 def main(ctx):
@@ -245,7 +245,7 @@ def validate(lang):
 		"go": [
 			{
 				"name": "go-fmt",
-				"image": "owncloudci/golang:1.18",
+				"image": "owncloudci/golang:1.22",
 				"commands": [
 					"cd %s" % config["languages"][lang]["src"],
 					"gofmt -w .",
@@ -253,7 +253,7 @@ def validate(lang):
 			},
 			{
 				"name": "go-mod",
-				"image": "owncloudci/golang:1.18",
+				"image": "owncloudci/golang:1.22",
 				"commands": [
 					"cd %s" % config["languages"][lang]["src"],
 					"go mod tidy",
