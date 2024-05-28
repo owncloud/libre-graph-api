@@ -306,7 +306,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/drive'
+              $ref: '#/components/schemas/driveUpdate'
             examples:
               change quota:
                 value:
@@ -4035,9 +4035,13 @@ components:
           description: 'The user`s type. This can be either "Member" for regular user, or "Guest" for guest users.'
     drive:
       description: The drive represents a space on the storage.
-      type: object
       required:
         - name
+      allOf:
+        - $ref: '#/components/schemas/driveUpdate'
+    driveUpdate:
+      description: The drive represents an update to a space on the storage.
+      type: object
       properties:
         # entity
         id:
