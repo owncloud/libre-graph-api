@@ -3773,6 +3773,96 @@ paths:
                 $ref: '#/components/schemas/application'
         default:
           $ref: '#/components/responses/error'
+  /v1.0/$batch:
+    post:
+      tags:
+        - batch
+      summary: Executes multiple requests in a single HTTP request
+      description: |
+        This endpoint allows for sending multiple Graph API requests in a single HTTP POST request.
+        Each request in the batch is specified in the requests array. Responses may be returned in any order and must be correlated via the id property.
+      operationId: RequestBatch
+      requestBody:
+        description: Batch request containing multiple individual requests.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - requests
+              properties:
+                requests:
+                  type: array
+                  description: Array of individual requests to be processed in a batch.
+                  items:
+                    type: object
+                    required:
+                      - id
+                      - method
+                      - url
+                    properties:
+                      id:
+                        type: string
+                        description: A correlation value to associate individual responses with requests. This value allows the server to process requests in the batch in the most efficient order. Not case-sensitive. Must be unique in the batch.
+                      method:
+                        type: string
+                        description: The HTTP method.
+                        enum: [GET, POST, PATCH, DELETE]
+                      url:
+                        type: string
+                        description: The relative resource URL for the individual request
+                      headers:
+                        type: object
+                        description: 'Optional but required when the body is specified. A JSON object with the key/value pair for the headers. For example, when the ConsistencyLevel header is required, this property is represented as "headers": {"ConsistencyLevel": "eventual"}. When the body is supplied, a Content-Type header must be included.'
+                        additionalProperties:
+                          type: string
+                      body:
+                        type: string
+                        format: binary
+                        description: Might be a JSON object or a base64 URL-encoded value, for example, when the body is an image. When a body is included with the request, the headers object must contain a value for Content-Type.
+                      dependsOn:
+                        type: array
+                        items:
+                          type: string
+                        description: Array of request IDs this request depends on; this request will only be executed after all specified requests have completed successfully.
+      responses:
+        '200':
+          description: |
+            Successful response with an array of responses corresponding to the batched requests.
+            Each response is correlated with its request by the id property.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - responses
+                properties:
+                  responses:
+                    type: array
+                    description: Array of responses for each request in the batch.
+                    items:
+                      type: object
+                      required:
+                        - id
+                        - status
+                      properties:
+                        id:
+                          type: string
+                          description: Identifier of the response correlating to the original request's id.
+                        status:
+                          type: integer
+                          description: HTTP status code of the response.
+                        headers:
+                          type: object
+                          additionalProperties:
+                            type: string
+                          description: Headers returned by the response, if any.
+                        body:
+                          type: object
+                          nullable: true
+                          description: Body of the response if the request produced body content. The structure will depend on the request made.
+
   /v1beta1/roleManagement/permissions/roleDefinitions:
     get:
       tags:
