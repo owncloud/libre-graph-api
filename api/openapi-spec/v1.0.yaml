@@ -99,6 +99,48 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  '/v1beta1/extensions/org.libregraph/activities':
+    get:
+      tags:
+        - activities
+      summary: Get activities
+      operationId: GetActivities
+      parameters:
+        - in: query
+          name: kql
+          schema:
+            type: string
+          example: resourceid:a0ca6a90-a365-4782-871e-d44447bbc668$a0ca6a90-a365-4782-871e-d44447bbc668 depth:2
+      responses:
+        '200':
+          description: Found activities
+          content:
+            application/json:
+              schema:
+                title: Collection of activities
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/activity'
+              examples:
+                item activities:
+                  value:
+                    - id: "34646ab6-be32-43c9-89e6-987e0c237e9b"
+                      times:
+                        recordedTime: "2023-09-14T12:27:15"
+                      template:
+                        message: "{user} shared {resource}"
+                        variables:
+                          user:
+                            id: "4c510ada-c86b-4815-8820-42cdf82c3d51"
+                            displayName: "Albert Einstein"
+                          resource:
+                            id: "7f92b0a9-06ad-49dc-890f-0e0a6eb4dea6$e9f01ca3-577f-4d1d-acd4-1cc44149ac25!5fb9f87c-a317-467b-9882-eb9f171564ac"
+                            name: "secret stuff"
+        default:
+          $ref: '#/components/responses/error'
   '/v1beta1/me/drives':
     # $ref is buggy in the openapi-generator v7.0.1
     # $ref: '#/paths/~1v1.0~1me~1drives'
@@ -4343,6 +4385,37 @@ components:
       description: 'Represents the users language setting, ISO-639-1 Code'
       readOnly: false
       type: string
+    activity:
+      description: Represents activity.
+      type: object
+      required:
+        - id
+        - times
+        - template
+      properties:
+        id:
+          type: string
+          description: Activity ID.
+        times:
+          type: object
+          required:
+            - recordedTime
+          properties:
+            recordedTime:
+              type: string
+              format: date-time
+              description: Timestamp of the activity.
+        template:
+          type: object
+          required:
+            - message
+          properties:
+            message:
+              type: string
+              description: Activity description.
+            variables:
+              type: object
+              description: Activity description variables.
     driveItem:
       description: Represents a resource inside a drive. Read-only.
       readOnly: true
