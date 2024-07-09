@@ -11,6 +11,22 @@ The project goal is to provide an open source standard for open Cloud Collaborat
 
 Libre Graph is open source and open to any open source project that implements endpoints of the API.
 
+
+## Influence and differences from Microsoft Graph API
+
+Libre Graph API draws significant inspiration from the Microsoft Graph API,
+particularly in its approach to providing a unified endpoint for accessing various services and data.
+We believe that the model provided by Microsoft Graph API is a robust and efficient way
+to facilitate integration and collaboration across different services.
+
+However, Libre Graph API is not identical to Microsoft Graph API.
+We have made specific extensions and modifications to better suit our needs and goals:
+
+1. **Extended Functionality**: We have added specific endpoints and features unique to our implementation, designed to enhance collaboration and integration within the open source ecosystem.
+2. **Custom Extensions**: Certain functionalities have been extended to provide additional features that are not present in the Microsoft Graph API.
+3. **Beta Features**: Some endpoints are currently in beta, allowing us to continuously innovate and adapt to user needs before finalizing them.
+
+
 ## Specification
 
 The API specification uses the OpenAPI Specification (OAS) standard.
