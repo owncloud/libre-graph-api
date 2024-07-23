@@ -4294,6 +4294,10 @@ components:
     user:
       description: Represents an Active Directory user object.
       type: object
+      required:
+        - mail
+        - displayName
+        - onPremisesSamAccountName
       properties:
         # entity
         id:
@@ -4338,7 +4342,7 @@ components:
           description: 'Groups that this user is a member of. HTTP Methods: GET (supported for all groups). Read-only. Nullable. Supports $expand.'
         onPremisesSamAccountName:
           type: string
-          description: 'Contains the on-premises SAM account name synchronized from the on-premises directory. Read-only.'
+          description: 'Contains the on-premises SAM account name synchronized from the on-premises directory.'
         passwordProfile:
           $ref: '#/components/schemas/passwordProfile'
         surname:
