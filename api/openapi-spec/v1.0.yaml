@@ -7,8 +7,8 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: https://ocis.ocis-traefik.latest.owncloud.works/graph
-    description: ownCloud Infinite Scale Latest
+  - url: https://ocis.ocis.rolling.owncloud.works/graph
+    description: ownCloud Infinite Scale Rolling Release
   - url: https://localhost:9200/graph
     description: ownCloud Infinite Scale Development Setup
 # commented for now because it is unrelated to the PR but allows describing and linking to external docs
@@ -5588,7 +5588,7 @@ components:
   securitySchemes:
     openId:
       type: openIdConnect
-      openIdConnectUrl: https://ocis.ocis-traefik.latest.owncloud.works/.well-known/openid-configuration
+      openIdConnectUrl: https://ocis.ocis.rolling.owncloud.works/.well-known/openid-configuration
     bearerAuth:
       type: http
       scheme: bearer
