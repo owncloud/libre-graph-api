@@ -51,6 +51,16 @@
         ],
         layout: "StandaloneLayout"
       });
+      ui.initOAuth({
+        clientId: "xdXOt13JKxym1B1QcEncf2XDkLAexMBFwiT9j6EfhhHFJhs2KM9jbjTmf8JBXE69",
+        clientSecret: "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh",
+        realm: "oCIS",
+        appName: "SwaggerUI",
+        scopeSeparator: " ",
+        scopes: "openid profile email",
+        useBasicAuthenticationWithAccessCodeGrant: false,
+        usePkceWithAuthorizationCodeGrant: true
+      })
       // End Swagger UI call region
 
       window.ui = ui;
