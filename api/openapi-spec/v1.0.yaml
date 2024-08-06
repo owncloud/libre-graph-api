@@ -75,7 +75,7 @@ paths:
     post:
       tags:
         - me.changepassword
-      summary: Chanage your own password
+      summary: Change your own password
       operationId: ChangeOwnPassword
       requestBody:
         description: Password change request
@@ -728,7 +728,7 @@ paths:
       # | edit           | Edit              | Creates a read-write link to the driveItem.                     | editor         |
       # | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            | createOnly     |
       # | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. | blocksDownload |
-      # AFAICT we wcill have to define the actions granted by a link type when we start to implement this
+      # AFAICT we will have to define the actions granted by a link type when we start to implement this
       # but e.g. a createOnly role and blocksDownload should not show up in the drop down for sharing files internally ...
       # when we need to hardcode this anyway ... we should indicate that by using the buildIn flag ... but how do we prevent some roles from showing up in the internal sharing dialog ...
       # for now leave out the roles property and hardcode the actions allowed by the link type
@@ -1532,7 +1532,7 @@ paths:
       # | edit           | Edit              | Creates a read-write link to the driveItem.                     | editor         |
       # | createOnly     | File Drop         | Creates an upload-only link to the folder driveItem.            | createOnly     |
       # | blocksDownload | Secure View       | Creates a read-only link that blocks download to the driveItem. | blocksDownload |
-      # AFAICT we wcill have to define the actions granted by a link type when we start to implement this
+      # AFAICT we will have to define the actions granted by a link type when we start to implement this
       # but e.g. a createOnly role and blocksDownload should not show up in the drop down for sharing files internally ...
       # when we need to hardcode this anyway ... we should indicate that by using the buildIn flag ... but how do we prevent some roles from showing up in the internal sharing dialog ...
       # for now leave out the roles property and hardcode the actions allowed by the link type
@@ -3966,7 +3966,7 @@ components:
       properties:
         id:
           type: string
-          description: The unique idenfier for an entity. Read-only.
+          description: The unique identifier for an entity. Read-only.
           readOnly: true
         displayName:
           type: string
@@ -4019,7 +4019,7 @@ components:
           type: string
           description: An external unique ID for the class
     educationUser:
-      description: And extension of user with education specific attributes
+      description: An extension of user with education-specific attributes
       type: object
       properties:
         # entity
@@ -4088,7 +4088,7 @@ components:
         # entity
         id:
           type: string
-          description: The unique idenfier for this drive.
+          description: The unique identifier for this drive.
           readOnly: true
         # base item
         createdBy:
@@ -4538,7 +4538,7 @@ components:
           type: boolean
         # follows the SAP UI vocabulary: https://github.com/SAP/odata-vocabularies/blob/main/vocabularies/UI.md
         '@UI.Hidden':
-          description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissons.
+          description: Properties or facets (see UI.Facet) annotated with this term will not be rendered if the annotation evaluates to true. Users can set this to hide permissions.
           type: boolean
     sharingLinkType:
       type: string
@@ -4577,7 +4577,7 @@ components:
         '@libre.graph.quickLink':
           type: boolean
           description: The quicklink property can be assigned to only one link per resource. A quicklink can be used in the clients to provide a one-click copy to clipboard action. Optional. Libregraph only.
-        # unused. we could add thisto invite guests or specify which users should be sent the link
+        # unused. we could add this to invite guests or specify which users should be sent the link
         #recipients:
         #  type: array
         #  items:
@@ -4605,7 +4605,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/driveRecipient'
-          description: A collection of recipients who will receive access and the sharing invitation. Currently, only internal users or gorups are supported.
+          description: A collection of recipients who will receive access and the sharing invitation. Currently, only internal users or groups are supported.
         roles:
           type: array
           items:
@@ -4640,7 +4640,7 @@ components:
         # internal shares do not have a password
         #password:
         #  type: string
-        #  description: The password set on the invite by the creator. Optional .
+        #  description: The password set on the invite by the creator. Optional.
 
         # not supported by ocis
         #retainInheritedPermissions:
@@ -4761,7 +4761,7 @@ components:
       readOnly: true
       description: |
         The GeoCoordinates resource provides geographic coordinates and elevation of a location based on metadata contained within the file.
-        If a DriveItem has a non-null location facet, the item represents a file with a known location assocaited with it.
+        If a DriveItem has a non-null location facet, the item represents a file with a known location associated with it.
       properties:
         altitude:
           type: number
@@ -5558,7 +5558,7 @@ components:
           value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
         list all users that are a member of either one or both groups:
           value: memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) or memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
-        list all users with a specific role assignd:
+        list all users with a specific role assigned:
           value: appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf)
         list all users that are a member of the group and have a specific role assigned:
           value: appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
