@@ -43,7 +43,7 @@ You can find a rendered version of the [API documentation](https://owncloud.dev/
 
 Client code can be generated from the API spec.
 
-For example, to run the generator for the C++ bindings locally, run the following docker based command:
+For example, to run the generator for the C++ bindings locally, run the following docker-based command:
 ```bash
 docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate --enable-post-process-file  -t local/templates/cpp-qt-client  -i local/api/openapi-spec/v1.0.yaml -g cpp-qt-client -o /local/out/cpp
 ```
