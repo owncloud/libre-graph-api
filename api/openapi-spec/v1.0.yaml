@@ -741,6 +741,8 @@ paths:
           schema:
             type: string
           x-ms-docs-key-type: drive
+        - $ref: '#/components/parameters/permissionsFilter'
+        - $ref: '#/components/parameters/permissionsSelect'
       responses:
         '200':
           description: Retrieved resource
@@ -1552,6 +1554,8 @@ paths:
           schema:
             type: string
           x-ms-docs-key-type: item
+        - $ref: '#/components/parameters/permissionsFilter'
+        - $ref: '#/components/parameters/permissionsSelect'
       responses:
         '200':
           description: Retrieved resource
@@ -5564,6 +5568,30 @@ components:
           value: appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf) and memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)
         list all users that are a member of any of groups and have a specific role assigned:
           value: (memberOf/any(x:x/id eq 910367f9-4041-4db1-961b-d1e98f708eaf) or memberOf/any(x:x/id eq 4cceeace-b8ca-472a-9788-e73da11de14c)) and appRoleAssignments/any(x:x/appRoleId eq 910367f9-4041-4db1-961b-d1e98f708eaf)
+    permissionsFilter:
+      name: $filter
+      in: query
+      description: Filter items by property values. By default all permissions are returned and the avalable sharing roles are limited to normal users. To get a list of sharing roles applicable to federated users use the example $select query and combine it with $filter to omit the list of permissions.
+      schema:
+        type: string
+      examples:
+        filter to see roles for ocm shares:
+          value: \@libre.graph.permissions.roles.allowedValues/rolePermissions/any(p:contains(p/condition, '@Subject.UserType=="Federated"'))
+    permissionsSelect:
+      name: $select
+      in: query
+      description: Select properties to be returned. By default all properties are returned. Select the roles property to fetch the available sharing roles without resolving all the permissions. Combine this with the $filter parameter to fetch the actions applicable to federated users.
+      style: form
+      explode: false
+      schema:
+        uniqueItems: true
+        type: array
+        items:
+          enum:
+            - \@libre.graph.permissions.actions.allowedValues
+            - \@libre.graph.permissions.roles.allowedValues
+            - value
+          type: string
     count:
       name: $count
       in: query
