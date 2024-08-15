@@ -5576,7 +5576,7 @@ components:
         type: string
       examples:
         filter to see roles for ocm shares:
-          value: @libre.graph.permissions.roles.allowedValues/rolePermissions/any(p:contains(p/condition, '@Subject.UserType=="Federated"'))
+          value: \@libre.graph.permissions.roles.allowedValues/rolePermissions/any(p:contains(p/condition, '@Subject.UserType=="Federated"'))
     permissionsSelect:
       name: $select
       in: query
