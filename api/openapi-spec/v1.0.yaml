@@ -29,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/userUpdate'
             examples:
               change preferred language:
                 value:
@@ -2633,7 +2633,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/userUpdate'
             examples:
               change displayName:
                 value:
@@ -4300,11 +4300,14 @@ components:
         #    | users          | The link grants access only to a specific list of people.                                                             |
     user:
       description: Represents an Active Directory user object.
-      type: object
       required:
-        - mail
         - displayName
         - onPremisesSamAccountName
+      allOf:
+        - $ref: '#/components/schemas/userUpdate'
+    userUpdate:
+      description: Represents updates to an Active Directory user object.
+      type: object
       properties:
         # entity
         id:
