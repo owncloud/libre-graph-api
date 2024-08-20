@@ -31,7 +31,7 @@ config = {
 			'openapi-generator-image': 'openapitools/openapi-generator-cli@sha256:95ba4bf0bb5b219841c51a63e8776453b16cb93e74257cc65f781aa24472afda'
 		},
 	},
-	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.6.0@sha256:424666401f3b05b3cfaf1fde96b2be0e2d47504bde34e9f41c8ebf15eba51b2d',
+	'openapi-generator-image': 'openapitools/openapi-generator-cli:v7.8.0@sha256:18345ed78d64e2590481c6c4ed1d15e8a389156a38a289ba2960b0693ea69207',
 }
 
 def main(ctx):
