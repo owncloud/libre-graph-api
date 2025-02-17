@@ -3986,9 +3986,6 @@ components:
     educationClass:
       description: And extension of group representing a class or course
       type: object
-      required:
-        - displayName
-        - classification
       properties:
         # entity
         id:
