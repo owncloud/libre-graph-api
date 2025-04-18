@@ -168,6 +168,7 @@ def generate(ctx, lang):
 					'rm -Rf %s/*' % config["languages"][lang]["src"],
 					'/usr/local/bin/docker-entrypoint.sh generate --enable-post-process-file -i api/openapi-spec/v1.0.yaml $${TEMPLATE_ARG} --additional-properties=packageName=libregraph --git-user-id=owncloud --git-repo-id=%s -g %s -o %s %s' % (config["languages"][lang]["repo-slug"], lang, config["languages"][lang]["src"], config["languages"][lang].get('generator-args', '') ),
 					'cp LICENSE %s/LICENSE' % config["languages"][lang]["src"],
+					'test -d "templates/{0}-files" && cp -rT "templates/{0}-files" "{1}" || true'.format(lang, config["languages"][lang]["src"]),
 				],
 			}
 			] + validate(lang) + [
@@ -230,9 +231,17 @@ def validate(lang):
 	steps = {
 		"cpp-qt-client": [
 			{
+				"name": "validate-cpp-format",
+				"image": "xianpengshen/clang-tools:17",
+				"commands": [
+					"git clang-format -force"
+				]
+			},
+			{
 				"name": "validate-cpp",
 				"image": "owncloudci/client",
 				"commands": [
+					"git clang-format -force",
 					"mkdir build-qt",
 					"cd build-qt",
 					"cmake -GNinja -S ../%s/client" % config["languages"][lang]["src"],
