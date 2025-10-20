@@ -1,9 +1,5 @@
 config = {
 	'name': 'libre-graph-api',
-	'rocketchat': {
-		'channel': 'builds',
-		'from_secret': 'rocketchat_talk_webhook'
-	},
 	'branches': [
 		'main'
 	],
@@ -40,9 +36,8 @@ def main(ctx):
 		print('Errors detected. Review messages above.')
 		return []
 
-	after = afterPipelines(ctx)
-	dependsOn(stages, after)
-	return stages + after
+	dependsOn(stages)
+	return stages
 
 def stagePipelines(ctx):
 	linters = linting(ctx)
@@ -50,53 +45,10 @@ def stagePipelines(ctx):
 	dependsOn(linters, generators)
 	return linters + generators
 
-def afterPipelines(ctx):
-	return [
-		notify()
-	]
-
 def dependsOn(earlierStages, nextStages):
 	for earlierStage in earlierStages:
 		for nextStage in nextStages:
 			nextStage['depends_on'].append(earlierStage['name'])
-
-def notify():
-	result = {
-		'kind': 'pipeline',
-		'type': 'docker',
-		'name': 'chat-notifications',
-		'clone': {
-			'disable': True
-		},
-		'steps': [
-			{
-				'name': 'notify-rocketchat',
-				'image': 'plugins/slack:1',
-				'pull': 'always',
-				'settings': {
-					'webhook': {
-						'from_secret': config['rocketchat']['from_secret']
-					},
-					'channel': config['rocketchat']['channel']
-				}
-			}
-		],
-		'depends_on': [],
-		'trigger': {
-			'ref': [
-				'refs/tags/**'
-			],
-			'status': [
-				'success',
-				'failure'
-			]
-		}
-	}
-
-	for branch in config['branches']:
-		result['trigger']['ref'].append('refs/heads/%s' % branch)
-
-	return result
 
 def linting(ctx):
 	pipelines = []
