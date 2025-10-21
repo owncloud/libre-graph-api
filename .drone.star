@@ -36,7 +36,6 @@ def main(ctx):
 		print('Errors detected. Review messages above.')
 		return []
 
-	dependsOn(stages)
 	return stages
 
 def stagePipelines(ctx):
