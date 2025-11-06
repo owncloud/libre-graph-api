@@ -4379,6 +4379,9 @@ components:
         signInActivity:
           readOnly: true
           $ref: '#/components/schemas/signInActivity'
+        externalID:
+          type: string
+          description: 'A unique identifier assigned to the user by the organization.'
     itemReference:
       type: object
       properties:
