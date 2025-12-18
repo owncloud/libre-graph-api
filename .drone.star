@@ -8,7 +8,7 @@ config = {
 			'src': "out-go",
 			'repo-slug': "libre-graph-api-go",
 			'branch': 'main',
-			'generator-args': "--api-name-suffix Api",
+			'generator-args': "--api-name-suffix Api --additional-properties=disallowAdditionalPropertiesIfNotPresent=false",
 		},
 		'typescript-axios': {
 			'src': "out-typescript-axios",
