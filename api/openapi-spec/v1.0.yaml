@@ -241,6 +241,144 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+    post:
+      tags:
+        - drives
+      summary: Create a new drive of a specific type. Alias for '/v1.0/drives', the difference is that grantedtoV2 is used and roles contain unified roles instead of cs3 roles.
+      operationId: CreateDriveBeta
+      requestBody:
+        description: New space property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/drive'
+            examples:
+              multiple values:
+                value:
+                  name: Mars
+                  quota:
+                    total: 1000000000
+                  description: Team space mars project
+              minimal:
+                value:
+                  name: Venus
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/drive'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation      
+  '/v1beta1/drives/{drive-id}':
+    get:
+      tags:
+        - drives
+      summary: Get drive by id. Alias for '/v1.0/drives', the difference is that grantedtoV2 is used and roles contain unified roles instead of cs3 roles
+      operationId: GetDriveBeta
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+      responses:
+        '200':
+          description: Retrieved drive
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/drive'
+          links:
+            root:
+              operationId: GetRoot
+              parameters:
+                drive-id: $request.path.drive-id
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - drives
+      summary: Update the drive. Alias for '/v1.0/drives', the difference is that grantedtoV2 is used and roles contain unified roles instead of cs3 roles
+      operationId: UpdateDriveBeta
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+      requestBody:
+        description: New space values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/driveUpdate'
+            examples:
+              change quota:
+                value:
+                  quota:
+                    total: 1000000000
+              change name:
+                value:
+                  name: Physics
+              change description:
+                value:
+                  description: Marketing team collaboration area
+              change drive image:
+                value:
+                  special:
+                    id: 408f26e3-d6d8-4aa4-bd5c-3fd6f5032b51$aba2bafc-e1a0-421e-a37a-9acf5f655f83!14fd3432-e8d9-42a7-9446-2e3fd621afca
+                    specialFolder:
+                      name: image
+              change drive readme:
+                value:
+                  special:
+                    id: 408f26e3-d6d8-4aa4-bd5c-3fd6f5032b51$aba2bafc-e1a0-421e-a37a-9acf5f655f83!14fd3432-e8d9-42a7-9446-2e3fd621afca
+                    specialFolder:
+                      name: readme
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/drive'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - drives
+      summary: Delete a specific space. Alias for '/v1.0/drives'.
+      operationId: DeleteDriveBeta
+      parameters:
+        - name: drive-id
+          in: path
+          description: 'key: id of drive'
+          required: true
+          schema:
+            type: string
+          x-ms-docs-key-type: drive
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation  
   '/v1.0/drives':
     get:
       tags:
