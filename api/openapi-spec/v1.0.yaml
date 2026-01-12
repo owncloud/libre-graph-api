@@ -4520,6 +4520,14 @@ components:
         externalID:
           type: string
           description: 'A unique identifier assigned to the user by the organization.'
+        crossInstanceReference:
+          type: string
+          description: 'A unique reference to the user. This is used to query the user from a different oCIS instance connected to the same identity provider.'
+        instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/instance'
+          description: 'oCIS instances that the user is either a member or a guest of.'
     itemReference:
       type: object
       properties:
@@ -5669,6 +5677,17 @@ components:
           type: string
           description: 'The display name for the application.'
           nullable: true
+    instance:
+      type: object
+      title: instance
+      description: 'An oCIS instance that the user is either a member or a guest of.'
+      properties:
+        url:
+          type: string
+          description: 'The URL of the oCIS instance.'
+        primary:
+          type: boolean
+          description: "Whether the instance is the user's primary instance."
   responses:
     error:
       description: error
