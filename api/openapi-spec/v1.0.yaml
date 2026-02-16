@@ -5092,6 +5092,10 @@ components:
           type: string
           description: URL that displays the resource in the browser. Read-only.
           title: shared
+        spaceId:
+          type: string
+          description: The UUID of the space that contains the item.
+          title: spaceId
     quota:
       type: object
       description: Optional. Information about the drive's storage space quota. Read-only.
