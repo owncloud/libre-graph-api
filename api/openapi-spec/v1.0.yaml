@@ -5685,6 +5685,9 @@ components:
       type: object
       title: instance
       description: 'An oCIS instance that the user is either a member or a guest of.'
+      required:
+        - url
+        - primary
       properties:
         url:
           type: string
