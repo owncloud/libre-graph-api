@@ -1,58 +1,99 @@
-# Libre Graph Api
+# Libre Graph API
 
-An API for open Cloud Collaboration. See the [Libre Graph Home](https://libregraph.github.io/) for more details.
+<!-- OSPO-managed README | Generated: 2026-04-16 | v2 -->
 
-This API is inspired by [Microsoft Graph API](https://developer.microsoft.com/en-us/graph).
+[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE) [![ownCloud OSPO](https://img.shields.io/badge/OSPO-ownCloud-blue)](https://kiteworks.com/opensource) [![Docker Hub](https://img.shields.io/docker/pulls/owncloud)](https://hub.docker.com/r/owncloud/ocis)
 
+The canonical OpenAPI specification for the Libre Graph API, an open standard for cloud collaboration inspired by the Microsoft Graph API. This repository contains the YAML/JSON API definitions, documentation templates, and code generation configuration used to produce typed client libraries in Go, PHP, C++/Qt, and TypeScript for consumption by ownCloud Infinite Scale and third-party integrators.
 
-## Goal
+## Getting Started
 
-The project goal is to provide an open source standard for open Cloud Collaboration.
+Follow the steps below to view or generate code from the API specification.
 
-Libre Graph is open source and open to any open source project that implements endpoints of the API.
+### Viewing the Spec
 
+The OpenAPI spec lives in `api/openapi-spec/v1.0.yaml`. You can render it with any OpenAPI viewer or Swagger UI.
 
-## Influence and differences from Microsoft Graph API
+### Generating Client Code
 
-Libre Graph API draws significant inspiration from the Microsoft Graph API,
-particularly in its approach to providing a unified endpoint for accessing various services and data.
-We believe that the model provided by Microsoft Graph API is a robust and efficient way
-to facilitate integration and collaboration across different services.
-
-However, Libre Graph API is not identical to Microsoft Graph API.
-We have made specific extensions and modifications to better suit our needs and goals:
-
-1. **Extended Functionality**: We have added specific endpoints and features unique to our implementation, designed to enhance collaboration and integration within the open source ecosystem.
-2. **Custom Extensions**: Certain functionalities have been extended to provide additional features that are not present in the Microsoft Graph API.
-3. **Beta Features**: Some endpoints are currently in beta, allowing us to continuously innovate and adapt to user needs before finalizing them.
-
-
-## Specification
-
-The API specification uses the OpenAPI Specification (OAS) standard.
-
-The [OpenAPI Specification (OAS)](https://swagger.io/specification/) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.
-
-An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.
+```bash
+docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
+  -i local/api/openapi-spec/v1.0.yaml \
+  -g <language> \
+  -o /local/out/<language>
+```
 
 ## Documentation
 
-You can find a rendered version of the [API documentation](https://owncloud.dev/libre-graph-api/) in our dev docs.
+- [Rendered API Documentation](https://owncloud.dev/libre-graph-api/)
+- [Libre Graph Home](https://libregraph.github.io/)
+- [OpenAPI Specification](https://swagger.io/specification/)
 
-## Clients
+## Part of ownCloud Infinite Scale
 
-Client code can be generated from the API spec.
+Libre Graph is the collaboration API that underpins [ownCloud Infinite Scale (oCIS)](https://github.com/owncloud/ocis). Client SDKs are generated from this spec into dedicated repositories:
 
-For example, to run the generator for the C++ bindings locally, run the following docker-based command:
-```bash
-docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate --enable-post-process-file  -t local/templates/cpp-qt-client  -i local/api/openapi-spec/v1.0.yaml -g cpp-qt-client -o /local/out/cpp
-```
-That generates the output in out/cpp.
+- [libre-graph-api-go](https://github.com/owncloud/libre-graph-api-go)
+- [libre-graph-api-php](https://github.com/owncloud/libre-graph-api-php)
+- [libre-graph-api-cpp-qt-client](https://github.com/owncloud/libre-graph-api-cpp-qt-client)
+- [libre-graph-api-typescript-axios](https://github.com/owncloud/libre-graph-api-typescript-axios)
 
+See the [Libre Graph Home](https://libregraph.github.io/) for the full project vision.
 
-### Available client libraries
-- [C++/Qt](https://github.com/owncloud/libre-graph-api-cpp-qt-client)
-- [go](https://github.com/owncloud/libre-graph-api-go)
-- [php](https://github.com/owncloud/libre-graph-api-php)
-- [typescript-axios](https://github.com/owncloud/libre-graph-api-typescript-axios)
+This component is part of the [oCIS Docker image](https://hub.docker.com/r/owncloud/ocis).
 
+## Community & Support
+
+**[Star](https://github.com/owncloud/libre-graph-api)** this repo and **Watch** for release notifications!
+
+- [ownCloud Website](https://owncloud.com)
+- [Community Discussions](https://github.com/orgs/owncloud/discussions)
+- [Matrix Chat](https://app.element.io/#/room/#owncloud:matrix.org)
+- [Documentation](https://doc.owncloud.com)
+- [Enterprise Support](https://owncloud.com/contact-us/)
+- [OSPO Home](https://kiteworks.com/opensource)
+
+## Contributing
+
+We welcome contributions! Please read the [Contributing Guidelines](CONTRIBUTING.md)
+and our [Code of Conduct](CODE_OF_CONDUCT.md) before getting started.
+
+### Workflow
+
+- **Rebase Early, Rebase Often!** We use a rebase workflow. Always rebase on the target branch before submitting a PR.
+- **Dependabot**: Automated dependency updates are managed via Dependabot. Review and merge dependency PRs promptly.
+- **Signed Commits**: All commits **must** be PGP/GPG signed. See [GitHub's signing guide](https://docs.github.com/en/authentication/managing-commit-signature-verification).
+- **DCO Sign-off**: Every commit must carry a `Signed-off-by` line:
+  ```
+  git commit -s -S -m "your commit message"
+  ```
+- **GitHub Actions Policy**: Workflows may only use actions that are (a) owned by `owncloud`, (b) created by GitHub (`actions/*`), or (c) verified in the GitHub Marketplace.
+
+## Security
+
+**Do not open a public GitHub issue for security vulnerabilities.**
+
+Report vulnerabilities at **<https://security.owncloud.com>** -- see [SECURITY.md](SECURITY.md).
+
+Bug bounty: [YesWeHack ownCloud Program](https://yeswehack.com/programs/owncloud-bug-bounty-program)
+
+## License
+
+This project is licensed under the [Apache-2.0](LICENSE).
+
+## About the ownCloud OSPO
+
+The [Kiteworks Open Source Program Office](https://kiteworks.com/opensource), operating under
+the [ownCloud](https://owncloud.com) brand, launched on May 5, 2026, to steward the open source
+ecosystem around ownCloud's products. The OSPO ensures transparent governance, license compliance,
+community health, and sustainable collaboration between the open source community and
+[Kiteworks](https://www.kiteworks.com), which acquired ownCloud in 2023.
+
+- **OSPO Home**: <https://kiteworks.com/opensource>
+- **GitHub**: <https://github.com/owncloud>
+- **ownCloud**: <https://owncloud.com>
+
+For questions about the OSPO or licensing, contact ospo@kiteworks.com.
+
+> **License status:** This repository is already licensed under Apache-2.0 -- the OSPO target license.
+> No migration is required.
