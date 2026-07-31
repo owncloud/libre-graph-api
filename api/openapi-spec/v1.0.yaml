@@ -3971,43 +3971,44 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/unifiedRoleDefinition'
+                type: array
+                items:
+                  $ref: '#/components/schemas/unifiedRoleDefinition'
               example:
-                value:
-                  - id: b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
-                    description: "Allows reading the shared file or folder"
-                    displayName: Viewer
-                    rolePermissions:
-                      - allowedResourceActions:
-                          - libre.graph/driveItem/basic/read
-                          - libre.graph/driveItem/permissions/read
-                          - libre.graph/driveItem/upload/create
-                        condition: "exists @Resource.File"
-                    '@libre.graph.weight': 1
-                  - id: fb6c3e19-e378-47e5-b277-9732f9de6e21
-                    description: "Allows reading and writing the shared file or folder"
-                    displayName: Editor
-                    rolePermissions:
-                      - allowedResourceActions:
-                          - libre.graph/driveItem/standard/allTasks
-                        condition: "exists @Resource.File"
-                    '@libre.graph.weight': 2
-                  - id: 312c0871-5ef7-4b3a-85b6-0e4074c64049
-                    description: "Allows managing a space"
-                    displayName: Manager
-                    rolePermissions:
-                      - allowedResourceActions:
-                          - libre.graph/drive/standard/allTasks
-                        condition: "exists @Resource.File"
-                    '@libre.graph.weight': 3
-                  - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
-                    description: "Allows creating new files"
-                    displayName: File Drop
-                    rolePermissions:
-                      - allowedResourceActions:
-                          libre.graph/driveItem/upload/create
-                        condition: "exists @Resource.File"
-                    '@libre.graph.weight': 4
+                - id: b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
+                  description: "Allows reading the shared file or folder"
+                  displayName: Viewer
+                  rolePermissions:
+                    - allowedResourceActions:
+                        - libre.graph/driveItem/basic/read
+                        - libre.graph/driveItem/permissions/read
+                        - libre.graph/driveItem/upload/create
+                      condition: "exists @Resource.File"
+                  '@libre.graph.weight': 1
+                - id: fb6c3e19-e378-47e5-b277-9732f9de6e21
+                  description: "Allows reading and writing the shared file or folder"
+                  displayName: Editor
+                  rolePermissions:
+                    - allowedResourceActions:
+                        - libre.graph/driveItem/standard/allTasks
+                      condition: "exists @Resource.File"
+                  '@libre.graph.weight': 2
+                - id: 312c0871-5ef7-4b3a-85b6-0e4074c64049
+                  description: "Allows managing a space"
+                  displayName: Manager
+                  rolePermissions:
+                    - allowedResourceActions:
+                        - libre.graph/drive/standard/allTasks
+                      condition: "exists @Resource.File"
+                  '@libre.graph.weight': 3
+                - id: 4916f47e-66d5-49bb-9ac9-748ad00334b
+                  description: "Allows creating new files"
+                  displayName: File Drop
+                  rolePermissions:
+                    - allowedResourceActions:
+                        libre.graph/driveItem/upload/create
+                      condition: "exists @Resource.File"
+                  '@libre.graph.weight': 4
         default:
           $ref: '#/components/responses/error'
   /v1beta1/roleManagement/permissions/roleDefinitions/{role-id}:
