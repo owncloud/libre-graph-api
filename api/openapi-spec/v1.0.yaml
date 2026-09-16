@@ -4229,6 +4229,12 @@ components:
             driveType:
               type: string
               description: Describes the type of drive represented by this resource. Values are "personal" for users home spaces, "project", "virtual" or "share". Read-write on create, read-only afterwards, see the `driveUpdate` schema.
+            special:
+              type: array
+              items:
+                $ref: '#/components/schemas/driveItem'
+              description: A collection of special drive resources. Read-only, see the `driveUpdate` schema for assigning them.
+              readOnly: true
     driveUpdate:
       description: The drive represents an update to a space on the storage.
       type: object
@@ -4301,8 +4307,18 @@ components:
         special:
           type: array
           items:
-            $ref: '#/components/schemas/driveItem'
-          description: A collection of special drive resources.
+            $ref: '#/components/schemas/specialDriveItemUpdate'
+          description: A collection of special drive resources. See the `drive` schema for the resources returned by the server.
+    specialDriveItemUpdate:
+      description: References an existing item inside a drive to be assigned as one of the drive's special resources, such as its image or readme.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the item to assign. Read-write.
+        specialFolder:
+          $ref: '#/components/schemas/specialFolder'
+          description: Identifies which special resource the item is assigned to. Read-write.
     driveRecipient:
       type: object
       description: |
@@ -4606,7 +4622,8 @@ components:
         # entity
         id:
           type: string
-          description: The unique identifier for the item. Server-assigned, but writable where the schema is used to reference an item that already exists, such as the entries of `drive.special`.
+          description: Read-only.
+          readOnly: true
         # base item
         createdBy:
           $ref: '#/components/schemas/identitySet'
@@ -4681,6 +4698,8 @@ components:
           $ref: '#/components/schemas/trash'
         specialFolder:
           $ref: '#/components/schemas/specialFolder'
+          description: 'Identifies the special resource the item is assigned to, if any. Read-only.'
+          readOnly: true
         remoteItem:
           $ref: '#/components/schemas/remoteItem'
         size:
@@ -5017,8 +5036,7 @@ components:
           format: date-time
     specialFolder:
       type: object
-      description: 'If the current item is also available as a special folder, this facet is returned. Read-only'
-      readOnly: true
+      description: 'If the current item is also available as a special folder, this facet is returned.'
       properties:
         name:
           type: string
@@ -5090,6 +5108,8 @@ components:
           format: int64
         specialFolder:
           $ref: '#/components/schemas/specialFolder'
+          description: 'Identifies the special resource the item is assigned to, if any. Read-only.'
+          readOnly: true
         webDavUrl:
           type: string
           description: DAV compatible URL for the item.
