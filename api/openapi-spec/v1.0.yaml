@@ -4606,8 +4606,7 @@ components:
         # entity
         id:
           type: string
-          description: Read-only.
-          readOnly: true
+          description: The unique identifier for the item. Server-assigned, but writable where the schema is used to reference an item that already exists, such as the entries of `drive.special`.
         # base item
         createdBy:
           $ref: '#/components/schemas/identitySet'
